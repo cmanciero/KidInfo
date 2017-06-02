@@ -61,11 +61,12 @@ class KidsViewController: UIViewController, UITableViewDelegate, UITableViewData
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = UITableViewCell();
+        let cell = tableView.dequeueReusableCell(withIdentifier: "kidInfoTableViewCell", for: indexPath) as! KidTableViewCell;
         let kid = arrKids[indexPath.row];
         
-        cell.textLabel?.text = kid.firstName;
-        //        cell.imageView?.image = UIImage(data: kid.avatar! as Data);
+        cell.lblName.text = kid.firstName;
+        cell.lblDOB.text = "4/10/1980";
+        cell.avatarImageView?.image = UIImage(data: kid.avatar! as Data);
         
         return cell;
     }

@@ -30,6 +30,8 @@ class KidInfoViewController: UIViewController, UIImagePickerControllerDelegate, 
             txtFirstName.text = kid!.firstName;
             txtLastName.text = kid!.lastName;
             btnDelete.isHidden = false;
+            let image = UIImage(data: kid!.avatar! as Data);
+            btnAvatar.setBackgroundImage(image, for: .normal);
         }
     }
     
@@ -42,12 +44,14 @@ class KidInfoViewController: UIViewController, UIImagePickerControllerDelegate, 
         if(kid != nil){
             kid!.firstName = txtFirstName.text;
             kid!.lastName = txtLastName.text;
+            kid!.avatar = UIImagePNGRepresentation(btnAvatar.backgroundImage(for: .normal)!)! as NSData;
         } else {
             let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext;
             
             let kid = Kid(context: context);
             kid.firstName = txtFirstName.text;
             kid.lastName = txtLastName.text;
+            kid.avatar = UIImagePNGRepresentation(btnAvatar.backgroundImage(for: .normal)!)! as NSData;
             //            kid.height = txtHeight.text;
             //            kid.weight = txtWeight.text;
         }

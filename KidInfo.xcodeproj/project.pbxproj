@@ -14,6 +14,7 @@
 		954CE6821EE0AB6F00C1160F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 954CE6811EE0AB6F00C1160F /* Assets.xcassets */; };
 		954CE6851EE0AB6F00C1160F /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 954CE6831EE0AB6F00C1160F /* LaunchScreen.storyboard */; };
 		954CE6911EE0EEB700C1160F /* KidInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 954CE6901EE0EEB700C1160F /* KidInfoViewController.swift */; };
+		954CE6931EE1E4FD00C1160F /* KidTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 954CE6921EE1E4FD00C1160F /* KidTableViewCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -26,6 +27,7 @@
 		954CE6841EE0AB6F00C1160F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		954CE6861EE0AB6F00C1160F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		954CE6901EE0EEB700C1160F /* KidInfoViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KidInfoViewController.swift; sourceTree = "<group>"; };
+		954CE6921EE1E4FD00C1160F /* KidTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KidTableViewCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -80,6 +82,7 @@
 		954CE68D1EE0EB7B00C1160F /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
+				954CE6921EE1E4FD00C1160F /* KidTableViewCell.swift */,
 				954CE6901EE0EEB700C1160F /* KidInfoViewController.swift */,
 				954CE6791EE0AB6F00C1160F /* KidsViewController.swift */,
 			);
@@ -162,6 +165,7 @@
 				954CE67A1EE0AB6F00C1160F /* KidsViewController.swift in Sources */,
 				954CE6911EE0EEB700C1160F /* KidInfoViewController.swift in Sources */,
 				954CE6781EE0AB6F00C1160F /* AppDelegate.swift in Sources */,
+				954CE6931EE1E4FD00C1160F /* KidTableViewCell.swift in Sources */,
 				954CE6801EE0AB6F00C1160F /* KidInfo.xcdatamodeld in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -328,6 +332,7 @@
 				954CE68B1EE0AB6F00C1160F /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 
