@@ -17,6 +17,8 @@ class KidTableViewCell: UITableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
+        
+        avatarImageView.layer.cornerRadius = avatarImageView.frame.size.width / 2;
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {
