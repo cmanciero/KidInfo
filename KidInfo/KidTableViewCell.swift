@@ -19,6 +19,8 @@ class KidTableViewCell: UITableViewCell {
         // Initialization code
         
         avatarImageView.layer.cornerRadius = avatarImageView.frame.size.width / 2;
+        avatarImageView.layer.borderWidth = 3;
+        avatarImageView.layer.borderColor = UIColor.white.cgColor;
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {

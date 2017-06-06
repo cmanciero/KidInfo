@@ -10,8 +10,7 @@ import UIKit
 
 class KidInfoViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate{
     
-    @IBOutlet weak var txtFirstName: UITextField!
-    @IBOutlet weak var txtLastName: UITextField!
+    @IBOutlet weak var txtName: UITextField!
     @IBOutlet weak var txtWeightLbs: UITextField!
     @IBOutlet weak var txtWeightOz: UITextField!
     @IBOutlet weak var txtHeightFt: UITextField!
@@ -40,8 +39,7 @@ class KidInfoViewController: UIViewController, UIImagePickerControllerDelegate, 
         
         // check if kid exist
         if(kid != nil){
-            txtFirstName.text = kid!.firstName;
-            txtLastName.text = kid!.lastName;
+            txtName.text = kid!.name;
             btnDelete.isHidden = false;
             let image = UIImage(data: kid!.avatar! as Data);
             btnAvatar.setBackgroundImage(image, for: .normal);
@@ -53,6 +51,22 @@ class KidInfoViewController: UIViewController, UIImagePickerControllerDelegate, 
                 txtHeightFt.text = String(Int(height / 12.0));
                 // set height inces
                 txtHeightInches.text = String(Int(height.truncatingRemainder(dividingBy: 12.0)));
+            }
+            
+            // set weight
+            let weight = kid!.weight;
+            if(weight > 0){
+                // set weight lbs
+                txtWeightLbs.text = String(Int(weight));
+                txtWeightOz.text = String(weight).components(separatedBy: ".")[1];
+            }
+            
+            // set date of birth
+            if(kid!.dob != nil){
+                let dateFormatter = DateFormatter();
+                dateFormatter.dateStyle = .medium;
+                dateFormatter.timeStyle = .none;
+                txtDOB.text = dateFormatter.string(from: kid!.dob! as Date);
             }
         }
     }
@@ -122,6 +136,27 @@ class KidInfoViewController: UIViewController, UIImagePickerControllerDelegate, 
         return height;
     }
     
+    // calculate the weight
+    func calculateWeight() -> Double{
+        var weight = 0.0
+        
+        if let convertWeight = Double(txtWeightLbs.text!){
+            weight = convertWeight;
+        }
+        
+        if var convertWeightOz = Double(txtWeightOz.text!){
+            // convert ounce value
+            if(convertWeightOz >= 16){
+                weight += 1;
+                convertWeightOz = convertWeightOz - 16;
+            }
+            weight += convertWeightOz * 0.1;
+        }
+        
+        return weight;
+    }
+    
+    // set avatar button after selection
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
         let image = info[UIImagePickerControllerOriginalImage] as! UIImage;
         
@@ -136,22 +171,35 @@ class KidInfoViewController: UIViewController, UIImagePickerControllerDelegate, 
     // Save kid
     @IBAction func saveTapped(_ sender: Any) {
         if(kid != nil){
-            kid!.firstName = txtFirstName.text;
-            kid!.lastName = txtLastName.text;
+            kid!.name = txtName.text;
             kid!.avatar = UIImagePNGRepresentation(btnAvatar.backgroundImage(for: .normal)!)! as NSData;
+            
+            // calculate the weight
+            let weight = calculateWeight();
+            if(weight > 0.0){
+                kid!.weight = weight;
+            }
             
             // calculate the height
             let height = calculateHeight();
             if(height > 0.0){
                 kid!.height = height;
             }
+            
+            // save DOB
+            kid!.dob = dobPicker.date as NSDate;
         } else {
             let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext;
             
             let kid = Kid(context: context);
-            kid.firstName = txtFirstName.text;
-            kid.lastName = txtLastName.text;
+            kid.name = txtName.text;
             kid.avatar = UIImagePNGRepresentation(btnAvatar.backgroundImage(for: .normal)!)! as NSData;
+            
+            // calculate the weight
+            let weight = calculateWeight();
+            if(weight > 0.0){
+                kid.weight = weight;
+            }
             
             // calculate the height
             let height = calculateHeight();
@@ -159,7 +207,8 @@ class KidInfoViewController: UIViewController, UIImagePickerControllerDelegate, 
                 kid.height = height;
             }
             
-            //            kid.weight = txtWeight.text;
+            // save DOB
+            kid.dob = dobPicker.date as NSDate;
         }
         
         (UIApplication.shared.delegate as! AppDelegate).saveContext();

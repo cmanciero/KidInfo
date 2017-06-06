@@ -64,11 +64,36 @@ class KidsViewController: UIViewController, UITableViewDelegate, UITableViewData
         let cell = tableView.dequeueReusableCell(withIdentifier: "kidInfoTableViewCell", for: indexPath) as! KidTableViewCell;
         let kid = arrKids[indexPath.row];
         
-        cell.lblName.text = kid.firstName;
-        cell.lblDOB.text = "4/10/1980";
+        // set kid name
+        cell.lblName.text = kid.name;
+        
+        // set kid DOB
+        let dateFormatter = DateFormatter();
+        dateFormatter.dateStyle = .medium;
+        dateFormatter.timeStyle = .none;
+        if(kid.dob != nil){
+            let formatDOB = dateFormatter.string(from: kid.dob! as Date);
+            let currentAge = calculateAge(dob: kid.dob! as Date);
+            cell.lblDOB.text = "\(formatDOB) (\(currentAge) years old)";
+        } else {
+            cell.lblDOB.text = "";
+        }
+        
         cell.avatarImageView?.image = UIImage(data: kid.avatar! as Data);
         
         return cell;
+    }
+    
+    // get the age of kid
+    func calculateAge(dob: Date) -> Int{
+        let now = Date();
+        let birthday: Date = dob;
+        let calendar = Calendar.current;
+        
+        let ageComponents = calendar.dateComponents([.year], from: birthday, to: now);
+        let age = ageComponents.year!;
+        
+        return age;
     }
     
     override func didReceiveMemoryWarning() {
