@@ -48,6 +48,10 @@ class KidsViewController: UIViewController, UITableViewDelegate, UITableViewData
     
     // do this everytime view appears
     override func viewWillAppear(_ animated: Bool) {
+        if(UIApplication.shared.isIgnoringInteractionEvents){
+            UIApplication.shared.endIgnoringInteractionEvents();
+        }
+        
         // get context for CoreData
         let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext;
         
@@ -79,7 +83,10 @@ class KidsViewController: UIViewController, UITableViewDelegate, UITableViewData
             cell.lblDOB.text = "";
         }
         
-        cell.avatarImageView?.image = UIImage(data: kid.avatar! as Data);
+        // check if avatar exists
+        if(kid.avatar != nil){
+            cell.avatarImageView?.image = UIImage(data: kid.avatar! as Data);
+        }
         
         return cell;
     }

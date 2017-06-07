@@ -18,9 +18,14 @@ class KidInfoViewController: UIViewController, UIImagePickerControllerDelegate, 
     @IBOutlet weak var txtDOB: UITextField!
     @IBOutlet weak var btnDelete: UIButton!
     @IBOutlet weak var btnAvatar: UIButton!
+    @IBOutlet weak var titleName: UINavigationItem!
+    @IBOutlet weak var mainView: UIView!
     
     var kid: Kid? = nil;
     var imagePicker = UIImagePickerController();
+    let activityIndicator = UIActivityIndicatorView(activityIndicatorStyle: UIActivityIndicatorViewStyle.gray);
+    let activityView = UIView();
+    var activityViewConstraints: [NSLayoutConstraint] = [];
     
     // UIDatePicker for DOB
     let dobPicker = UIDatePicker();
@@ -28,11 +33,22 @@ class KidInfoViewController: UIViewController, UIImagePickerControllerDelegate, 
     override func viewDidLoad() {
         super.viewDidLoad();
         
+        // create the activity view
+        createActivityView();
+        
+        // hide activity indicator if running
+        if(activityIndicator.isAnimating){
+            activityView.isHidden = true;
+            activityIndicator.stopAnimating();
+        }
+        
         imagePicker.delegate = self;
         
+        // style avatar button
         btnAvatar.layer.cornerRadius = btnAvatar.layer.frame.width / 2;
         btnAvatar.layer.borderWidth = 3;
         btnAvatar.layer.borderColor = UIColor.white.cgColor;
+        btnAvatar.setTitle("Add photo", for: .normal);
         
         // create date picker for DOB
         createDatePicker();
@@ -40,9 +56,16 @@ class KidInfoViewController: UIViewController, UIImagePickerControllerDelegate, 
         // check if kid exist
         if(kid != nil){
             txtName.text = kid!.name;
+            titleName.title = txtName.text;
+            
             btnDelete.isHidden = false;
-            let image = UIImage(data: kid!.avatar! as Data);
-            btnAvatar.setBackgroundImage(image, for: .normal);
+            
+            // check if avatar is set
+            if(kid!.avatar != nil){
+                let image = UIImage(data: kid!.avatar! as Data);
+                btnAvatar.setBackgroundImage(image, for: .normal);
+                btnAvatar.setTitle("Update photo", for: .normal);
+            }
             
             // set height
             let height = kid!.height;
@@ -79,6 +102,23 @@ class KidInfoViewController: UIViewController, UIImagePickerControllerDelegate, 
     /************************/
     // Func
     /************************/
+    
+    // create the activity view
+    func createActivityView(){
+        activityView.alpha = 0.5;
+        activityView.translatesAutoresizingMaskIntoConstraints = false;
+        activityView.isHidden = true;
+        activityView.backgroundColor = UIColor.white;
+        self.view.addSubview(activityView);
+        
+        let topConstraint = activityView.topAnchor.constraint(equalTo: self.view.topAnchor);
+        let bottomConstraint = activityView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor);
+        let leftConstraint = activityView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor);
+        let rightConstraint = activityView.rightAnchor.constraint(equalTo: self.view.rightAnchor);
+        
+        activityViewConstraints = [topConstraint, bottomConstraint, leftConstraint, rightConstraint];
+        NSLayoutConstraint.activate(activityViewConstraints);
+    }
     
     // create date picker for DOB
     func createDatePicker(){
@@ -168,6 +208,11 @@ class KidInfoViewController: UIViewController, UIImagePickerControllerDelegate, 
     // Actions
     /************************/
     
+    // update title on name change
+    @IBAction func nameUpdating(_ sender: Any) {
+        titleName.title = txtName.text;
+    }
+    
     // Save kid
     @IBAction func saveTapped(_ sender: Any) {
         if(kid != nil){
@@ -193,7 +238,11 @@ class KidInfoViewController: UIViewController, UIImagePickerControllerDelegate, 
             
             let kid = Kid(context: context);
             kid.name = txtName.text;
-            kid.avatar = UIImagePNGRepresentation(btnAvatar.backgroundImage(for: .normal)!)! as NSData;
+            
+            // check if avatar image was set
+            if(btnAvatar.backgroundImage(for: .normal) != nil){
+                kid.avatar = UIImagePNGRepresentation(btnAvatar.backgroundImage(for: .normal)!)! as NSData;
+            }
             
             // calculate the weight
             let weight = calculateWeight();
@@ -208,7 +257,9 @@ class KidInfoViewController: UIViewController, UIImagePickerControllerDelegate, 
             }
             
             // save DOB
-            kid.dob = dobPicker.date as NSDate;
+            if(txtDOB.text != nil && txtDOB.text != ""){
+                kid.dob = dobPicker.date as NSDate;
+            }
         }
         
         (UIApplication.shared.delegate as! AppDelegate).saveContext();
@@ -226,12 +277,36 @@ class KidInfoViewController: UIViewController, UIImagePickerControllerDelegate, 
     
     // delete kid
     @IBAction func deleteTapped(_ sender: Any) {
-        let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext;
+        // show waiting icon
+        activityView.isHidden = false;
+        activityIndicator.center = activityView.center;
+        activityIndicator.hidesWhenStopped = true;
+        activityView.addSubview(activityIndicator);
         
-        context.delete(kid!);
+        // start animating
+        activityIndicator.startAnimating();
         
-        (UIApplication.shared.delegate as! AppDelegate).saveContext();
-        navigationController?.popViewController(animated: true);
+        let warningAlert = UIAlertController(title: "Delete kid", message: "Are you sure you want to delete \(txtName!.text!)? This cannot be undone.", preferredStyle: .alert);
+        warningAlert.addAction(UIAlertAction(title: "Yes", style: .default, handler: { action in
+            UIApplication.shared.beginIgnoringInteractionEvents();
+        
+            // get context
+            let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext;
+            
+            // delete kid
+            context.delete(self.kid!);
+            
+            // save context
+            (UIApplication.shared.delegate as! AppDelegate).saveContext();
+            
+            // navigate back to main view
+            self.navigationController?.popViewController(animated: true);
+        }));
+        warningAlert.addAction(UIAlertAction(title: "No", style: .cancel, handler: { action in
+            self.activityIndicator.stopAnimating();
+            self.activityView.isHidden = true;
+        }));
+        self.present(warningAlert, animated: true, completion: nil);
     }
     
     /*

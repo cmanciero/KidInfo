@@ -3,6 +3,14 @@
    version = "1.0">
    <ContextStates>
       <ContextState
+         contextName = "KidInfoViewController.deleteTapped(Any) -&gt; ():KidInfoViewController.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "activityIndicator.isHidden">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
          contextName = "KidInfoViewController.viewDidLoad() -&gt; ():KidInfoViewController.swift">
          <PersistentStrings>
             <PersistentString
