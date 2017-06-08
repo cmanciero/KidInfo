@@ -1,13 +1,20 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="12141" systemVersion="16F73" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+    <entity name="Allergy" representedClassName="Allergy" syncable="YES" codeGenerationType="class">
+        <attribute name="level" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="type" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="kid" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Kid" inverseName="allergies" inverseEntity="Kid" syncable="YES"/>
+    </entity>
     <entity name="Kid" representedClassName="Kid" syncable="YES" codeGenerationType="class">
         <attribute name="avatar" optional="YES" attributeType="Binary" allowsExternalBinaryDataStorage="YES" syncable="YES"/>
         <attribute name="dob" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
         <attribute name="height" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="weight" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES" syncable="YES"/>
+        <relationship name="allergies" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Allergy" inverseName="kid" inverseEntity="Allergy" syncable="YES"/>
     </entity>
     <elements>
-        <element name="Kid" positionX="-63" positionY="-18" width="128" height="120"/>
+        <element name="Kid" positionX="-288" positionY="18" width="128" height="133"/>
+        <element name="Allergy" positionX="-63" positionY="18" width="128" height="88"/>
     </elements>
 </model>

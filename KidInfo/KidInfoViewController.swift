@@ -8,7 +8,7 @@
 
 import UIKit
 
-class KidInfoViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate{
+class KidInfoViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITableViewDelegate, UITableViewDataSource{
     
     @IBOutlet weak var txtName: UITextField!
     @IBOutlet weak var txtWeightLbs: UITextField!
@@ -20,12 +20,19 @@ class KidInfoViewController: UIViewController, UIImagePickerControllerDelegate, 
     @IBOutlet weak var btnAvatar: UIButton!
     @IBOutlet weak var titleName: UINavigationItem!
     @IBOutlet weak var mainView: UIView!
+    @IBOutlet weak var allergyTableView: UITableView!
+    @IBOutlet weak var lblAllergyCount: UILabel!
+    @IBOutlet weak var lblDoctorCount: UILabel!
+    @IBOutlet weak var doctorTableView: UITableView!
     
     var kid: Kid? = nil;
     var imagePicker = UIImagePickerController();
     let activityIndicator = UIActivityIndicatorView(activityIndicatorStyle: UIActivityIndicatorViewStyle.gray);
     let activityView = UIView();
     var activityViewConstraints: [NSLayoutConstraint] = [];
+    
+    var selectedAllergy: Allergy? = nil;
+    var doctors = ["Branford Pediatrics", "Dr. Parker", "Dr. Kim", "Dr. Love"];
     
     // UIDatePicker for DOB
     let dobPicker = UIDatePicker();
@@ -43,6 +50,14 @@ class KidInfoViewController: UIViewController, UIImagePickerControllerDelegate, 
         }
         
         imagePicker.delegate = self;
+        
+        // allergyTableView
+        allergyTableView.delegate = self;
+        allergyTableView.dataSource = self;
+        
+        // doctorTableView
+        doctorTableView.delegate = self;
+        doctorTableView.dataSource = self;
         
         // style avatar button
         btnAvatar.layer.cornerRadius = btnAvatar.layer.frame.width / 2;
@@ -90,6 +105,27 @@ class KidInfoViewController: UIViewController, UIImagePickerControllerDelegate, 
                 dateFormatter.dateStyle = .medium;
                 dateFormatter.timeStyle = .none;
                 txtDOB.text = dateFormatter.string(from: kid!.dob! as Date);
+                
+                // set date picker to date of birth
+                dobPicker.setDate(kid!.dob! as Date, animated: false);
+            }
+            
+            // check if kid has allergies
+            if((kid!.allergies?.count)! > 0){
+                allergyTableView.isHidden = false;
+                let allergyCount = (kid!.allergies?.count)!;
+                
+                // check if to display allergies count
+                if(allergyCount > 3){
+                    lblAllergyCount.isHidden = false;
+                    lblAllergyCount.text = "\(allergyCount) allergies";
+                }
+            }
+            
+            // check if to display doctors count
+            if(doctors.count > 3){
+                lblDoctorCount.isHidden = false;
+                lblDoctorCount.text = "\(doctors.count) doctors";
             }
         }
     }
@@ -97,6 +133,57 @@ class KidInfoViewController: UIViewController, UIImagePickerControllerDelegate, 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        // check for allergy table view
+        if(tableView.isEqual(allergyTableView)){
+            selectedAllergy = (kid!.allergies!.allObjects as! [Allergy])[indexPath.row] as Allergy;
+            performSegue(withIdentifier: "allergySegue", sender: nil);
+        } else if(tableView.isEqual(doctorTableView)) {
+            print("doctor");
+        }
+        
+        // deselect selected row
+        tableView.deselectRow(at: indexPath, animated: true);
+    }
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        var rowCount = 0;
+        if(tableView.isEqual(allergyTableView)){
+            rowCount = (kid!.allergies?.count)!;
+        }else if(tableView.isEqual(doctorTableView)) {
+            rowCount = doctors.count;
+        }
+        
+        return rowCount;
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = UITableViewCell();
+        if(tableView.isEqual(allergyTableView)){
+            let allergy: Allergy = (kid!.allergies!.allObjects as! [Allergy])[indexPath.row] as Allergy;
+            cell.textLabel?.text = allergy.type;
+            
+            var image: UIImage = UIImage();
+            if(allergy.level == "Mild"){
+                image = UIImage(named: "yellowDot.png")!;
+            } else if(allergy.level == "Severe"){
+                image = UIImage(named: "redDot.png")!;
+            }
+            
+            cell.imageView?.image = image;
+        }else if(tableView.isEqual(doctorTableView)) {
+            cell.textLabel?.text = doctors[indexPath.row];
+        }
+        
+        return cell;
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        allergyTableView.reloadData();
+        
+        // check count of allergies
     }
     
     /************************/
@@ -204,6 +291,21 @@ class KidInfoViewController: UIViewController, UIImagePickerControllerDelegate, 
         imagePicker.dismiss(animated: true, completion: nil);
     }
     
+    // In a storyboard-based application, you will often want to do a little preparation before navigation
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        // Get the new view controller using segue.destinationViewController.
+        // Pass the selected object to the new view controller.
+        
+        if(segue.identifier == "allergySegue"){
+            let nextVC: AllergyViewController = segue.destination as! AllergyViewController;
+            nextVC.kid = kid;
+            nextVC.allergy = selectedAllergy;
+            
+        }
+    }
+    
+    
+    
     /************************/
     // Actions
     /************************/
@@ -211,6 +313,11 @@ class KidInfoViewController: UIViewController, UIImagePickerControllerDelegate, 
     // update title on name change
     @IBAction func nameUpdating(_ sender: Any) {
         titleName.title = txtName.text;
+    }
+    
+    // Add allergy
+    @IBAction func addAllergyTapped(_ sender: Any) {
+        performSegue(withIdentifier: "allergySegue", sender: nil);
     }
     
     // Save kid
@@ -289,7 +396,7 @@ class KidInfoViewController: UIViewController, UIImagePickerControllerDelegate, 
         let warningAlert = UIAlertController(title: "Delete kid", message: "Are you sure you want to delete \(txtName!.text!)? This cannot be undone.", preferredStyle: .alert);
         warningAlert.addAction(UIAlertAction(title: "Yes", style: .default, handler: { action in
             UIApplication.shared.beginIgnoringInteractionEvents();
-        
+            
             // get context
             let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext;
             
@@ -308,15 +415,4 @@ class KidInfoViewController: UIViewController, UIImagePickerControllerDelegate, 
         }));
         self.present(warningAlert, animated: true, completion: nil);
     }
-    
-    /*
-     // MARK: - Navigation
-     
-     // In a storyboard-based application, you will often want to do a little preparation before navigation
-     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-     // Get the new view controller using segue.destinationViewController.
-     // Pass the selected object to the new view controller.
-     }
-     */
-    
 }

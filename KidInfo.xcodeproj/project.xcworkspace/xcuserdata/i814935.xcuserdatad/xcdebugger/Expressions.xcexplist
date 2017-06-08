@@ -3,6 +3,17 @@
    version = "1.0">
    <ContextStates>
       <ContextState
+         contextName = "KidInfoViewController.prepare(for : UIStoryboardSegue, sender : Any?) -&gt; ():KidInfoViewController.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "type(of: sender)">
+            </PersistentString>
+            <PersistentString
+               value = "segue.identifier">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
          contextName = "KidInfoViewController.deleteTapped(Any) -&gt; ():KidInfoViewController.swift">
          <PersistentStrings>
             <PersistentString

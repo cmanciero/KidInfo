@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		9537B1C81EE878DF00CF5E1B /* AllergyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9537B1C71EE878DF00CF5E1B /* AllergyViewController.swift */; };
+		9537B1CD1EE9A70700CF5E1B /* blueDot.png in Resources */ = {isa = PBXBuildFile; fileRef = 9537B1CA1EE9A70700CF5E1B /* blueDot.png */; };
+		9537B1CE1EE9A70700CF5E1B /* yellowDot.png in Resources */ = {isa = PBXBuildFile; fileRef = 9537B1CB1EE9A70700CF5E1B /* yellowDot.png */; };
+		9537B1CF1EE9A70700CF5E1B /* redDot.png in Resources */ = {isa = PBXBuildFile; fileRef = 9537B1CC1EE9A70700CF5E1B /* redDot.png */; };
 		954CE6781EE0AB6F00C1160F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 954CE6771EE0AB6F00C1160F /* AppDelegate.swift */; };
 		954CE67A1EE0AB6F00C1160F /* KidsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 954CE6791EE0AB6F00C1160F /* KidsViewController.swift */; };
 		954CE67D1EE0AB6F00C1160F /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 954CE67B1EE0AB6F00C1160F /* Main.storyboard */; };
@@ -18,6 +22,10 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		9537B1C71EE878DF00CF5E1B /* AllergyViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AllergyViewController.swift; sourceTree = "<group>"; };
+		9537B1CA1EE9A70700CF5E1B /* blueDot.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = blueDot.png; sourceTree = "<group>"; };
+		9537B1CB1EE9A70700CF5E1B /* yellowDot.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = yellowDot.png; sourceTree = "<group>"; };
+		9537B1CC1EE9A70700CF5E1B /* redDot.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = redDot.png; sourceTree = "<group>"; };
 		954CE6741EE0AB6F00C1160F /* KidInfo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = KidInfo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		954CE6771EE0AB6F00C1160F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		954CE6791EE0AB6F00C1160F /* KidsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KidsViewController.swift; sourceTree = "<group>"; };
@@ -41,6 +49,16 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		9537B1C91EE9A62300CF5E1B /* assets */ = {
+			isa = PBXGroup;
+			children = (
+				9537B1CA1EE9A70700CF5E1B /* blueDot.png */,
+				9537B1CB1EE9A70700CF5E1B /* yellowDot.png */,
+				9537B1CC1EE9A70700CF5E1B /* redDot.png */,
+			);
+			name = assets;
+			sourceTree = "<group>";
+		};
 		954CE66B1EE0AB6F00C1160F = {
 			isa = PBXGroup;
 			children = (
@@ -60,6 +78,7 @@
 		954CE6761EE0AB6F00C1160F /* KidInfo */ = {
 			isa = PBXGroup;
 			children = (
+				9537B1C91EE9A62300CF5E1B /* assets */,
 				954CE68D1EE0EB7B00C1160F /* ViewControllers */,
 				954CE68C1EE0EB7300C1160F /* classes */,
 				954CE6771EE0AB6F00C1160F /* AppDelegate.swift */,
@@ -82,6 +101,7 @@
 		954CE68D1EE0EB7B00C1160F /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
+				9537B1C71EE878DF00CF5E1B /* AllergyViewController.swift */,
 				954CE6921EE1E4FD00C1160F /* KidTableViewCell.swift */,
 				954CE6901EE0EEB700C1160F /* KidInfoViewController.swift */,
 				954CE6791EE0AB6F00C1160F /* KidsViewController.swift */,
@@ -150,8 +170,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				954CE6851EE0AB6F00C1160F /* LaunchScreen.storyboard in Resources */,
+				9537B1CE1EE9A70700CF5E1B /* yellowDot.png in Resources */,
 				954CE6821EE0AB6F00C1160F /* Assets.xcassets in Resources */,
 				954CE67D1EE0AB6F00C1160F /* Main.storyboard in Resources */,
+				9537B1CF1EE9A70700CF5E1B /* redDot.png in Resources */,
+				9537B1CD1EE9A70700CF5E1B /* blueDot.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -163,6 +186,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				954CE67A1EE0AB6F00C1160F /* KidsViewController.swift in Sources */,
+				9537B1C81EE878DF00CF5E1B /* AllergyViewController.swift in Sources */,
 				954CE6911EE0EEB700C1160F /* KidInfoViewController.swift in Sources */,
 				954CE6781EE0AB6F00C1160F /* AppDelegate.swift in Sources */,
 				954CE6931EE1E4FD00C1160F /* KidTableViewCell.swift in Sources */,
