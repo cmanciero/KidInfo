@@ -180,6 +180,20 @@ class KidInfoViewController: UIViewController, UIImagePickerControllerDelegate, 
         return cell;
     }
     
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
+        if(editingStyle == .delete){
+            let allergy = (kid!.allergies?.allObjects as! [Allergy])[indexPath.row] as Allergy;
+            
+            let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext;
+            context.delete(allergy);
+            (UIApplication.shared.delegate as! AppDelegate).saveContext();
+            
+            do{
+                allergyTableView.reloadData();
+            } catch {}
+        }
+    }
+    
     override func viewDidAppear(_ animated: Bool) {
         allergyTableView.reloadData();
         
@@ -373,7 +387,6 @@ class KidInfoViewController: UIViewController, UIImagePickerControllerDelegate, 
         
         navigationController?.popViewController(animated: true);
     }
-    
     
     // change/set avatar image
     @IBAction func avatarTapped(_ sender: Any) {
