@@ -32,6 +32,7 @@ class KidInfoViewController: UIViewController, UIImagePickerControllerDelegate, 
     var activityViewConstraints: [NSLayoutConstraint] = [];
     
     var selectedAllergy: Allergy? = nil;
+    var selectedDoctor: Doctor? = nil;
     var doctors = ["Branford Pediatrics", "Dr. Parker", "Dr. Kim", "Dr. Love"];
     
     // UIDatePicker for DOB
@@ -111,16 +112,10 @@ class KidInfoViewController: UIViewController, UIImagePickerControllerDelegate, 
             }
             
             // check if kid has allergies
-            if((kid!.allergies?.count)! > 0){
-                allergyTableView.isHidden = false;
-                checkAllergyTableView();
-            }
+            checkAllergyTableView();
             
             // check if to display doctors count
-            if(doctors.count > 3){
-                lblDoctorCount.isHidden = false;
-                lblDoctorCount.text = "\(doctors.count) doctors";
-            }
+            checkDoctorTableView();
         }
     }
     
@@ -136,10 +131,12 @@ class KidInfoViewController: UIViewController, UIImagePickerControllerDelegate, 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         // check for allergy table view
         if(tableView.isEqual(allergyTableView)){
-            selectedAllergy = (kid!.allergies!.allObjects as! [Allergy])[indexPath.row] as Allergy;
+            selectedAllergy = (kid!.allergies!.array as! [Allergy])[indexPath.row] as Allergy;
             performSegue(withIdentifier: "allergySegue", sender: nil);
         } else if(tableView.isEqual(doctorTableView)) {
-            print("doctor");
+            selectedDoctor = (kid!.doctors!.array as! [Doctor])[indexPath.row] as Doctor;
+            performSegue(withIdentifier: "doctorSegue", sender: nil);
+            
         }
         
         // deselect selected row
@@ -152,6 +149,7 @@ class KidInfoViewController: UIViewController, UIImagePickerControllerDelegate, 
             rowCount = (kid!.allergies?.count)!;
         }else if(tableView.isEqual(doctorTableView)) {
             rowCount = doctors.count;
+            rowCount = (kid!.doctors?.count)!;
         }
         
         return rowCount;
@@ -160,7 +158,8 @@ class KidInfoViewController: UIViewController, UIImagePickerControllerDelegate, 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = UITableViewCell();
         if(tableView.isEqual(allergyTableView)){
-            let allergy: Allergy = (kid!.allergies!.allObjects as! [Allergy])[indexPath.row] as Allergy;
+            let allergy: Allergy = (kid!.allergies!.array as! [Allergy])[indexPath.row] as Allergy;
+            
             cell.textLabel?.text = allergy.type;
             
             var image: UIImage = UIImage();
@@ -172,7 +171,8 @@ class KidInfoViewController: UIViewController, UIImagePickerControllerDelegate, 
             
             cell.imageView?.image = image;
         }else if(tableView.isEqual(doctorTableView)) {
-            cell.textLabel?.text = doctors[indexPath.row];
+            let doctor: Doctor = (kid!.doctors!.array as! [Doctor])[indexPath.row] as Doctor;
+            cell.textLabel?.text = doctor.name;
         }
         
         return cell;
@@ -180,16 +180,32 @@ class KidInfoViewController: UIViewController, UIImagePickerControllerDelegate, 
     
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
         if(editingStyle == .delete){
-            let allergy = (kid!.allergies?.allObjects as! [Allergy])[indexPath.row] as Allergy;
-            
-            let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext;
-            context.delete(allergy);
-            (UIApplication.shared.delegate as! AppDelegate).saveContext();
-            
-            allergyTableView.reloadData();
-            
-            // check if kid has allergies
-            checkAllergyTableView();
+            // delete row from allergy table
+            if(tableView.isEqual(allergyTableView)){
+                let allergy = (kid!.allergies!.array as! [Allergy])[indexPath.row] as Allergy;
+                
+                let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext;
+                context.delete(allergy);
+                (UIApplication.shared.delegate as! AppDelegate).saveContext();
+                
+                allergyTableView.reloadData();
+                
+                // check if kid has allergies
+                checkAllergyTableView();
+            }
+                // delete row from doctor table
+            else if(tableView.isEqual(doctorTableView)){
+                let doctor = (kid!.doctors!.array as! [Doctor])[indexPath.row] as Doctor;
+                
+                let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext;
+                context.delete(doctor);
+                (UIApplication.shared.delegate as! AppDelegate).saveContext();
+                
+                doctorTableView.reloadData();
+                
+                // check if kid has allergies
+                checkDoctorTableView();
+            }
         }
     }
     
@@ -198,6 +214,9 @@ class KidInfoViewController: UIViewController, UIImagePickerControllerDelegate, 
         
         // check count of allergies
         checkAllergyTableView();
+        
+        // check count of doctors
+        checkDoctorTableView();
     }
     
     /************************/
@@ -240,6 +259,28 @@ class KidInfoViewController: UIViewController, UIImagePickerControllerDelegate, 
         } else {
             lblAllergyCount.isHidden = true;
             allergyTableView.isHidden = true;
+        }
+    }
+    
+    // check if doctor table should be shown
+    func checkDoctorTableView(){
+        let doctorCount = (kid!.doctors?.count)!;
+        
+        if(doctorCount > 0){
+            if(doctorTableView.isHidden){
+                doctorTableView.isHidden = false;
+            }
+            
+            // check if to display allergies count
+            if(doctorCount > 3){
+                lblDoctorCount.isHidden = false;
+                lblDoctorCount.text = "\(doctorCount) doctors";
+            } else {
+                lblDoctorCount.isHidden = true;
+            }
+        } else {
+            lblDoctorCount.isHidden = true;
+            doctorTableView.isHidden = true;
         }
     }
     
@@ -337,6 +378,10 @@ class KidInfoViewController: UIViewController, UIImagePickerControllerDelegate, 
             nextVC.kid = kid;
             nextVC.allergy = selectedAllergy;
             
+        } else if(segue.identifier == "doctorSegue"){
+            let nextVC: DoctorViewController = segue.destination as! DoctorViewController;
+            nextVC.kid = kid;
+            nextVC.doctor = selectedDoctor;
         }
     }
     
@@ -355,7 +400,11 @@ class KidInfoViewController: UIViewController, UIImagePickerControllerDelegate, 
     @IBAction func addAllergyTapped(_ sender: Any) {
         // reset selectedAllergy
         selectedAllergy = nil;
-        performSegue(withIdentifier: "allergySegue", sender: nil);
+    }
+    
+    // Add doctor
+    @IBAction func addDoctorTapped(_ sender: Any) {
+        selectedDoctor = nil;
     }
     
     // Save kid

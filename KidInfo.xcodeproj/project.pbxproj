@@ -19,6 +19,7 @@
 		954CE6851EE0AB6F00C1160F /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 954CE6831EE0AB6F00C1160F /* LaunchScreen.storyboard */; };
 		954CE6911EE0EEB700C1160F /* KidInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 954CE6901EE0EEB700C1160F /* KidInfoViewController.swift */; };
 		954CE6931EE1E4FD00C1160F /* KidTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 954CE6921EE1E4FD00C1160F /* KidTableViewCell.swift */; };
+		959C6B1D1EEAE38D00C32353 /* DoctorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 959C6B1C1EEAE38D00C32353 /* DoctorViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -36,6 +37,7 @@
 		954CE6861EE0AB6F00C1160F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		954CE6901EE0EEB700C1160F /* KidInfoViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KidInfoViewController.swift; sourceTree = "<group>"; };
 		954CE6921EE1E4FD00C1160F /* KidTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KidTableViewCell.swift; sourceTree = "<group>"; };
+		959C6B1C1EEAE38D00C32353 /* DoctorViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DoctorViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -102,6 +104,7 @@
 			isa = PBXGroup;
 			children = (
 				9537B1C71EE878DF00CF5E1B /* AllergyViewController.swift */,
+				959C6B1C1EEAE38D00C32353 /* DoctorViewController.swift */,
 				954CE6921EE1E4FD00C1160F /* KidTableViewCell.swift */,
 				954CE6901EE0EEB700C1160F /* KidInfoViewController.swift */,
 				954CE6791EE0AB6F00C1160F /* KidsViewController.swift */,
@@ -187,6 +190,7 @@
 			files = (
 				954CE67A1EE0AB6F00C1160F /* KidsViewController.swift in Sources */,
 				9537B1C81EE878DF00CF5E1B /* AllergyViewController.swift in Sources */,
+				959C6B1D1EEAE38D00C32353 /* DoctorViewController.swift in Sources */,
 				954CE6911EE0EEB700C1160F /* KidInfoViewController.swift in Sources */,
 				954CE6781EE0AB6F00C1160F /* AppDelegate.swift in Sources */,
 				954CE6931EE1E4FD00C1160F /* KidTableViewCell.swift in Sources */,
