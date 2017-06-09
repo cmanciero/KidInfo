@@ -113,13 +113,7 @@ class KidInfoViewController: UIViewController, UIImagePickerControllerDelegate, 
             // check if kid has allergies
             if((kid!.allergies?.count)! > 0){
                 allergyTableView.isHidden = false;
-                let allergyCount = (kid!.allergies?.count)!;
-                
-                // check if to display allergies count
-                if(allergyCount > 3){
-                    lblAllergyCount.isHidden = false;
-                    lblAllergyCount.text = "\(allergyCount) allergies";
-                }
+                checkAllergyTableView();
             }
             
             // check if to display doctors count
@@ -134,6 +128,10 @@ class KidInfoViewController: UIViewController, UIImagePickerControllerDelegate, 
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
+    
+    /************************/
+    // tableView methods
+    /************************/
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         // check for allergy table view
@@ -188,9 +186,10 @@ class KidInfoViewController: UIViewController, UIImagePickerControllerDelegate, 
             context.delete(allergy);
             (UIApplication.shared.delegate as! AppDelegate).saveContext();
             
-            do{
-                allergyTableView.reloadData();
-            } catch {}
+            allergyTableView.reloadData();
+            
+            // check if kid has allergies
+            checkAllergyTableView();
         }
     }
     
@@ -198,6 +197,7 @@ class KidInfoViewController: UIViewController, UIImagePickerControllerDelegate, 
         allergyTableView.reloadData();
         
         // check count of allergies
+        checkAllergyTableView();
     }
     
     /************************/
@@ -219,6 +219,28 @@ class KidInfoViewController: UIViewController, UIImagePickerControllerDelegate, 
         
         activityViewConstraints = [topConstraint, bottomConstraint, leftConstraint, rightConstraint];
         NSLayoutConstraint.activate(activityViewConstraints);
+    }
+    
+    // check if allergy table should be shown
+    func checkAllergyTableView(){
+        let allergyCount = (kid!.allergies?.count)!;
+        
+        if(allergyCount > 0){
+            if(allergyTableView.isHidden){
+                allergyTableView.isHidden = false;
+            }
+            
+            // check if to display allergies count
+            if(allergyCount > 3){
+                lblAllergyCount.isHidden = false;
+                lblAllergyCount.text = "\(allergyCount) allergies";
+            } else {
+                lblAllergyCount.isHidden = true;
+            }
+        } else {
+            lblAllergyCount.isHidden = true;
+            allergyTableView.isHidden = true;
+        }
     }
     
     // create date picker for DOB
@@ -331,6 +353,8 @@ class KidInfoViewController: UIViewController, UIImagePickerControllerDelegate, 
     
     // Add allergy
     @IBAction func addAllergyTapped(_ sender: Any) {
+        // reset selectedAllergy
+        selectedAllergy = nil;
         performSegue(withIdentifier: "allergySegue", sender: nil);
     }
     

@@ -2,6 +2,7 @@
 <model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="12141" systemVersion="16F73" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
     <entity name="Allergy" representedClassName="Allergy" syncable="YES" codeGenerationType="class">
         <attribute name="level" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="notes" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="type" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="kid" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Kid" inverseName="allergies" inverseEntity="Kid" syncable="YES"/>
     </entity>
@@ -14,7 +15,7 @@
         <relationship name="allergies" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Allergy" inverseName="kid" inverseEntity="Allergy" syncable="YES"/>
     </entity>
     <elements>
+        <element name="Allergy" positionX="-63" positionY="18" width="128" height="105"/>
         <element name="Kid" positionX="-288" positionY="18" width="128" height="133"/>
-        <element name="Allergy" positionX="-63" positionY="18" width="128" height="88"/>
     </elements>
 </model>

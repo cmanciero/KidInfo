@@ -13,17 +13,27 @@ class AllergyViewController: UIViewController {
     @IBOutlet weak var txtAllergyName: UITextField!
     @IBOutlet weak var segAllergyLevel: UISegmentedControl!
     @IBOutlet weak var titleBar: UINavigationItem!
+    @IBOutlet weak var txtNotes: UITextView!
+    @IBOutlet weak var btnDone: UIBarButtonItem!
     
     var kid: Kid? = nil;
     var allergy: Allergy? = nil;
     
-    
     override func viewDidLoad() {
-        super.viewDidLoad()
+        super.viewDidLoad();
+        
+        btnDone.isEnabled = false;
+        
+        // style notes section
+        txtNotes.layer.borderWidth = 1;
+        txtNotes.layer.borderColor = UIColor.init(red: 230/255, green: 230/255, blue: 230/255, alpha: 1).cgColor;
+        txtNotes.layer.cornerRadius = 5;
         
         if(allergy != nil){
+            btnDone.isEnabled = true;
             titleBar.title = "Update Allergy";
             txtAllergyName.text = allergy?.type;
+            txtNotes.text = allergy?.notes;
             
             // loop through segments to find which one to select
             let segments = segAllergyLevel.numberOfSegments;
@@ -45,6 +55,14 @@ class AllergyViewController: UIViewController {
     @IBAction func cancelTapped(_ sender: Any) {
         self.dismiss(animated: true, completion: nil);
     }
+    @IBAction func changingAllergyName(_ sender: Any) {
+        // check to see if allergy name exists
+        if(txtAllergyName.text!.isEmpty){
+            btnDone.isEnabled = false;
+        } else {
+            btnDone.isEnabled = true;
+        }
+    }
     
     // Done adding/updating allergy
     @IBAction func doneTapped(_ sender: Any) {
@@ -58,6 +76,7 @@ class AllergyViewController: UIViewController {
         
         allergy!.type = txtAllergyName.text;
         allergy!.level = segAllergyLevel!.titleForSegment(at: segAllergyLevel.selectedSegmentIndex)!;
+        allergy!.notes = txtNotes.text;
         allergy!.kid = kid;
         
         appDelegate.saveContext();
