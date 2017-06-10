@@ -24,6 +24,7 @@ class KidInfoViewController: UIViewController, UIImagePickerControllerDelegate, 
     @IBOutlet weak var lblAllergyCount: UILabel!
     @IBOutlet weak var lblDoctorCount: UILabel!
     @IBOutlet weak var doctorTableView: UITableView!
+    @IBOutlet weak var btnSave: UIBarButtonItem!
     
     var kid: Kid? = nil;
     var imagePicker = UIImagePickerController();
@@ -33,7 +34,6 @@ class KidInfoViewController: UIViewController, UIImagePickerControllerDelegate, 
     
     var selectedAllergy: Allergy? = nil;
     var selectedDoctor: Doctor? = nil;
-    var doctors = ["Branford Pediatrics", "Dr. Parker", "Dr. Kim", "Dr. Love"];
     
     // UIDatePicker for DOB
     let dobPicker = UIDatePicker();
@@ -69,8 +69,13 @@ class KidInfoViewController: UIViewController, UIImagePickerControllerDelegate, 
         // create date picker for DOB
         createDatePicker();
         
+        // disable save button
+        btnSave.isEnabled = false;
+        
         // check if kid exist
         if(kid != nil){
+            // disable save button
+            btnSave.isEnabled = true;
             txtName.text = kid!.name;
             titleName.title = txtName.text;
             
@@ -146,10 +151,13 @@ class KidInfoViewController: UIViewController, UIImagePickerControllerDelegate, 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         var rowCount = 0;
         if(tableView.isEqual(allergyTableView)){
-            rowCount = (kid?.allergies?.count)!;
+            if(kid?.allergies != nil){
+                rowCount = (kid!.allergies!.count);
+            }
         }else if(tableView.isEqual(doctorTableView)) {
-            rowCount = doctors.count;
-            rowCount = (kid?.doctors?.count)!;
+            if(kid?.doctors != nil){
+                rowCount = (kid!.doctors!.count);
+            }
         }
         
         return rowCount;
@@ -246,7 +254,11 @@ class KidInfoViewController: UIViewController, UIImagePickerControllerDelegate, 
     
     // check if allergy table should be shown
     func checkAllergyTableView(){
-        let allergyCount = (kid!.allergies?.count)!;
+        var allergyCount = 0;
+        
+        if(kid?.allergies != nil){
+            allergyCount = (kid!.allergies?.count)!;
+        }
         
         if(allergyCount > 0){
             if(allergyTableView.isHidden){
@@ -268,7 +280,10 @@ class KidInfoViewController: UIViewController, UIImagePickerControllerDelegate, 
     
     // check if doctor table should be shown
     func checkDoctorTableView(){
-        let doctorCount = (kid!.doctors?.count)!;
+        var doctorCount = 0;
+        if(kid?.doctors != nil){
+            doctorCount = (kid!.doctors?.count)!;
+        }
         
         if(doctorCount > 0){
             if(doctorTableView.isHidden){
@@ -394,6 +409,14 @@ class KidInfoViewController: UIViewController, UIImagePickerControllerDelegate, 
     /************************/
     // Actions
     /************************/
+    // check to see if a kid name exists
+    @IBAction func checkForName(_ sender: Any) {
+        if(txtName.text!.isEmpty){
+            btnSave.isEnabled = false;
+        } else {
+            btnSave.isEnabled = true;
+        }
+    }
     
     // update title on name change
     @IBAction func nameUpdating(_ sender: Any) {

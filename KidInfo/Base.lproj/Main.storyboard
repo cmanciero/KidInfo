@@ -30,7 +30,7 @@
                                         <rect key="frame" x="0.0" y="28" width="375" height="83"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="LOr-Z0-rYe" id="OE1-Z2-rcn">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="82.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="83"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="VUf-X0-Foc">
@@ -133,6 +133,7 @@
                                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                 <textInputTraits key="textInputTraits"/>
                                                 <connections>
+                                                    <action selector="checkForName:" destination="fzg-PN-b9J" eventType="editingChanged" id="uNP-b2-Kqr"/>
                                                     <action selector="nameUpdating:" destination="fzg-PN-b9J" eventType="editingChanged" id="cvW-cu-k85"/>
                                                 </connections>
                                             </textField>
@@ -394,6 +395,7 @@
                         <outlet property="allergyTableView" destination="TQu-kw-IEO" id="7lI-Qh-kd8"/>
                         <outlet property="btnAvatar" destination="Yia-5L-Ppr" id="VCb-TG-lTS"/>
                         <outlet property="btnDelete" destination="zjn-Bk-uKM" id="nkL-ka-cIr"/>
+                        <outlet property="btnSave" destination="qoX-09-cne" id="peu-P7-pJB"/>
                         <outlet property="doctorTableView" destination="Zuj-Xe-tlx" id="jo6-JD-p8O"/>
                         <outlet property="lblAllergyCount" destination="jQD-Mp-SQM" id="HIX-Bz-Y9O"/>
                         <outlet property="lblDoctorCount" destination="YIF-f6-mvE" id="FqP-dG-qKa"/>
