@@ -32,13 +32,13 @@ class AllergyViewController: UIViewController {
         if(allergy != nil){
             btnDone.isEnabled = true;
             titleBar.title = "Update Allergy";
-            txtAllergyName.text = allergy?.type;
-            txtNotes.text = allergy?.notes;
+            txtAllergyName.text = allergy!.type;
+            txtNotes.text = allergy!.notes;
             
             // loop through segments to find which one to select
             let segments = segAllergyLevel.numberOfSegments;
             for i in 0..<segments{
-                if(segAllergyLevel.titleForSegment(at: i) == allergy?.level){
+                if(segAllergyLevel.titleForSegment(at: i) == allergy!.level){
                     segAllergyLevel.selectedSegmentIndex = i;
                     break;
                 }

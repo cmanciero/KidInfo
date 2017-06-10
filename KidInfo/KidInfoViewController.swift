@@ -146,10 +146,10 @@ class KidInfoViewController: UIViewController, UIImagePickerControllerDelegate, 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         var rowCount = 0;
         if(tableView.isEqual(allergyTableView)){
-            rowCount = (kid!.allergies?.count)!;
+            rowCount = (kid?.allergies?.count)!;
         }else if(tableView.isEqual(doctorTableView)) {
             rowCount = doctors.count;
-            rowCount = (kid!.doctors?.count)!;
+            rowCount = (kid?.doctors?.count)!;
         }
         
         return rowCount;
@@ -210,10 +210,14 @@ class KidInfoViewController: UIViewController, UIImagePickerControllerDelegate, 
     }
     
     override func viewDidAppear(_ animated: Bool) {
+        // reload the allergies table view
         allergyTableView.reloadData();
         
         // check count of allergies
         checkAllergyTableView();
+        
+        // reload doctor's table view
+        doctorTableView.reloadData();
         
         // check count of doctors
         checkDoctorTableView();

@@ -8,10 +8,14 @@
     </entity>
     <entity name="Doctor" representedClassName="Doctor" syncable="YES" codeGenerationType="class">
         <attribute name="address" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="address2" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="city" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="email" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="notes" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="phoneNumber" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="postalCode" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="state" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="kid" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Kid" inverseName="doctors" inverseEntity="Kid" syncable="YES"/>
     </entity>
     <entity name="Kid" representedClassName="Kid" syncable="YES" codeGenerationType="class">
@@ -25,7 +29,7 @@
     </entity>
     <elements>
         <element name="Allergy" positionX="-63" positionY="18" width="128" height="105"/>
+        <element name="Doctor" positionX="-171" positionY="72" width="128" height="195"/>
         <element name="Kid" positionX="-288" positionY="18" width="128" height="150"/>
-        <element name="Doctor" positionX="-171" positionY="72" width="128" height="135"/>
     </elements>
 </model>

@@ -14,6 +14,10 @@ class DoctorViewController: UIViewController {
     @IBOutlet weak var titleBar: UINavigationItem!
     @IBOutlet weak var txtDoctorName: UITextField!
     @IBOutlet weak var txtAddress: UITextField!
+    @IBOutlet weak var txtAddress2: UITextField!
+    @IBOutlet weak var txtCity: UITextField!
+    @IBOutlet weak var txtState: UITextField!
+    @IBOutlet weak var txtPostalCode: UITextField!
     @IBOutlet weak var txtPhoneNumber: UITextField!
     @IBOutlet weak var txtEmail: UITextField!
     @IBOutlet weak var txtNotes: UITextView!
@@ -29,6 +33,16 @@ class DoctorViewController: UIViewController {
         // Do any additional setup after loading the view.
         if(doctor != nil){
             titleBar.title = "Update Doctor";
+            
+            txtDoctorName.text = doctor!.name;
+            txtAddress.text = doctor!.address;
+            txtAddress2.text = doctor!.address2;
+            txtCity.text = doctor!.city;
+            txtState.text = doctor!.state;
+            txtPostalCode.text = String(doctor!.postalCode);
+            txtEmail.text = doctor!.email;
+            txtPhoneNumber.text = doctor!.phoneNumber;
+            txtNotes.text = doctor!.notes;
         }
     }
 
@@ -37,6 +51,30 @@ class DoctorViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
+    @IBAction func saveTapped(_ sender: Any) {
+        let appDelegate = (UIApplication.shared.delegate as! AppDelegate);
+        
+        // if allergy is not available
+        if(doctor == nil){
+            let context = appDelegate.persistentContainer.viewContext;
+            doctor = Doctor(context: context);
+        }
+        
+        doctor!.name = txtDoctorName.text;
+        doctor!.address = txtAddress.text;
+        doctor!.address2 = txtAddress2.text;
+        doctor!.city = txtCity.text;
+        doctor!.state = txtState.text;
+        doctor!.postalCode = Int16(txtPostalCode.text!)!;
+        doctor!.email = txtEmail.text;
+        doctor!.phoneNumber = txtPhoneNumber.text;
+        doctor!.notes = txtNotes.text;
+        doctor!.kid = kid;
+        
+        appDelegate.saveContext();
+        
+        navigationController?.popViewController(animated: true);
+    }
 
     /*
     // MARK: - Navigation
