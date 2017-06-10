@@ -39,7 +39,7 @@ class DoctorViewController: UIViewController {
             txtAddress2.text = doctor!.address2;
             txtCity.text = doctor!.city;
             txtState.text = doctor!.state;
-            txtPostalCode.text = String(doctor!.postalCode);
+            txtPostalCode.text = doctor!.postalCode;
             txtEmail.text = doctor!.email;
             txtPhoneNumber.text = doctor!.phoneNumber;
             txtNotes.text = doctor!.notes;
@@ -65,7 +65,7 @@ class DoctorViewController: UIViewController {
         doctor!.address2 = txtAddress2.text;
         doctor!.city = txtCity.text;
         doctor!.state = txtState.text;
-        doctor!.postalCode = Int16(txtPostalCode.text!)!;
+        doctor!.postalCode = txtPostalCode.text;
         doctor!.email = txtEmail.text;
         doctor!.phoneNumber = txtPhoneNumber.text;
         doctor!.notes = txtNotes.text;
@@ -76,6 +76,22 @@ class DoctorViewController: UIViewController {
         navigationController?.popViewController(animated: true);
     }
 
+    @IBAction func phoneNumberFormat(_ sender: Any) {
+        if(!txtPhoneNumber.text!.isEmpty){
+            let numberCount = txtPhoneNumber.text!.characters.count;
+            // add () around number
+            if(numberCount == 3){
+                txtPhoneNumber.text = "(\(txtPhoneNumber.text!))";
+                
+                txtPhoneNumber.text!.insert(" ", at: txtPhoneNumber.text!.index(after: txtPhoneNumber.text!.index(txtPhoneNumber.text!.startIndex, offsetBy: 4)));
+            }
+            
+            // add space between ) and number
+            if(numberCount == 9){
+                txtPhoneNumber.text = "\(txtPhoneNumber.text!)-";
+            }
+        }
+    }
     /*
     // MARK: - Navigation
 
