@@ -8,7 +8,11 @@
 
 import UIKit
 
-class KidInfoViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITableViewDelegate, UITableViewDataSource{
+class KidInfoViewController: UIViewController,
+    UIImagePickerControllerDelegate,
+    UINavigationControllerDelegate,
+    UITableViewDelegate, UITableViewDataSource,
+UIPickerViewDelegate, UIPickerViewDataSource{
     
     @IBOutlet weak var txtName: UITextField!
     @IBOutlet weak var txtWeightLbs: UITextField!
@@ -25,6 +29,7 @@ class KidInfoViewController: UIViewController, UIImagePickerControllerDelegate, 
     @IBOutlet weak var lblDoctorCount: UILabel!
     @IBOutlet weak var doctorTableView: UITableView!
     @IBOutlet weak var btnSave: UIBarButtonItem!
+    @IBOutlet weak var txtBloodType: UITextField!
     
     var kid: Kid? = nil;
     var imagePicker = UIImagePickerController();
@@ -34,6 +39,9 @@ class KidInfoViewController: UIViewController, UIImagePickerControllerDelegate, 
     
     var selectedAllergy: Allergy? = nil;
     var selectedDoctor: Doctor? = nil;
+    
+    var aBloodTypes = ["A Positive", "B Positive", "A/B Positive", "O Positive", "A Negative", "B Negative", "A/B Negative", "O Negative"];
+    var bloodTypePicker = UIPickerView();
     
     // UIDatePicker for DOB
     let dobPicker = UIDatePicker();
@@ -68,6 +76,11 @@ class KidInfoViewController: UIViewController, UIImagePickerControllerDelegate, 
         
         // create date picker for DOB
         createDatePicker();
+        
+        // create blood type picker
+        bloodTypePicker.dataSource = self;
+        bloodTypePicker.delegate = self;
+        createBloodTypePicker();
         
         // disable save button
         btnSave.isEnabled = false;
@@ -114,6 +127,11 @@ class KidInfoViewController: UIViewController, UIImagePickerControllerDelegate, 
                 
                 // set date picker to date of birth
                 dobPicker.setDate(kid!.dob! as Date, animated: false);
+            }
+            
+            // set blood type
+            if(kid!.bloodType != nil){
+                txtBloodType.text = kid!.bloodType;
             }
             
             // check if kid has allergies
@@ -232,6 +250,27 @@ class KidInfoViewController: UIViewController, UIImagePickerControllerDelegate, 
     }
     
     /************************/
+    // PickerView methods
+    /************************/
+    func numberOfComponents(in pickerView: UIPickerView) -> Int {
+        return 1;
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
+        return aBloodTypes.count
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
+        return aBloodTypes[row];
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
+        if(pickerView == bloodTypePicker){
+            print(aBloodTypes[row]);
+        }
+    }
+    
+    /************************/
     // Func
     /************************/
     
@@ -336,6 +375,32 @@ class KidInfoViewController: UIViewController, UIImagePickerControllerDelegate, 
         dateFormatter.timeStyle = .none;
         
         txtDOB.text = dateFormatter.string(from: dobPicker.date);
+        closePicker();
+    }
+    
+    // create blood type picker
+    func createBloodTypePicker(){
+        let toolbar = UIToolbar();
+        toolbar.sizeToFit();
+        
+        // done button
+        let doneButton = UIBarButtonItem(barButtonSystemItem: .done, target: nil, action: #selector(bloodTypeDonePressed));
+        
+        let flex = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil);
+        
+        // cancel button
+        let cancelButton = UIBarButtonItem(barButtonSystemItem: .cancel, target: nil, action: #selector(closePicker));
+        
+        // add buttons to button bar
+        toolbar.setItems([cancelButton, flex, doneButton], animated: true);
+        
+        txtBloodType.inputAccessoryView = toolbar;
+        txtBloodType.inputView = bloodTypePicker;
+    }
+    
+    // Done pressed for Blood Type
+    func bloodTypeDonePressed(){
+        txtBloodType.text = aBloodTypes[bloodTypePicker.selectedRow(inComponent: 0)];
         closePicker();
     }
     
@@ -454,6 +519,9 @@ class KidInfoViewController: UIViewController, UIImagePickerControllerDelegate, 
             
             // save DOB
             kid!.dob = dobPicker.date as NSDate;
+            
+            // save blood type
+            kid!.bloodType = txtBloodType.text;
         } else {
             let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext;
             
@@ -480,6 +548,11 @@ class KidInfoViewController: UIViewController, UIImagePickerControllerDelegate, 
             // save DOB
             if(txtDOB.text != nil && txtDOB.text != ""){
                 kid.dob = dobPicker.date as NSDate;
+            }
+            
+            // save blood type
+            if(txtBloodType.text != nil && txtBloodType.text != ""){
+                kid.bloodType = txtBloodType.text;
             }
         }
         

@@ -20,6 +20,7 @@
     </entity>
     <entity name="Kid" representedClassName="Kid" syncable="YES" codeGenerationType="class">
         <attribute name="avatar" optional="YES" attributeType="Binary" allowsExternalBinaryDataStorage="YES" syncable="YES"/>
+        <attribute name="bloodType" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="dob" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
         <attribute name="height" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
@@ -30,6 +31,6 @@
     <elements>
         <element name="Allergy" positionX="-63" positionY="18" width="128" height="105"/>
         <element name="Doctor" positionX="-171" positionY="72" width="128" height="195"/>
-        <element name="Kid" positionX="-288" positionY="18" width="128" height="150"/>
+        <element name="Kid" positionX="-288" positionY="18" width="128" height="165"/>
     </elements>
 </model>
