@@ -458,7 +458,7 @@
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="VEm-ij-K6D">
                                 <rect key="frame" x="0.0" y="64" width="375" height="1000"/>
                                 <subviews>
-                                    <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="NDw-ar-D3K" userLabel="DoctorView">
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="NDw-ar-D3K" userLabel="DoctorView">
                                         <rect key="frame" x="0.0" y="-67" width="375" height="1000"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cYp-ek-jFu">
@@ -601,8 +601,8 @@
                                 <constraints>
                                     <constraint firstAttribute="bottom" secondItem="NDw-ar-D3K" secondAttribute="bottom" constant="3" id="62h-Mq-qfp"/>
                                     <constraint firstItem="NDw-ar-D3K" firstAttribute="centerX" secondItem="VEm-ij-K6D" secondAttribute="centerX" id="F19-Ef-Jqv"/>
+                                    <constraint firstItem="NDw-ar-D3K" firstAttribute="top" secondItem="VEm-ij-K6D" secondAttribute="top" constant="-67" id="O8O-iI-HJQ"/>
                                     <constraint firstItem="NDw-ar-D3K" firstAttribute="leading" secondItem="VEm-ij-K6D" secondAttribute="leading" id="Q9t-RR-Stq"/>
-                                    <constraint firstItem="NDw-ar-D3K" firstAttribute="top" secondItem="VEm-ij-K6D" secondAttribute="top" constant="-3" id="fOI-4x-gg6"/>
                                     <constraint firstAttribute="trailing" secondItem="NDw-ar-D3K" secondAttribute="trailing" id="jRt-Iy-2Jy"/>
                                 </constraints>
                             </scrollView>
