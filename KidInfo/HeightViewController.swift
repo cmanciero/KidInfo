@@ -128,12 +128,16 @@ class HeightViewController: UIViewController, UITableViewDataSource, UITableView
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = UITableViewCell();
+        let cell = tableView.dequeueReusableCell(withIdentifier: "heightTableViewCell", for: indexPath) as! HeightTableViewCell;
         let ht: Height = arrHeights[indexPath.row];
         
-        cell.textLabel?.text = String(ht.height);
-        print(dateFormatter.string(from: ht.date! as Date));
-        cell.detailTextLabel?.text = dateFormatter.string(from: ht.date! as Date);
+        // set height feet
+        let feet = String(Int(ht.height / 12.0));
+        // set height inches
+        let inches = String(Int(ht.height.truncatingRemainder(dividingBy: 12.0)));
+        
+        cell.txtHeight?.text = "\(feet) ft \(inches) inches";
+        cell.txtDate?.text = dateFormatter.string(from: ht.date! as Date);
         
         return cell;
     }
@@ -141,12 +145,13 @@ class HeightViewController: UIViewController, UITableViewDataSource, UITableView
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
         if(editingStyle == .delete){
             // delete row from allergy table
-            let ht = (kid!.heights!.array as! [Height])[indexPath.row] as Height;
+            let ht = arrHeights[indexPath.row];
             
             let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext;
             context.delete(ht);
             (UIApplication.shared.delegate as! AppDelegate).saveContext();
             
+            arrHeights.remove(at: indexPath.row);
             heightTableView.reloadData();
         }
     }

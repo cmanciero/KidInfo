@@ -22,6 +22,8 @@
 		959C6B1D1EEAE38D00C32353 /* DoctorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 959C6B1C1EEAE38D00C32353 /* DoctorViewController.swift */; };
 		95CA48DE1EF0063D00401E07 /* WeightViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95CA48DD1EF0063D00401E07 /* WeightViewController.swift */; };
 		95CA48E01EF0078900401E07 /* HeightViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95CA48DF1EF0078900401E07 /* HeightViewController.swift */; };
+		95CA48E21EF062B400401E07 /* WeightTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95CA48E11EF062B400401E07 /* WeightTableViewCell.swift */; };
+		95CA48E41EF063B100401E07 /* HeightTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95CA48E31EF063B100401E07 /* HeightTableViewCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -42,6 +44,8 @@
 		959C6B1C1EEAE38D00C32353 /* DoctorViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DoctorViewController.swift; sourceTree = "<group>"; };
 		95CA48DD1EF0063D00401E07 /* WeightViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WeightViewController.swift; sourceTree = "<group>"; };
 		95CA48DF1EF0078900401E07 /* HeightViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HeightViewController.swift; sourceTree = "<group>"; };
+		95CA48E11EF062B400401E07 /* WeightTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WeightTableViewCell.swift; sourceTree = "<group>"; };
+		95CA48E31EF063B100401E07 /* HeightTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HeightTableViewCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -110,10 +114,12 @@
 				9537B1C71EE878DF00CF5E1B /* AllergyViewController.swift */,
 				959C6B1C1EEAE38D00C32353 /* DoctorViewController.swift */,
 				95CA48DF1EF0078900401E07 /* HeightViewController.swift */,
+				95CA48E31EF063B100401E07 /* HeightTableViewCell.swift */,
 				954CE6921EE1E4FD00C1160F /* KidTableViewCell.swift */,
 				954CE6901EE0EEB700C1160F /* KidInfoViewController.swift */,
 				954CE6791EE0AB6F00C1160F /* KidsViewController.swift */,
 				95CA48DD1EF0063D00401E07 /* WeightViewController.swift */,
+				95CA48E11EF062B400401E07 /* WeightTableViewCell.swift */,
 			);
 			name = ViewControllers;
 			sourceTree = "<group>";
@@ -201,8 +207,10 @@
 				954CE6911EE0EEB700C1160F /* KidInfoViewController.swift in Sources */,
 				95CA48DE1EF0063D00401E07 /* WeightViewController.swift in Sources */,
 				954CE6781EE0AB6F00C1160F /* AppDelegate.swift in Sources */,
+				95CA48E41EF063B100401E07 /* HeightTableViewCell.swift in Sources */,
 				954CE6931EE1E4FD00C1160F /* KidTableViewCell.swift in Sources */,
 				954CE6801EE0AB6F00C1160F /* KidInfo.xcdatamodeld in Sources */,
+				95CA48E21EF062B400401E07 /* WeightTableViewCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

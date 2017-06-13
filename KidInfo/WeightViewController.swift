@@ -135,12 +135,16 @@ class WeightViewController: UIViewController, UITableViewDelegate, UITableViewDa
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = UITableViewCell();
+        let cell = tableView.dequeueReusableCell(withIdentifier: "weightTableViewCell", for: indexPath) as! WeightTableViewCell;
         let wt: Weight = arrWeights[indexPath.row];
         
-        cell.textLabel?.text = String(wt.weight);
-        print(dateFormatter.string(from: wt.date! as Date));
-        cell.detailTextLabel?.text = dateFormatter.string(from: wt.date! as Date);
+        // set pounds
+        let pounds = String(Int(wt.weight));
+        // set ounces
+        let ounces = String(wt.weight).components(separatedBy: ".")[1];
+        
+        cell.txtWeight?.text = "\(pounds) lbs \(ounces) oz";
+        cell.txtDate?.text = dateFormatter.string(from: wt.date! as Date);
         
         return cell;
     }
@@ -148,11 +152,13 @@ class WeightViewController: UIViewController, UITableViewDelegate, UITableViewDa
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
         if(editingStyle == .delete){
             // delete row from allergy table
-            let wt = (kid!.weights!.array as! [Weight])[indexPath.row] as Weight;
+            let wt = arrWeights[indexPath.row];
             
             let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext;
             context.delete(wt);
             (UIApplication.shared.delegate as! AppDelegate).saveContext();
+            
+            arrWeights.remove(at: indexPath.row);
             
             weightTableView.reloadData();
         }

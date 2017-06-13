@@ -25,11 +25,15 @@ UIPickerViewDelegate, UIPickerViewDataSource{
     @IBOutlet weak var titleName: UINavigationItem!
     @IBOutlet weak var mainView: UIView!
     @IBOutlet weak var allergyTableView: UITableView!
-    @IBOutlet weak var lblAllergyCount: UILabel!
-    @IBOutlet weak var lblDoctorCount: UILabel!
     @IBOutlet weak var doctorTableView: UITableView!
     @IBOutlet weak var btnSave: UIBarButtonItem!
     @IBOutlet weak var txtBloodType: UITextField!
+    @IBOutlet weak var lblAllergies: UILabel!
+    @IBOutlet weak var lblDoctors: UILabel!
+    @IBOutlet weak var lblHeightVal: UILabel!
+    @IBOutlet weak var lblWeightVal: UILabel!
+    @IBOutlet weak var lblAllergyCount: UILabel!
+    @IBOutlet weak var lblDoctorCount: UILabel!
     
     var kid: Kid? = nil;
     var imagePicker = UIImagePickerController();
@@ -101,15 +105,6 @@ UIPickerViewDelegate, UIPickerViewDataSource{
                 btnAvatar.setTitle("Update photo", for: .normal);
             }
             
-            // set height
-//            let height = kid!.height;
-//            if(height > 0){
-//                // set height feet
-//                txtHeightFt.text = String(Int(height / 12.0));
-//                // set height inces
-//                txtHeightInches.text = String(Int(height.truncatingRemainder(dividingBy: 12.0)));
-//            }
-            
             // set date of birth
             if(kid!.dob != nil){
                 let dateFormatter = DateFormatter();
@@ -124,6 +119,32 @@ UIPickerViewDelegate, UIPickerViewDataSource{
             // set blood type
             if(kid!.bloodType != nil){
                 txtBloodType.text = kid!.bloodType;
+            }
+            
+            // set weight
+            if((kid!.weights?.count)! > 0){
+                lblWeightVal.isHidden = false;
+                let latestKidWeight = kid!.weights?[0] as! Weight;
+                
+                // set pounds
+                let pounds = String(Int(latestKidWeight.weight));
+                // set ounces
+                let ounces = String(latestKidWeight.weight).components(separatedBy: ".")[1];
+                
+                lblWeightVal.text = "\(pounds) lbs \(ounces) oz";
+            }
+            
+            // set height
+            if((kid!.heights?.count)! > 0){
+                lblHeightVal.isHidden = false;
+                let latestKidHeight = kid!.heights?[0] as! Height;
+                
+                // set height feet
+                let feet = String(Int(latestKidHeight.height / 12.0));
+                // set height inches
+                let inches = String(Int(latestKidHeight.height.truncatingRemainder(dividingBy: 12.0)));
+                
+                lblHeightVal.text = "\(feet) ft \(inches) inches";
             }
             
             // check if kid has allergies
@@ -298,13 +319,9 @@ UIPickerViewDelegate, UIPickerViewDataSource{
             
             // check if to display allergies count
             if(allergyCount > 3){
-                lblAllergyCount.isHidden = false;
-                lblAllergyCount.text = "\(allergyCount) allergies";
-            } else {
-                lblAllergyCount.isHidden = true;
+                lblAllergyCount.text = "(\(allergyCount))";
             }
         } else {
-            lblAllergyCount.isHidden = true;
             allergyTableView.isHidden = true;
         }
     }
@@ -323,13 +340,9 @@ UIPickerViewDelegate, UIPickerViewDataSource{
             
             // check if to display allergies count
             if(doctorCount > 3){
-                lblDoctorCount.isHidden = false;
-                lblDoctorCount.text = "\(doctorCount) doctors";
-            } else {
-                lblDoctorCount.isHidden = true;
+                lblDoctorCount.text = "(\(doctorCount))";
             }
         } else {
-            lblDoctorCount.isHidden = true;
             doctorTableView.isHidden = true;
         }
     }
@@ -423,6 +436,12 @@ UIPickerViewDelegate, UIPickerViewDataSource{
             let nextVC: DoctorViewController = segue.destination as! DoctorViewController;
             nextVC.kid = kid;
             nextVC.doctor = selectedDoctor;
+        } else if(segue.identifier == "weightSegue"){
+            let nextVC: WeightViewController = segue.destination as! WeightViewController;
+            nextVC.kid = kid;
+        } else if(segue.identifier == "heightSegue"){
+            let nextVC: HeightViewController = segue.destination as! HeightViewController;
+            nextVC.kid = kid;
         }
     }
     
