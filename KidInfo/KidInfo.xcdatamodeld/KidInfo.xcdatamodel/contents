@@ -18,19 +18,31 @@
         <attribute name="state" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="kid" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Kid" inverseName="doctors" inverseEntity="Kid" syncable="YES"/>
     </entity>
+    <entity name="Height" representedClassName="Height" syncable="YES" codeGenerationType="class">
+        <attribute name="date" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
+        <attribute name="height" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES" syncable="YES"/>
+        <relationship name="kid" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Kid" inverseName="heights" inverseEntity="Kid" syncable="YES"/>
+    </entity>
     <entity name="Kid" representedClassName="Kid" syncable="YES" codeGenerationType="class">
         <attribute name="avatar" optional="YES" attributeType="Binary" allowsExternalBinaryDataStorage="YES" syncable="YES"/>
         <attribute name="bloodType" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="dob" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
-        <attribute name="height" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="weight" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES" syncable="YES"/>
         <relationship name="allergies" optional="YES" toMany="YES" deletionRule="Nullify" ordered="YES" destinationEntity="Allergy" inverseName="kid" inverseEntity="Allergy" syncable="YES"/>
         <relationship name="doctors" optional="YES" toMany="YES" deletionRule="Nullify" ordered="YES" destinationEntity="Doctor" inverseName="kid" inverseEntity="Doctor" syncable="YES"/>
+        <relationship name="heights" optional="YES" toMany="YES" deletionRule="Nullify" ordered="YES" destinationEntity="Height" inverseName="kid" inverseEntity="Height" syncable="YES"/>
+        <relationship name="weights" optional="YES" toMany="YES" deletionRule="Nullify" ordered="YES" destinationEntity="Weight" inverseName="kid" inverseEntity="Weight" syncable="YES"/>
+    </entity>
+    <entity name="Weight" representedClassName="Weight" syncable="YES" codeGenerationType="class">
+        <attribute name="date" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
+        <attribute name="weight" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES" syncable="YES"/>
+        <relationship name="kid" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Kid" inverseName="weights" inverseEntity="Kid" syncable="YES"/>
     </entity>
     <elements>
         <element name="Allergy" positionX="-63" positionY="18" width="128" height="105"/>
         <element name="Doctor" positionX="-171" positionY="72" width="128" height="195"/>
         <element name="Kid" positionX="-288" positionY="18" width="128" height="165"/>
+        <element name="Weight" positionX="-171" positionY="126" width="128" height="90"/>
+        <element name="Height" positionX="-162" positionY="135" width="128" height="90"/>
     </elements>
 </model>

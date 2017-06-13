@@ -102,21 +102,13 @@ UIPickerViewDelegate, UIPickerViewDataSource{
             }
             
             // set height
-            let height = kid!.height;
-            if(height > 0){
-                // set height feet
-                txtHeightFt.text = String(Int(height / 12.0));
-                // set height inces
-                txtHeightInches.text = String(Int(height.truncatingRemainder(dividingBy: 12.0)));
-            }
-            
-            // set weight
-            let weight = kid!.weight;
-            if(weight > 0){
-                // set weight lbs
-                txtWeightLbs.text = String(Int(weight));
-                txtWeightOz.text = String(weight).components(separatedBy: ".")[1];
-            }
+//            let height = kid!.height;
+//            if(height > 0){
+//                // set height feet
+//                txtHeightFt.text = String(Int(height / 12.0));
+//                // set height inces
+//                txtHeightInches.text = String(Int(height.truncatingRemainder(dividingBy: 12.0)));
+//            }
             
             // set date of birth
             if(kid!.dob != nil){
@@ -148,7 +140,7 @@ UIPickerViewDelegate, UIPickerViewDataSource{
     }
     
     /************************/
-    // tableView methods
+    // MARK: - tableView methods
     /************************/
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -250,7 +242,7 @@ UIPickerViewDelegate, UIPickerViewDataSource{
     }
     
     /************************/
-    // PickerView methods
+    // MARK: - PickerView methods
     /************************/
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
         return 1;
@@ -271,7 +263,7 @@ UIPickerViewDelegate, UIPickerViewDataSource{
     }
     
     /************************/
-    // Func
+    // MARK: - Functions
     /************************/
     
     // create the activity view
@@ -409,41 +401,6 @@ UIPickerViewDelegate, UIPickerViewDataSource{
         self.view.endEditing(true);
     }
     
-    // calculate the height
-    func calculateHeight() -> Double{
-        var height = 0.0;
-        
-        if let convertHeightFt = Double(txtHeightFt.text!){
-            height = convertHeightFt * 12;
-        }
-        
-        if let convertHeightInches = Double(txtHeightInches.text!){
-            height += convertHeightInches;
-        }
-        
-        return height;
-    }
-    
-    // calculate the weight
-    func calculateWeight() -> Double{
-        var weight = 0.0
-        
-        if let convertWeight = Double(txtWeightLbs.text!){
-            weight = convertWeight;
-        }
-        
-        if var convertWeightOz = Double(txtWeightOz.text!){
-            // convert ounce value
-            if(convertWeightOz >= 16){
-                weight += 1;
-                convertWeightOz = convertWeightOz - 16;
-            }
-            weight += convertWeightOz * 0.1;
-        }
-        
-        return weight;
-    }
-    
     // set avatar button after selection
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
         let image = info[UIImagePickerControllerOriginalImage] as! UIImage;
@@ -469,11 +426,10 @@ UIPickerViewDelegate, UIPickerViewDataSource{
         }
     }
     
-    
-    
     /************************/
-    // Actions
+    // MARK: - Actions
     /************************/
+    
     // check to see if a kid name exists
     @IBAction func checkForName(_ sender: Any) {
         if(txtName.text!.isEmpty){
@@ -505,18 +461,6 @@ UIPickerViewDelegate, UIPickerViewDataSource{
             kid!.name = txtName.text;
             kid!.avatar = UIImagePNGRepresentation(btnAvatar.backgroundImage(for: .normal)!)! as NSData;
             
-            // calculate the weight
-            let weight = calculateWeight();
-            if(weight > 0.0){
-                kid!.weight = weight;
-            }
-            
-            // calculate the height
-            let height = calculateHeight();
-            if(height > 0.0){
-                kid!.height = height;
-            }
-            
             // save DOB
             kid!.dob = dobPicker.date as NSDate;
             
@@ -531,18 +475,6 @@ UIPickerViewDelegate, UIPickerViewDataSource{
             // check if avatar image was set
             if(btnAvatar.backgroundImage(for: .normal) != nil){
                 kid.avatar = UIImagePNGRepresentation(btnAvatar.backgroundImage(for: .normal)!)! as NSData;
-            }
-            
-            // calculate the weight
-            let weight = calculateWeight();
-            if(weight > 0.0){
-                kid.weight = weight;
-            }
-            
-            // calculate the height
-            let height = calculateHeight();
-            if(height > 0.0){
-                kid.height = height;
             }
             
             // save DOB
