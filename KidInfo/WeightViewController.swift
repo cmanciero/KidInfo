@@ -52,6 +52,20 @@ class WeightViewController: UIViewController, UITableViewDelegate, UITableViewDa
         // Dispose of any resources that can be recreated.
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        // get context for CoreData
+        let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext;
+        
+        do{
+            // fetch to get all kids
+            arrWeights = try context.fetch(Weight.fetchRequest());
+            arrWeights.sort(by: { $0.date?.compare($1.date! as Date) == ComparisonResult.orderedDescending });
+            
+            // reload table view
+            weightTableView.reloadData();
+        } catch {}
+    }
+    
     /************************/
     // MARK: - Functions
     /************************/
@@ -113,19 +127,6 @@ class WeightViewController: UIViewController, UITableViewDelegate, UITableViewDa
         return weight;
     }
     
-    override func viewDidAppear(_ animated: Bool) {
-        // get context for CoreData
-        let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext;
-        
-        do{
-            // fetch to get all kids
-            arrWeights = try context.fetch(Weight.fetchRequest());
-            
-            // reload table view
-            weightTableView.reloadData();
-        } catch {}
-    }
-    
     /************************/
     // MARK: - tableView methods
     /************************/
@@ -147,6 +148,10 @@ class WeightViewController: UIViewController, UITableViewDelegate, UITableViewDa
         cell.txtDate?.text = dateFormatter.string(from: wt.date! as Date);
         
         return cell;
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true);
     }
     
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {

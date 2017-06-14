@@ -57,6 +57,7 @@ class HeightViewController: UIViewController, UITableViewDataSource, UITableView
         do{
             // fetch to get all kids
             arrHeights = try context.fetch(Height.fetchRequest());
+            arrHeights.sort(by: { $0.date?.compare($1.date! as Date) == ComparisonResult.orderedDescending });
             
             // reload table view
             heightTableView.reloadData();
@@ -64,7 +65,7 @@ class HeightViewController: UIViewController, UITableViewDataSource, UITableView
     }
     
     /************************/
-    // Functions
+    // MARK: - Functions
     /************************/
     
     // calculate the height
@@ -155,10 +156,14 @@ class HeightViewController: UIViewController, UITableViewDataSource, UITableView
             heightTableView.reloadData();
         }
     }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true);
+    }
 
     
     /************************/
-    // Actions
+    // MARK: - Actions
     /************************/
     
     @IBAction func saveTapped(_ sender: Any) {

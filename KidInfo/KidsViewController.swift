@@ -21,29 +21,12 @@ class KidsViewController: UIViewController, UITableViewDelegate, UITableViewData
         kidsTableView.dataSource = self;
     }
     
-    // select kid
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        // get selected kid
-        let kid = arrKids[indexPath.row];
-        
-        // navigate to kid info, show selected kid
-        performSegue(withIdentifier: "showKidSegue", sender: kid);
-        
-        // deselect selected row
-        tableView.deselectRow(at: indexPath, animated: true);
-    }
-    
     // get ready to segue
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if(segue.identifier == "showKidSegue"){
             let nextVC: KidInfoViewController = segue.destination as! KidInfoViewController;
             nextVC.kid = sender as? Kid;
         }
-    }
-    
-    // set table row count
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return arrKids.count;
     }
     
     // do this everytime view appears
@@ -64,6 +47,49 @@ class KidsViewController: UIViewController, UITableViewDelegate, UITableViewData
         } catch {}
     }
     
+    override func didReceiveMemoryWarning() {
+        super.didReceiveMemoryWarning()
+        // Dispose of any resources that can be recreated.
+    }
+    
+    /************************/
+    // MARK: - Functions
+    /************************/
+    
+    // get the age of kid
+    func calculateAge(dob: Date) -> Int{
+        let now = Date();
+        let birthday: Date = dob;
+        let calendar = Calendar.current;
+        
+        let ageComponents = calendar.dateComponents([.year], from: birthday, to: now);
+        let age = ageComponents.year!;
+        
+        return age;
+    }
+    
+    /************************/
+    // MARK: - tableView methods
+    /************************/
+    
+    // set table row count
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return arrKids.count;
+    }
+    
+    // select kid
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        // get selected kid
+        let kid = arrKids[indexPath.row];
+        
+        // navigate to kid info, show selected kid
+        performSegue(withIdentifier: "showKidSegue", sender: kid);
+        
+        // deselect selected row
+        tableView.deselectRow(at: indexPath, animated: true);
+    }
+    
+    // display kids in table cell
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "kidInfoTableViewCell", for: indexPath) as! KidTableViewCell;
         let kid = arrKids[indexPath.row];
@@ -90,24 +116,5 @@ class KidsViewController: UIViewController, UITableViewDelegate, UITableViewData
         
         return cell;
     }
-    
-    // get the age of kid
-    func calculateAge(dob: Date) -> Int{
-        let now = Date();
-        let birthday: Date = dob;
-        let calendar = Calendar.current;
-        
-        let ageComponents = calendar.dateComponents([.year], from: birthday, to: now);
-        let age = ageComponents.year!;
-        
-        return age;
-    }
-    
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
-    
-    
 }
 

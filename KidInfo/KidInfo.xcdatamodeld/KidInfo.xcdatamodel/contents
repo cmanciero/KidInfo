@@ -41,8 +41,8 @@
     <elements>
         <element name="Allergy" positionX="-63" positionY="18" width="128" height="105"/>
         <element name="Doctor" positionX="-171" positionY="72" width="128" height="195"/>
+        <element name="Height" positionX="-162" positionY="135" width="128" height="90"/>
         <element name="Kid" positionX="-288" positionY="18" width="128" height="165"/>
         <element name="Weight" positionX="-171" positionY="126" width="128" height="90"/>
-        <element name="Height" positionX="-162" positionY="135" width="128" height="90"/>
     </elements>
 </model>

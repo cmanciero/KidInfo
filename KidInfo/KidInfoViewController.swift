@@ -44,7 +44,8 @@ UIPickerViewDelegate, UIPickerViewDataSource{
     var selectedAllergy: Allergy? = nil;
     var selectedDoctor: Doctor? = nil;
     
-    var aBloodTypes = ["A Positive", "B Positive", "A/B Positive", "O Positive", "A Negative", "B Negative", "A/B Negative", "O Negative"];
+    var aBloodTypes = ["A Positive", "B Positive", "A/B Positive", "O Positive",
+                       "A Negative", "B Negative", "A/B Negative", "O Negative"];
     var bloodTypePicker = UIPickerView();
     
     // UIDatePicker for DOB
@@ -91,73 +92,47 @@ UIPickerViewDelegate, UIPickerViewDataSource{
         
         // check if kid exist
         if(kid != nil){
-            // disable save button
-            btnSave.isEnabled = true;
-            txtName.text = kid!.name;
-            titleName.title = txtName.text;
-            
-            btnDelete.isHidden = false;
-            
-            // check if avatar is set
-            if(kid!.avatar != nil){
-                let image = UIImage(data: kid!.avatar! as Data);
-                btnAvatar.setBackgroundImage(image, for: .normal);
-                btnAvatar.setTitle("Update photo", for: .normal);
-            }
-            
-            // set date of birth
-            if(kid!.dob != nil){
-                let dateFormatter = DateFormatter();
-                dateFormatter.dateStyle = .medium;
-                dateFormatter.timeStyle = .none;
-                txtDOB.text = dateFormatter.string(from: kid!.dob! as Date);
-                
-                // set date picker to date of birth
-                dobPicker.setDate(kid!.dob! as Date, animated: false);
-            }
-            
-            // set blood type
-            if(kid!.bloodType != nil){
-                txtBloodType.text = kid!.bloodType;
-            }
-            
-            // set weight
-            if((kid!.weights?.count)! > 0){
-                lblWeightVal.isHidden = false;
-                let latestKidWeight = kid!.weights?[0] as! Weight;
-                
-                // set pounds
-                let pounds = String(Int(latestKidWeight.weight));
-                // set ounces
-                let ounces = String(latestKidWeight.weight).components(separatedBy: ".")[1];
-                
-                lblWeightVal.text = "\(pounds) lbs \(ounces) oz";
-            }
-            
-            // set height
-            if((kid!.heights?.count)! > 0){
-                lblHeightVal.isHidden = false;
-                let latestKidHeight = kid!.heights?[0] as! Height;
-                
-                // set height feet
-                let feet = String(Int(latestKidHeight.height / 12.0));
-                // set height inches
-                let inches = String(Int(latestKidHeight.height.truncatingRemainder(dividingBy: 12.0)));
-                
-                lblHeightVal.text = "\(feet) ft \(inches) inches";
-            }
-            
-            // check if kid has allergies
-            checkAllergyTableView();
-            
-            // check if to display doctors count
-            checkDoctorTableView();
+            loadKidInfo();
         }
     }
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        // reload the allergies table view
+        allergyTableView.reloadData();
+        
+        // check count of allergies
+        checkAllergyTableView();
+        
+        // reload doctor's table view
+        doctorTableView.reloadData();
+        
+        // check count of doctors
+        checkDoctorTableView();
+        
+        // get context for CoreData
+        let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext;
+        
+        do{
+            // fetch to get all kids
+            let arrKids = try context.fetch(Kid.fetchRequest()) as! [Kid];
+            
+            // find the right kid
+            for item in arrKids {
+                if(item.objectID == kid?.objectID){
+                    kid = item;
+                    break;
+                }
+            }
+            
+            // reload kid data
+            loadKidInfo();
+            
+        } catch {}
     }
     
     /************************/
@@ -248,23 +223,10 @@ UIPickerViewDelegate, UIPickerViewDataSource{
         }
     }
     
-    override func viewDidAppear(_ animated: Bool) {
-        // reload the allergies table view
-        allergyTableView.reloadData();
-        
-        // check count of allergies
-        checkAllergyTableView();
-        
-        // reload doctor's table view
-        doctorTableView.reloadData();
-        
-        // check count of doctors
-        checkDoctorTableView();
-    }
-    
     /************************/
     // MARK: - PickerView methods
     /************************/
+    
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
         return 1;
     }
@@ -286,6 +248,71 @@ UIPickerViewDelegate, UIPickerViewDataSource{
     /************************/
     // MARK: - Functions
     /************************/
+    
+    // load kid information
+    func loadKidInfo(){
+        // disable save button
+        btnSave.isEnabled = true;
+        txtName.text = kid!.name;
+        titleName.title = txtName.text;
+        
+        btnDelete.isHidden = false;
+        
+        // check if avatar is set
+        if(kid!.avatar != nil){
+            let image = UIImage(data: kid!.avatar! as Data);
+            btnAvatar.setBackgroundImage(image, for: .normal);
+            btnAvatar.setTitle("Update photo", for: .normal);
+        }
+        
+        // set date of birth
+        if(kid!.dob != nil){
+            let dateFormatter = DateFormatter();
+            dateFormatter.dateStyle = .medium;
+            dateFormatter.timeStyle = .none;
+            txtDOB.text = dateFormatter.string(from: kid!.dob! as Date);
+            
+            // set date picker to date of birth
+            dobPicker.setDate(kid!.dob! as Date, animated: false);
+        }
+        
+        // set blood type
+        if(kid!.bloodType != nil){
+            txtBloodType.text = kid!.bloodType;
+        }
+        
+        // set weight
+        if((kid!.weights?.count)! > 0){
+            lblWeightVal.isHidden = false;
+            let latestKidWeight = kid!.weights?[kid!.weights!.count - 1] as! Weight;
+            
+            // set pounds
+            let pounds = String(Int(latestKidWeight.weight));
+            // set ounces
+            let ounces = String(latestKidWeight.weight).components(separatedBy: ".")[1];
+            
+            lblWeightVal.text = "\(pounds) lbs \(ounces) oz";
+        }
+        
+        // set height
+        if((kid!.heights?.count)! > 0){
+            lblHeightVal.isHidden = false;
+            let latestKidHeight = kid!.heights?[kid!.heights!.count - 1] as! Height;
+            
+            // set height feet
+            let feet = String(Int(latestKidHeight.height / 12.0));
+            // set height inches
+            let inches = String(Int(latestKidHeight.height.truncatingRemainder(dividingBy: 12.0)));
+            
+            lblHeightVal.text = "\(feet) ft \(inches) inches";
+        }
+        
+        // check if kid has allergies
+        checkAllergyTableView();
+        
+        // check if to display doctors count
+        checkDoctorTableView();
+    }
     
     // create the activity view
     func createActivityView(){
