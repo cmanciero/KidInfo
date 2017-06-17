@@ -177,10 +177,8 @@ UIPickerViewDelegate, UIPickerViewDataSource{
             cell.textLabel?.text = allergy.type;
             
             var image: UIImage = UIImage();
-            if(allergy.level == "Mild"){
-                image = UIImage(named: "yellowDot.png")!;
-            } else if(allergy.level == "Severe"){
-                image = UIImage(named: "redDot.png")!;
+            if(allergy.level == "Severe"){
+                image = UIImage(named: "severe")!;
             }
             
             cell.imageView?.image = image;
@@ -464,11 +462,27 @@ UIPickerViewDelegate, UIPickerViewDataSource{
             nextVC.kid = kid;
             nextVC.doctor = selectedDoctor;
         } else if(segue.identifier == "weightSegue"){
-            let nextVC: WeightViewController = segue.destination as! WeightViewController;
+            // get the tab bar controller
+            let tabBar: WeightTabBarController = segue.destination as! WeightTabBarController;
+            
+            // pass data to the main view
+            let nextVC: WeightViewController = tabBar.viewControllers?.first as! WeightViewController;
             nextVC.kid = kid;
+            
+            // pass data to the growth chart
+            let secondVC: WeightGrowthChartViewController = tabBar.viewControllers?[1] as! WeightGrowthChartViewController;
+            secondVC.kid = kid;
         } else if(segue.identifier == "heightSegue"){
-            let nextVC: HeightViewController = segue.destination as! HeightViewController;
+            // get the tab bar controller
+            let tabBar: HeightTabBarController = segue.destination as! HeightTabBarController;
+            
+            // pass data to the main view
+            let nextVC: HeightViewController = tabBar.viewControllers?.first as! HeightViewController;
             nextVC.kid = kid;
+            
+            // pass data to the growth chart
+            let secondVC: HeightGrowthChartViewController = tabBar.viewControllers?[1] as! HeightGrowthChartViewController;
+            secondVC.kid = kid;
         }
     }
     

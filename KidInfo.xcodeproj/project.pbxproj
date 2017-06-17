@@ -8,9 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		9537B1C81EE878DF00CF5E1B /* AllergyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9537B1C71EE878DF00CF5E1B /* AllergyViewController.swift */; };
-		9537B1CD1EE9A70700CF5E1B /* blueDot.png in Resources */ = {isa = PBXBuildFile; fileRef = 9537B1CA1EE9A70700CF5E1B /* blueDot.png */; };
-		9537B1CE1EE9A70700CF5E1B /* yellowDot.png in Resources */ = {isa = PBXBuildFile; fileRef = 9537B1CB1EE9A70700CF5E1B /* yellowDot.png */; };
-		9537B1CF1EE9A70700CF5E1B /* redDot.png in Resources */ = {isa = PBXBuildFile; fileRef = 9537B1CC1EE9A70700CF5E1B /* redDot.png */; };
 		954CE6781EE0AB6F00C1160F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 954CE6771EE0AB6F00C1160F /* AppDelegate.swift */; };
 		954CE67A1EE0AB6F00C1160F /* KidsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 954CE6791EE0AB6F00C1160F /* KidsViewController.swift */; };
 		954CE67D1EE0AB6F00C1160F /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 954CE67B1EE0AB6F00C1160F /* Main.storyboard */; };
@@ -24,13 +21,14 @@
 		95CA48E01EF0078900401E07 /* HeightViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95CA48DF1EF0078900401E07 /* HeightViewController.swift */; };
 		95CA48E21EF062B400401E07 /* WeightTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95CA48E11EF062B400401E07 /* WeightTableViewCell.swift */; };
 		95CA48E41EF063B100401E07 /* HeightTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95CA48E31EF063B100401E07 /* HeightTableViewCell.swift */; };
+		95CA48E61EF4BD0100401E07 /* WeightGrowthChartViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95CA48E51EF4BD0100401E07 /* WeightGrowthChartViewController.swift */; };
+		95CA48E81EF4BD5200401E07 /* HeightGrowthChartViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95CA48E71EF4BD5200401E07 /* HeightGrowthChartViewController.swift */; };
+		95CA48EA1EF4BF2100401E07 /* WeightTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95CA48E91EF4BF2100401E07 /* WeightTabBarController.swift */; };
+		95CA48EC1EF4C33500401E07 /* HeightTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95CA48EB1EF4C33500401E07 /* HeightTabBarController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		9537B1C71EE878DF00CF5E1B /* AllergyViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AllergyViewController.swift; sourceTree = "<group>"; };
-		9537B1CA1EE9A70700CF5E1B /* blueDot.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = blueDot.png; sourceTree = "<group>"; };
-		9537B1CB1EE9A70700CF5E1B /* yellowDot.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = yellowDot.png; sourceTree = "<group>"; };
-		9537B1CC1EE9A70700CF5E1B /* redDot.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = redDot.png; sourceTree = "<group>"; };
 		954CE6741EE0AB6F00C1160F /* KidInfo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = KidInfo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		954CE6771EE0AB6F00C1160F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		954CE6791EE0AB6F00C1160F /* KidsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KidsViewController.swift; sourceTree = "<group>"; };
@@ -46,6 +44,10 @@
 		95CA48DF1EF0078900401E07 /* HeightViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HeightViewController.swift; sourceTree = "<group>"; };
 		95CA48E11EF062B400401E07 /* WeightTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WeightTableViewCell.swift; sourceTree = "<group>"; };
 		95CA48E31EF063B100401E07 /* HeightTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HeightTableViewCell.swift; sourceTree = "<group>"; };
+		95CA48E51EF4BD0100401E07 /* WeightGrowthChartViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WeightGrowthChartViewController.swift; sourceTree = "<group>"; };
+		95CA48E71EF4BD5200401E07 /* HeightGrowthChartViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HeightGrowthChartViewController.swift; sourceTree = "<group>"; };
+		95CA48E91EF4BF2100401E07 /* WeightTabBarController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WeightTabBarController.swift; sourceTree = "<group>"; };
+		95CA48EB1EF4C33500401E07 /* HeightTabBarController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HeightTabBarController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -59,16 +61,6 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		9537B1C91EE9A62300CF5E1B /* assets */ = {
-			isa = PBXGroup;
-			children = (
-				9537B1CA1EE9A70700CF5E1B /* blueDot.png */,
-				9537B1CB1EE9A70700CF5E1B /* yellowDot.png */,
-				9537B1CC1EE9A70700CF5E1B /* redDot.png */,
-			);
-			name = assets;
-			sourceTree = "<group>";
-		};
 		954CE66B1EE0AB6F00C1160F = {
 			isa = PBXGroup;
 			children = (
@@ -88,7 +80,6 @@
 		954CE6761EE0AB6F00C1160F /* KidInfo */ = {
 			isa = PBXGroup;
 			children = (
-				9537B1C91EE9A62300CF5E1B /* assets */,
 				954CE68D1EE0EB7B00C1160F /* ViewControllers */,
 				954CE68C1EE0EB7300C1160F /* classes */,
 				954CE6771EE0AB6F00C1160F /* AppDelegate.swift */,
@@ -115,10 +106,14 @@
 				959C6B1C1EEAE38D00C32353 /* DoctorViewController.swift */,
 				95CA48DF1EF0078900401E07 /* HeightViewController.swift */,
 				95CA48E31EF063B100401E07 /* HeightTableViewCell.swift */,
+				95CA48E71EF4BD5200401E07 /* HeightGrowthChartViewController.swift */,
+				95CA48EB1EF4C33500401E07 /* HeightTabBarController.swift */,
 				954CE6921EE1E4FD00C1160F /* KidTableViewCell.swift */,
 				954CE6901EE0EEB700C1160F /* KidInfoViewController.swift */,
 				954CE6791EE0AB6F00C1160F /* KidsViewController.swift */,
+				95CA48E91EF4BF2100401E07 /* WeightTabBarController.swift */,
 				95CA48DD1EF0063D00401E07 /* WeightViewController.swift */,
+				95CA48E51EF4BD0100401E07 /* WeightGrowthChartViewController.swift */,
 				95CA48E11EF062B400401E07 /* WeightTableViewCell.swift */,
 			);
 			name = ViewControllers;
@@ -185,11 +180,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				954CE6851EE0AB6F00C1160F /* LaunchScreen.storyboard in Resources */,
-				9537B1CE1EE9A70700CF5E1B /* yellowDot.png in Resources */,
 				954CE6821EE0AB6F00C1160F /* Assets.xcassets in Resources */,
 				954CE67D1EE0AB6F00C1160F /* Main.storyboard in Resources */,
-				9537B1CF1EE9A70700CF5E1B /* redDot.png in Resources */,
-				9537B1CD1EE9A70700CF5E1B /* blueDot.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -207,10 +199,14 @@
 				954CE6911EE0EEB700C1160F /* KidInfoViewController.swift in Sources */,
 				95CA48DE1EF0063D00401E07 /* WeightViewController.swift in Sources */,
 				954CE6781EE0AB6F00C1160F /* AppDelegate.swift in Sources */,
+				95CA48EC1EF4C33500401E07 /* HeightTabBarController.swift in Sources */,
 				95CA48E41EF063B100401E07 /* HeightTableViewCell.swift in Sources */,
+				95CA48E61EF4BD0100401E07 /* WeightGrowthChartViewController.swift in Sources */,
 				954CE6931EE1E4FD00C1160F /* KidTableViewCell.swift in Sources */,
 				954CE6801EE0AB6F00C1160F /* KidInfo.xcdatamodeld in Sources */,
 				95CA48E21EF062B400401E07 /* WeightTableViewCell.swift in Sources */,
+				95CA48E81EF4BD5200401E07 /* HeightGrowthChartViewController.swift in Sources */,
+				95CA48EA1EF4BF2100401E07 /* WeightTabBarController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

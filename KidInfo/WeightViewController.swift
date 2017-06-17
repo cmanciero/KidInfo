@@ -24,7 +24,7 @@ class WeightViewController: UIViewController, UITableViewDelegate, UITableViewDa
     let dateFormatter = DateFormatter();
     
     override func viewDidLoad() {
-        super.viewDidLoad()
+        super.viewDidLoad();
         
         // Do any additional setup after loading the view.
         //        btnSave.isEnabled = false;
