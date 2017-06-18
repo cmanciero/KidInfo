@@ -675,9 +675,25 @@
                     <view key="view" contentMode="scaleToFill" id="P8V-t7-cZ2">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xVw-4H-XNL" customClass="LineChartView" customModule="Charts">
+                                <rect key="frame" x="16" y="20" width="343" height="598"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            </view>
+                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="xVw-4H-XNL" firstAttribute="leading" secondItem="P8V-t7-cZ2" secondAttribute="leadingMargin" id="3oV-NI-fDz"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="xVw-4H-XNL" secondAttribute="trailing" id="CtH-du-aCr"/>
+                            <constraint firstItem="xVw-4H-XNL" firstAttribute="top" secondItem="R9R-rw-32l" secondAttribute="bottom" id="iZ9-uR-hWR"/>
+                            <constraint firstItem="Num-Ax-0hE" firstAttribute="top" secondItem="xVw-4H-XNL" secondAttribute="bottom" id="rU9-IZ-qnm"/>
+                        </constraints>
                     </view>
+                    <extendedEdge key="edgesForExtendedLayout" bottom="YES"/>
                     <tabBarItem key="tabBarItem" title="Growth Chart" image="chart" id="MwM-lR-VtR"/>
+                    <connections>
+                        <outlet property="lineChart" destination="xVw-4H-XNL" id="NWe-al-dmy"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Duj-Af-q0f" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -966,6 +982,7 @@
                 <tabBarController automaticallyAdjustsScrollViewInsets="NO" id="7Ou-rK-NtU" customClass="WeightTabBarController" customModule="KidInfo" customModuleProvider="target" sceneMemberID="viewController">
                     <toolbarItems/>
                     <tabBar key="tabBar" contentMode="scaleToFill" id="uth-Ue-CUd">
+                        <rect key="frame" x="0.0" y="0.0" width="1000" height="1000"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                     </tabBar>
@@ -984,6 +1001,7 @@
                 <tabBarController automaticallyAdjustsScrollViewInsets="NO" id="7h1-zP-wjD" customClass="HeightTabBarController" customModule="KidInfo" customModuleProvider="target" sceneMemberID="viewController">
                     <toolbarItems/>
                     <tabBar key="tabBar" contentMode="scaleToFill" id="KEg-53-wab">
+                        <rect key="frame" x="0.0" y="0.0" width="1000" height="1000"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                     </tabBar>
