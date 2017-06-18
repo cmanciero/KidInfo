@@ -103,6 +103,54 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		951FEF1B1EF6D1F000067E1C /* Weight */ = {
+			isa = PBXGroup;
+			children = (
+				95CA48E51EF4BD0100401E07 /* WeightGrowthChartViewController.swift */,
+				95CA48E91EF4BF2100401E07 /* WeightTabBarController.swift */,
+				95CA48E11EF062B400401E07 /* WeightTableViewCell.swift */,
+				95CA48DD1EF0063D00401E07 /* WeightViewController.swift */,
+			);
+			name = Weight;
+			sourceTree = "<group>";
+		};
+		951FEF1D1EF6D1FF00067E1C /* Height */ = {
+			isa = PBXGroup;
+			children = (
+				95CA48E71EF4BD5200401E07 /* HeightGrowthChartViewController.swift */,
+				95CA48EB1EF4C33500401E07 /* HeightTabBarController.swift */,
+				95CA48E31EF063B100401E07 /* HeightTableViewCell.swift */,
+				95CA48DF1EF0078900401E07 /* HeightViewController.swift */,
+			);
+			name = Height;
+			sourceTree = "<group>";
+		};
+		951FEF1E1EF6D23900067E1C /* Kids */ = {
+			isa = PBXGroup;
+			children = (
+				954CE6901EE0EEB700C1160F /* KidInfoViewController.swift */,
+				954CE6791EE0AB6F00C1160F /* KidsViewController.swift */,
+				954CE6921EE1E4FD00C1160F /* KidTableViewCell.swift */,
+			);
+			name = Kids;
+			sourceTree = "<group>";
+		};
+		951FEF1F1EF6D24500067E1C /* Allergy */ = {
+			isa = PBXGroup;
+			children = (
+				9537B1C71EE878DF00CF5E1B /* AllergyViewController.swift */,
+			);
+			name = Allergy;
+			sourceTree = "<group>";
+		};
+		951FEF201EF6D25100067E1C /* Doctor */ = {
+			isa = PBXGroup;
+			children = (
+				959C6B1C1EEAE38D00C32353 /* DoctorViewController.swift */,
+			);
+			name = Doctor;
+			sourceTree = "<group>";
+		};
 		954CE66B1EE0AB6F00C1160F = {
 			isa = PBXGroup;
 			children = (
@@ -145,19 +193,11 @@
 		954CE68D1EE0EB7B00C1160F /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
-				9537B1C71EE878DF00CF5E1B /* AllergyViewController.swift */,
-				959C6B1C1EEAE38D00C32353 /* DoctorViewController.swift */,
-				95CA48DF1EF0078900401E07 /* HeightViewController.swift */,
-				95CA48E31EF063B100401E07 /* HeightTableViewCell.swift */,
-				95CA48E71EF4BD5200401E07 /* HeightGrowthChartViewController.swift */,
-				95CA48EB1EF4C33500401E07 /* HeightTabBarController.swift */,
-				954CE6921EE1E4FD00C1160F /* KidTableViewCell.swift */,
-				954CE6901EE0EEB700C1160F /* KidInfoViewController.swift */,
-				954CE6791EE0AB6F00C1160F /* KidsViewController.swift */,
-				95CA48E91EF4BF2100401E07 /* WeightTabBarController.swift */,
-				95CA48DD1EF0063D00401E07 /* WeightViewController.swift */,
-				95CA48E51EF4BD0100401E07 /* WeightGrowthChartViewController.swift */,
-				95CA48E11EF062B400401E07 /* WeightTableViewCell.swift */,
+				951FEF1F1EF6D24500067E1C /* Allergy */,
+				951FEF201EF6D25100067E1C /* Doctor */,
+				951FEF1D1EF6D1FF00067E1C /* Height */,
+				951FEF1E1EF6D23900067E1C /* Kids */,
+				951FEF1B1EF6D1F000067E1C /* Weight */,
 			);
 			name = ViewControllers;
 			sourceTree = "<group>";
