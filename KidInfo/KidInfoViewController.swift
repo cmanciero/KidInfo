@@ -26,6 +26,7 @@ UIPickerViewDelegate, UIPickerViewDataSource{
     @IBOutlet weak var mainView: UIView!
     @IBOutlet weak var allergyTableView: UITableView!
     @IBOutlet weak var doctorTableView: UITableView!
+    @IBOutlet weak var medicationTableView: UITableView!
     @IBOutlet weak var btnSave: UIBarButtonItem!
     @IBOutlet weak var txtBloodType: UITextField!
     @IBOutlet weak var lblAllergies: UILabel!
@@ -34,6 +35,7 @@ UIPickerViewDelegate, UIPickerViewDataSource{
     @IBOutlet weak var lblWeightVal: UILabel!
     @IBOutlet weak var lblAllergyCount: UILabel!
     @IBOutlet weak var lblDoctorCount: UILabel!
+    @IBOutlet weak var lblMedicationCount: UILabel!
     
     var kid: Kid? = nil;
     var imagePicker = UIImagePickerController();
@@ -43,6 +45,7 @@ UIPickerViewDelegate, UIPickerViewDataSource{
     
     var selectedAllergy: Allergy? = nil;
     var selectedDoctor: Doctor? = nil;
+    var selectedMedication: Medication? = nil;
     
     var aBloodTypes = ["A Positive", "B Positive", "A/B Positive", "O Positive",
                        "A Negative", "B Negative", "A/B Negative", "O Negative"];
@@ -72,6 +75,10 @@ UIPickerViewDelegate, UIPickerViewDataSource{
         // doctorTableView
         doctorTableView.delegate = self;
         doctorTableView.dataSource = self;
+        
+        // medicationTableView
+        medicationTableView.delegate = self;
+        medicationTableView.dataSource = self;
         
         // style avatar button
         btnAvatar.layer.cornerRadius = btnAvatar.layer.frame.width / 2;
@@ -114,6 +121,12 @@ UIPickerViewDelegate, UIPickerViewDataSource{
         // check count of doctors
         checkDoctorTableView();
         
+        // reload medication table view
+        medicationTableView.reloadData();
+        
+        // check medication table vie
+        checkMedicationTableView();
+        
         // get context for CoreData
         let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext;
         
@@ -147,6 +160,9 @@ UIPickerViewDelegate, UIPickerViewDataSource{
         } else if(tableView.isEqual(doctorTableView)) {
             selectedDoctor = (kid!.doctors!.array as! [Doctor])[indexPath.row] as Doctor;
             performSegue(withIdentifier: "doctorSegue", sender: nil);
+        } else if(tableView.isEqual(medicationTableView)) {
+            selectedMedication = (kid!.medications!.array as! [Medication])[indexPath.row] as Medication;
+            performSegue(withIdentifier: "medicationSegue", sender: nil);
             
         }
         
@@ -160,9 +176,13 @@ UIPickerViewDelegate, UIPickerViewDataSource{
             if(kid?.allergies != nil){
                 rowCount = (kid!.allergies!.count);
             }
-        }else if(tableView.isEqual(doctorTableView)) {
+        } else if(tableView.isEqual(doctorTableView)) {
             if(kid?.doctors != nil){
                 rowCount = (kid!.doctors!.count);
+            }
+        } else if(tableView.isEqual(medicationTableView)) {
+            if(kid?.medications != nil){
+                rowCount = (kid!.medications!.count);
             }
         }
         
@@ -182,9 +202,12 @@ UIPickerViewDelegate, UIPickerViewDataSource{
             }
             
             cell.imageView?.image = image;
-        }else if(tableView.isEqual(doctorTableView)) {
+        } else if(tableView.isEqual(doctorTableView)) {
             let doctor: Doctor = (kid!.doctors!.array as! [Doctor])[indexPath.row] as Doctor;
             cell.textLabel?.text = doctor.name;
+        } else if(tableView.isEqual(medicationTableView)) {
+            let medication: Medication = (kid!.medications!.array as! [Medication])[indexPath.row] as Medication;
+            cell.textLabel?.text = medication.name;
         }
         
         return cell;
@@ -217,6 +240,19 @@ UIPickerViewDelegate, UIPickerViewDataSource{
                 
                 // check if kid has allergies
                 checkDoctorTableView();
+            }
+                // delete row from medication table
+            else if(tableView.isEqual(medicationTableView)){
+                let medication = (kid!.medications!.array as! [Medication])[indexPath.row] as Medication;
+                
+                let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext;
+                context.delete(medication);
+                (UIApplication.shared.delegate as! AppDelegate).saveContext();
+                
+                medicationTableView.reloadData();
+                
+                // check if kid has allergies
+                checkMedicationTableView();
             }
         }
     }
@@ -310,6 +346,9 @@ UIPickerViewDelegate, UIPickerViewDataSource{
         
         // check if to display doctors count
         checkDoctorTableView();
+        
+        // check if kid has medications
+        checkMedicationTableView();
     }
     
     // create the activity view
@@ -342,12 +381,10 @@ UIPickerViewDelegate, UIPickerViewDataSource{
                 allergyTableView.isHidden = false;
             }
             
-            // check if to display allergies count
-            if(allergyCount > 3){
-                lblAllergyCount.text = "(\(allergyCount))";
-            }
+            lblAllergyCount.text = "(\(allergyCount))";
         } else {
             allergyTableView.isHidden = true;
+            lblAllergyCount.text = "";
         }
     }
     
@@ -363,12 +400,29 @@ UIPickerViewDelegate, UIPickerViewDataSource{
                 doctorTableView.isHidden = false;
             }
             
-            // check if to display allergies count
-            if(doctorCount > 3){
-                lblDoctorCount.text = "(\(doctorCount))";
-            }
+            lblDoctorCount.text = "(\(doctorCount))";
         } else {
             doctorTableView.isHidden = true;
+            lblDoctorCount.text = "";
+        }
+    }
+    
+    // check if medication table should be shown
+    func checkMedicationTableView(){
+        var medicationCount = 0;
+        if(kid?.medications != nil){
+            medicationCount = (kid!.medications?.count)!;
+        }
+        
+        if(medicationCount > 0){
+            if(medicationTableView.isHidden){
+                medicationTableView.isHidden = false;
+            }
+            
+            lblMedicationCount.text = "(\(medicationCount))";
+        } else {
+            medicationTableView.isHidden = true;
+            lblMedicationCount.text = "";
         }
     }
     
@@ -454,13 +508,28 @@ UIPickerViewDelegate, UIPickerViewDataSource{
         
         if(segue.identifier == "allergySegue"){
             let nextVC: AllergyViewController = segue.destination as! AllergyViewController;
-            nextVC.kid = kid;
-            nextVC.allergy = selectedAllergy;
             
+            // pass kid info
+            nextVC.kid = kid;
+            
+            // pass selected allergy
+            nextVC.allergy = selectedAllergy;
         } else if(segue.identifier == "doctorSegue"){
             let nextVC: DoctorViewController = segue.destination as! DoctorViewController;
+            
+            // pass kid info
             nextVC.kid = kid;
+            
+            // pass selected doctor
             nextVC.doctor = selectedDoctor;
+        } else if(segue.identifier == "medicationSegue"){
+            let nextVC: MedicationViewController = segue.destination as! MedicationViewController;
+            
+            // pass kid info
+            nextVC.kid = kid;
+            
+            // pass selected medication
+            nextVC.medication = selectedMedication;
         } else if(segue.identifier == "weightSegue"){
             // get the tab bar controller
             let tabBar: WeightTabBarController = segue.destination as! WeightTabBarController;

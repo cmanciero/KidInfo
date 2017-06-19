@@ -51,6 +51,10 @@ class DoctorViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
+    @IBAction func cancelTapped(_ sender: Any) {
+        self.dismiss(animated: true, completion: nil);
+    }
+    
     @IBAction func saveTapped(_ sender: Any) {
         let appDelegate = (UIApplication.shared.delegate as! AppDelegate);
         
@@ -73,7 +77,7 @@ class DoctorViewController: UIViewController {
         
         appDelegate.saveContext();
         
-        navigationController?.popViewController(animated: true);
+        self.dismiss(animated: true, completion: nil);
     }
 
     @IBAction func phoneNumberFormat(_ sender: Any) {

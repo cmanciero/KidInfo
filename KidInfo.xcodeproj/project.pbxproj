@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		951FEF221EF6D4DF00067E1C /* MedicationsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 951FEF211EF6D4DF00067E1C /* MedicationsViewController.swift */; };
+		951FEF261EF85EAD00067E1C /* MedicationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 951FEF251EF85EAD00067E1C /* MedicationViewController.swift */; };
 		9537B1C81EE878DF00CF5E1B /* AllergyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9537B1C71EE878DF00CF5E1B /* AllergyViewController.swift */; };
 		954CE6781EE0AB6F00C1160F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 954CE6771EE0AB6F00C1160F /* AppDelegate.swift */; };
 		954CE67A1EE0AB6F00C1160F /* KidsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 954CE6791EE0AB6F00C1160F /* KidsViewController.swift */; };
@@ -69,7 +69,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		951FEF211EF6D4DF00067E1C /* MedicationsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MedicationsViewController.swift; sourceTree = "<group>"; };
+		951FEF251EF85EAD00067E1C /* MedicationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MedicationViewController.swift; sourceTree = "<group>"; };
 		9537B1C71EE878DF00CF5E1B /* AllergyViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AllergyViewController.swift; sourceTree = "<group>"; };
 		954CE6741EE0AB6F00C1160F /* KidInfo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = KidInfo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		954CE6771EE0AB6F00C1160F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -153,6 +153,14 @@
 			name = Doctor;
 			sourceTree = "<group>";
 		};
+		951FEF231EF758BD00067E1C /* Medication */ = {
+			isa = PBXGroup;
+			children = (
+				951FEF251EF85EAD00067E1C /* MedicationViewController.swift */,
+			);
+			name = Medication;
+			sourceTree = "<group>";
+		};
 		954CE66B1EE0AB6F00C1160F = {
 			isa = PBXGroup;
 			children = (
@@ -177,7 +185,6 @@
 				954CE68C1EE0EB7300C1160F /* classes */,
 				954CE6771EE0AB6F00C1160F /* AppDelegate.swift */,
 				954CE67B1EE0AB6F00C1160F /* Main.storyboard */,
-				951FEF211EF6D4DF00067E1C /* MedicationsViewController.swift */,
 				954CE6811EE0AB6F00C1160F /* Assets.xcassets */,
 				954CE6831EE0AB6F00C1160F /* LaunchScreen.storyboard */,
 				954CE6861EE0AB6F00C1160F /* Info.plist */,
@@ -196,6 +203,7 @@
 		954CE68D1EE0EB7B00C1160F /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
+				951FEF231EF758BD00067E1C /* Medication */,
 				951FEF1F1EF6D24500067E1C /* Allergy */,
 				951FEF201EF6D25100067E1C /* Doctor */,
 				951FEF1D1EF6D1FF00067E1C /* Height */,
@@ -317,11 +325,11 @@
 				95CA48E01EF0078900401E07 /* HeightViewController.swift in Sources */,
 				959C6B1D1EEAE38D00C32353 /* DoctorViewController.swift in Sources */,
 				954CE6911EE0EEB700C1160F /* KidInfoViewController.swift in Sources */,
+				951FEF261EF85EAD00067E1C /* MedicationViewController.swift in Sources */,
 				95CA48DE1EF0063D00401E07 /* WeightViewController.swift in Sources */,
 				954CE6781EE0AB6F00C1160F /* AppDelegate.swift in Sources */,
 				95CA48EC1EF4C33500401E07 /* HeightTabBarController.swift in Sources */,
 				95CA48E41EF063B100401E07 /* HeightTableViewCell.swift in Sources */,
-				951FEF221EF6D4DF00067E1C /* MedicationsViewController.swift in Sources */,
 				95CA48E61EF4BD0100401E07 /* WeightGrowthChartViewController.swift in Sources */,
 				954CE6931EE1E4FD00C1160F /* KidTableViewCell.swift in Sources */,
 				954CE6801EE0AB6F00C1160F /* KidInfo.xcdatamodeld in Sources */,
