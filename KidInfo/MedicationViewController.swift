@@ -10,6 +10,12 @@ import UIKit
 
 class MedicationViewController: UIViewController {
     
+    @IBOutlet weak var txtName: UITextField!
+    @IBOutlet weak var txtDosage: UITextField!
+    @IBOutlet weak var txtFreq: UITextField!
+    @IBOutlet weak var txtType: UITextField!
+    @IBOutlet weak var tvNotes: UITextView!
+    
     var kid: Kid? = nil;
     var medication: Medication? = nil;
 
