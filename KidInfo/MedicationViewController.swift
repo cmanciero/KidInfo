@@ -15,6 +15,7 @@ class MedicationViewController: UIViewController {
     @IBOutlet weak var txtFreq: UITextField!
     @IBOutlet weak var txtType: UITextField!
     @IBOutlet weak var tvNotes: UITextView!
+    @IBOutlet weak var scrollView: UIScrollView!
     
     var kid: Kid? = nil;
     var medication: Medication? = nil;
@@ -23,6 +24,8 @@ class MedicationViewController: UIViewController {
         super.viewDidLoad()
         print(kid);
         // Do any additional setup after loading the view.
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide(noti:)), name: NSNotification.Name.UIKeyboardWillHide, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow(noti:)), name: NSNotification.Name.UIKeyboardWillShow, object: nil)
     }
 
     override func didReceiveMemoryWarning() {
@@ -36,6 +39,27 @@ class MedicationViewController: UIViewController {
 
     @IBAction func saveTapped(_ sender: Any) {
         self.dismiss(animated: true, completion: nil);
+    }
+    
+    //---------------------------------
+    // MARK: - Notification Center
+    //---------------------------------
+    
+    func keyboardWillHide(noti: Notification) {
+        let contentInsets = UIEdgeInsets.zero
+        scrollView.contentInset = contentInsets
+        scrollView.scrollIndicatorInsets = contentInsets
+    }
+    
+    func keyboardWillShow(noti: Notification) {
+        
+        guard let userInfo = noti.userInfo else { return }
+        guard var keyboardFrame: CGRect = (userInfo[UIKeyboardFrameBeginUserInfoKey] as? NSValue)?.cgRectValue else { return }
+        keyboardFrame = self.view.convert(keyboardFrame, from: nil)
+        
+        var contentInset:UIEdgeInsets = scrollView.contentInset
+        contentInset.bottom = keyboardFrame.size.height
+        scrollView.contentInset = contentInset
     }
     
     /*
