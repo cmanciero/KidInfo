@@ -19,7 +19,9 @@ class HeightViewController: UIViewController, UITableViewDataSource, UITableView
     
     var kid: Kid? = nil;
     var height: Height? = nil;
-    var arrHeights: [Height] = [];
+    var arrHeights: [Double] = [];
+    var arrKidHeights: [Height] = [];
+    var arrDates: [Date] = [];
     var datePicker = UIDatePicker();
     let dateFormatter = DateFormatter();
     
@@ -33,7 +35,7 @@ class HeightViewController: UIViewController, UITableViewDataSource, UITableView
         heightTableView.delegate = self;
         
         // Do any additional setup after loading the view.
-//        btnSave.isEnabled = false;
+        btnSave.isEnabled = false;
         
         // create date picker
         createDatePicker();
@@ -54,17 +56,7 @@ class HeightViewController: UIViewController, UITableViewDataSource, UITableView
     }
     
     override func viewDidAppear(_ animated: Bool) {
-        // get context for CoreData
-        let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext;
         
-        do{
-            // fetch to get all kids
-            arrHeights = try context.fetch(Height.fetchRequest());
-            arrHeights.sort(by: { $0.date?.compare($1.date! as Date) == ComparisonResult.orderedDescending });
-            
-            // reload table view
-            heightTableView.reloadData();
-        } catch {}
     }
     
     //---------------------------------
@@ -149,12 +141,19 @@ class HeightViewController: UIViewController, UITableViewDataSource, UITableView
     /************************/
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return arrHeights.count;
+        var rowCount = 0;
+        
+        if(kid?.heights != nil){
+            rowCount = kid!.heights!.count;
+        }
+        
+        return rowCount;
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let ht: Height = ((kid!.heights!.array) as! [Height])[indexPath.row] as Height;
+        
         let cell = tableView.dequeueReusableCell(withIdentifier: "heightTableViewCell", for: indexPath) as! HeightTableViewCell;
-        let ht: Height = arrHeights[indexPath.row];
         
         // set height feet
         let feet = String(Int(ht.height / 12.0));
@@ -170,7 +169,7 @@ class HeightViewController: UIViewController, UITableViewDataSource, UITableView
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
         if(editingStyle == .delete){
             // delete row from allergy table
-            let ht = arrHeights[indexPath.row];
+            let ht = ((kid?.heights?.array) as! [Height])[indexPath.row] as Height;
             
             let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext;
             context.delete(ht);
@@ -211,6 +210,13 @@ class HeightViewController: UIViewController, UITableViewDataSource, UITableView
         appDelegate.saveContext();
         
         self.dismiss(animated: true, completion: nil);
+    }
+    @IBAction func checkForHeightVal(_ sender: Any) {
+        if(!txtFeet.text!.isEmpty || !txtInches.text!.isEmpty){
+            btnSave.isEnabled = true;
+        } else {
+            btnSave.isEnabled = false;
+        }
     }
     
     @IBAction func cancelTapped(_ sender: Any) {

@@ -19,7 +19,6 @@ class WeightViewController: UIViewController, UITableViewDelegate, UITableViewDa
     
     var kid: Kid? = nil;
     var weight: Weight? = nil;
-    var arrWeights: [Weight] = [];
     let datePicker = UIDatePicker();
     let dateFormatter = DateFormatter();
     
@@ -30,7 +29,7 @@ class WeightViewController: UIViewController, UITableViewDelegate, UITableViewDa
 //        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow(noti:)), name: NSNotification.Name.UIKeyboardWillShow, object: nil)
         
         // Do any additional setup after loading the view.
-        //        btnSave.isEnabled = false;
+        btnSave.isEnabled = false;
         
         // create date picker
         createDatePicker();
@@ -46,7 +45,6 @@ class WeightViewController: UIViewController, UITableViewDelegate, UITableViewDa
         
         if(weight != nil){
             btnSave.isEnabled = true;
-            
         }
     }
     
@@ -57,16 +55,24 @@ class WeightViewController: UIViewController, UITableViewDelegate, UITableViewDa
     
     override func viewDidAppear(_ animated: Bool) {
         // get context for CoreData
-        let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext;
+//        let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext;
         
-        do{
-            // fetch to get all kids
-            arrWeights = try context.fetch(Weight.fetchRequest());
-            arrWeights.sort(by: { $0.date?.compare($1.date! as Date) == ComparisonResult.orderedDescending });
-            
-            // reload table view
-            weightTableView.reloadData();
-        } catch {}
+//        if((kid?.weights?.count)! > 0){
+//            arrWeights = (kid?.weights)!;
+//            arrWeights.sort(by: { $0.date?.compare($1.date! as Date) == ComparisonResult.orderedDescending });
+//            
+//            // reload table view
+//            weightTableView.reloadData();
+//        }
+        
+//        do{
+//            // fetch to get all kids
+//            arrWeights = try context.fetch(kid?.weights.fetchRequest());
+//            arrWeights.sort(by: { $0.date?.compare($1.date! as Date) == ComparisonResult.orderedDescending });
+//            
+//            // reload table view
+//            weightTableView.reloadData();
+//        } catch {}
     }
     
     //---------------------------------
@@ -156,12 +162,20 @@ class WeightViewController: UIViewController, UITableViewDelegate, UITableViewDa
     /************************/
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return arrWeights.count;
+        var rowCount = 0;
+        
+        if(kid?.weights != nil){
+            rowCount = kid!.weights!.count;
+        }
+        
+        return rowCount;
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let wt: Weight = ((kid!.weights!.array) as! [Weight])[indexPath.row] as Weight;
+//        arrWeights.sort(by: { $0.date?.compare($1.date! as Date) == ComparisonResult.orderedDescending });
+
         let cell = tableView.dequeueReusableCell(withIdentifier: "weightTableViewCell", for: indexPath) as! WeightTableViewCell;
-        let wt: Weight = arrWeights[indexPath.row];
         
         // set pounds
         let pounds = String(Int(wt.weight));
@@ -181,13 +195,11 @@ class WeightViewController: UIViewController, UITableViewDelegate, UITableViewDa
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
         if(editingStyle == .delete){
             // delete row from allergy table
-            let wt = arrWeights[indexPath.row];
+            let wt = ((kid?.weights?.array) as! [Weight])[indexPath.row] as Weight;
             
             let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext;
             context.delete(wt);
             (UIApplication.shared.delegate as! AppDelegate).saveContext();
-            
-            arrWeights.remove(at: indexPath.row);
             
             weightTableView.reloadData();
         }
@@ -220,6 +232,13 @@ class WeightViewController: UIViewController, UITableViewDelegate, UITableViewDa
         self.dismiss(animated: true, completion: nil);
     }
     
+    @IBAction func checkForWeightVal(_ sender: Any) {
+        if(!txtPounds.text!.isEmpty || !txtOunces.text!.isEmpty){
+            btnSave.isEnabled = true;
+        } else {
+            btnSave.isEnabled = false;
+        }
+    }
     @IBAction func cancelTapped(_ sender: Any) {
         self.dismiss(animated: true, completion: nil);
     }

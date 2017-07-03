@@ -16,16 +16,27 @@ class MedicationViewController: UIViewController {
     @IBOutlet weak var txtType: UITextField!
     @IBOutlet weak var tvNotes: UITextView!
     @IBOutlet weak var scrollView: UIScrollView!
+    @IBOutlet weak var btnCheckMeds: UIButton!
+    @IBOutlet weak var titleBar: UINavigationItem!
     
     var kid: Kid? = nil;
     var medication: Medication? = nil;
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        print(kid);
+        
         // Do any additional setup after loading the view.
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide(noti:)), name: NSNotification.Name.UIKeyboardWillHide, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow(noti:)), name: NSNotification.Name.UIKeyboardWillShow, object: nil)
+        
+        if(medication != nil){
+            titleBar.title = "Update Medication"
+            txtDosage.text = medication!.dosage;
+            txtFreq.text = medication!.frequence;
+            tvNotes.text = medication!.howToTake;
+            txtName.text = medication!.name;
+            txtType.text = medication!.type;
+        }
     }
 
     override func didReceiveMemoryWarning() {
@@ -33,12 +44,41 @@ class MedicationViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
+    //---------------------------------
+    // MARK: - Actions
+    //---------------------------------
+    
     @IBAction func cancelTapped(_ sender: Any) {
         self.dismiss(animated: true, completion: nil);
     }
 
+    // save medication to kid
     @IBAction func saveTapped(_ sender: Any) {
+        let appDelegate = (UIApplication.shared.delegate as! AppDelegate);
+        
+        // if medication is not available
+        if(medication == nil){
+            let context = appDelegate.persistentContainer.viewContext;
+            medication = Medication(context: context);
+        }
+        
+        medication?.dosage = txtDosage.text;
+        medication?.frequence = txtFreq.text;
+        medication?.howToTake = tvNotes.text;
+        medication?.name = txtName.text;
+        medication?.type = txtType.text;
+        medication?.kid = kid;
+        
+        appDelegate.saveContext();
+        
         self.dismiss(animated: true, completion: nil);
+    }
+    
+    // open URL to check for drug interactions
+    @IBAction func checkMedsTapped(_ sender: Any) {
+        let url = URL(string: "https://www.drugs.com/drug_interactions.html")!;
+        
+        UIApplication.shared.open(url, options: [:], completionHandler: nil);
     }
     
     //---------------------------------

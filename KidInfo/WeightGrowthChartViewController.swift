@@ -12,6 +12,9 @@ import Charts
 class WeightGrowthChartViewController: UIViewController {
     var kid: Kid? = nil;
     var months: [String]!;
+    var arrKidWeights: [Weight]!;
+    var arrDates: [Date]! = [];
+    var arrWeights: [Double]! = [];
     
     @IBOutlet weak var lineChart: LineChartView!
     
@@ -20,10 +23,19 @@ class WeightGrowthChartViewController: UIViewController {
         super.viewDidLoad();
 
         // Do any additional setup after loading the view.
-        months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
-        let unitsSold = [20.0, 4.0, 6.0, 3.0, 12.0, 16.0, 4.0, 18.0, 2.0, 4.0, 5.0, 4.0]
+//        months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
+//        let unitsSold = [20.0, 4.0, 6.0, 3.0, 12.0, 16.0, 4.0, 18.0, 2.0, 4.0, 5.0, 4.0]
         
-        setChart(dataPoints: months, values: unitsSold);
+        if(kid?.weights != nil){
+            arrKidWeights = kid!.weights!.array as! [Weight];
+        }
+        
+        for wt in arrKidWeights{
+            arrDates.append(wt.date! as Date);
+            arrWeights.append(wt.weight);
+        }
+        
+        setChart(dataPoints: arrDates, values: arrWeights);
     }
 
     override func didReceiveMemoryWarning() {
@@ -31,7 +43,7 @@ class WeightGrowthChartViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
-    func setChart(dataPoints: [String], values: [Double]){
+    func setChart(dataPoints: [Date], values: [Double]){
         lineChart.noDataText = "You need to provide data for the chart";
         
         var dataEntries: [ChartDataEntry] = [];
@@ -44,7 +56,7 @@ class WeightGrowthChartViewController: UIViewController {
         lineChart.backgroundColor = UIColor(red: 189/255, green: 195/255, blue: 199/255, alpha: 1)
         lineChart.xAxis.labelPosition = .bottom;
         // display values on xaxis
-        lineChart.xAxis.valueFormatter = IndexAxisValueFormatter(values: dataPoints);
+//        lineChart.xAxis.valueFormatter = IndexAxisValueFormatter(values: dataPoints);
         lineChart.animate(xAxisDuration: 1.0, yAxisDuration: 1.0);
         
         let lineChartDataSet = LineChartDataSet(values: dataEntries, label: "Unites");
