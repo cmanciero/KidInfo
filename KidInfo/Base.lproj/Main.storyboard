@@ -1016,13 +1016,23 @@
                     <view key="view" contentMode="scaleToFill" id="V4D-F7-N0e">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="UWU-Xn-m1h" userLabel="LineChart" customClass="LineChartView" customModule="Charts">
+                                <rect key="frame" x="16" y="28" width="343" height="582"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            </view>
+                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
                     <tabBarItem key="tabBarItem" title="Growth Chart" image="chart" id="hxk-Lq-56B"/>
+                    <connections>
+                        <outlet property="lineChart" destination="UWU-Xn-m1h" id="8Nj-pK-Lmo"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Y2d-2F-mDR" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1847" y="1419"/>
+            <point key="canvasLocation" x="1845.5999999999999" y="1418.1409295352325"/>
         </scene>
         <!--Allergy View Controller-->
         <scene sceneID="hb1-R6-4jF">
