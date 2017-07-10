@@ -155,13 +155,16 @@ UIPickerViewDelegate, UIPickerViewDataSource{
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         // check for allergy table view
         if(tableView.isEqual(allergyTableView)){
-            selectedAllergy = (kid!.allergies!.array as! [Allergy])[indexPath.row] as Allergy;
+            let sortedAllergies = sortAllergies();
+            selectedAllergy = (sortedAllergies as! [Allergy])[indexPath.row] as Allergy;
             performSegue(withIdentifier: "allergySegue", sender: nil);
         } else if(tableView.isEqual(doctorTableView)) {
-            selectedDoctor = (kid!.doctors!.array as! [Doctor])[indexPath.row] as Doctor;
+            let sortedDoctors = sortDoctors();
+            selectedDoctor = (sortedDoctors as! [Doctor])[indexPath.row] as Doctor;
             performSegue(withIdentifier: "doctorSegue", sender: nil);
         } else if(tableView.isEqual(medicationTableView)) {
-            selectedMedication = (kid!.medications!.array as! [Medication])[indexPath.row] as Medication;
+            let sortedMedications = sortMedications();
+            selectedMedication = (sortedMedications as! [Medication])[indexPath.row] as Medication;
             performSegue(withIdentifier: "medicationSegue", sender: nil);
             
         }
@@ -192,7 +195,8 @@ UIPickerViewDelegate, UIPickerViewDataSource{
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = UITableViewCell();
         if(tableView.isEqual(allergyTableView)){
-            let allergy: Allergy = (kid!.allergies!.array as! [Allergy])[indexPath.row] as Allergy;
+            let sortedAllergies = sortAllergies();
+            let allergy: Allergy = (sortedAllergies as! [Allergy])[indexPath.row] as Allergy;
             
             cell.textLabel?.text = allergy.type;
             
@@ -203,10 +207,12 @@ UIPickerViewDelegate, UIPickerViewDataSource{
             
             cell.imageView?.image = image;
         } else if(tableView.isEqual(doctorTableView)) {
-            let doctor: Doctor = (kid!.doctors!.array as! [Doctor])[indexPath.row] as Doctor;
+            let sortedDoctors = sortDoctors();
+            let doctor: Doctor = (sortedDoctors as! [Doctor])[indexPath.row] as Doctor;
             cell.textLabel?.text = doctor.name;
         } else if(tableView.isEqual(medicationTableView)) {
-            let medication: Medication = (kid!.medications!.array as! [Medication])[indexPath.row] as Medication;
+            let sortedMedications = sortMedications();
+            let medication: Medication = (sortedMedications as! [Medication])[indexPath.row] as Medication;
             cell.textLabel?.text = medication.name;
         }
         
@@ -217,7 +223,8 @@ UIPickerViewDelegate, UIPickerViewDataSource{
         if(editingStyle == .delete){
             // delete row from allergy table
             if(tableView.isEqual(allergyTableView)){
-                let allergy = (kid!.allergies!.array as! [Allergy])[indexPath.row] as Allergy;
+                let sortedAllergies = sortAllergies();
+                let allergy = (sortedAllergies as! [Allergy])[indexPath.row] as Allergy;
                 
                 let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext;
                 context.delete(allergy);
@@ -230,7 +237,8 @@ UIPickerViewDelegate, UIPickerViewDataSource{
             }
                 // delete row from doctor table
             else if(tableView.isEqual(doctorTableView)){
-                let doctor = (kid!.doctors!.array as! [Doctor])[indexPath.row] as Doctor;
+                let sortedDoctors = sortDoctors();
+                let doctor = (sortedDoctors as! [Doctor])[indexPath.row] as Doctor;
                 
                 let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext;
                 context.delete(doctor);
@@ -243,7 +251,8 @@ UIPickerViewDelegate, UIPickerViewDataSource{
             }
                 // delete row from medication table
             else if(tableView.isEqual(medicationTableView)){
-                let medication = (kid!.medications!.array as! [Medication])[indexPath.row] as Medication;
+                let sortedMedications = sortMedications();
+                let medication = (sortedMedications as! [Medication])[indexPath.row] as Medication;
                 
                 let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext;
                 context.delete(medication);
@@ -388,6 +397,11 @@ UIPickerViewDelegate, UIPickerViewDataSource{
         }
     }
     
+    // sort allergies array
+    func sortAllergies() -> [Any]{
+        return kid!.allergies!.sortedArray(using: [NSSortDescriptor(key: "type", ascending: true)]);
+    }
+    
     // check if doctor table should be shown
     func checkDoctorTableView(){
         var doctorCount = 0;
@@ -407,6 +421,11 @@ UIPickerViewDelegate, UIPickerViewDataSource{
         }
     }
     
+    // sort doctors array
+    func sortDoctors() -> [Any]{
+        return kid!.doctors!.sortedArray(using: [NSSortDescriptor(key: "name", ascending: true)]);
+    }
+    
     // check if medication table should be shown
     func checkMedicationTableView(){
         var medicationCount = 0;
@@ -424,6 +443,11 @@ UIPickerViewDelegate, UIPickerViewDataSource{
             medicationTableView.isHidden = true;
             lblMedicationCount.text = "";
         }
+    }
+    
+    // sort medications array
+    func sortMedications() -> [Any]{
+        return kid!.medications!.sortedArray(using: [NSSortDescriptor(key: "name", ascending: true)]);
     }
     
     // create date picker for DOB

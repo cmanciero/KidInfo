@@ -54,25 +54,7 @@ class WeightViewController: UIViewController, UITableViewDelegate, UITableViewDa
     }
     
     override func viewDidAppear(_ animated: Bool) {
-        // get context for CoreData
-//        let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext;
         
-//        if((kid?.weights?.count)! > 0){
-//            arrWeights = (kid?.weights)!;
-//            arrWeights.sort(by: { $0.date?.compare($1.date! as Date) == ComparisonResult.orderedDescending });
-//            
-//            // reload table view
-//            weightTableView.reloadData();
-//        }
-        
-//        do{
-//            // fetch to get all kids
-//            arrWeights = try context.fetch(kid?.weights.fetchRequest());
-//            arrWeights.sort(by: { $0.date?.compare($1.date! as Date) == ComparisonResult.orderedDescending });
-//            
-//            // reload table view
-//            weightTableView.reloadData();
-//        } catch {}
     }
     
     //---------------------------------
@@ -157,6 +139,11 @@ class WeightViewController: UIViewController, UITableViewDelegate, UITableViewDa
         return weight;
     }
     
+    // sort the weight values
+    func sortWeightArray() -> [Any]{
+        return kid!.weights!.sortedArray(using: [NSSortDescriptor(key: "date", ascending: false)]);
+    }
+    
     /************************/
     // MARK: - tableView methods
     /************************/
@@ -172,7 +159,8 @@ class WeightViewController: UIViewController, UITableViewDelegate, UITableViewDa
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let wt: Weight = ((kid!.weights!.array) as! [Weight])[indexPath.row] as Weight;
+        let sortedWeightArray: [Any] = sortWeightArray();
+        let wt: Weight = (sortedWeightArray as! [Weight])[indexPath.row] as Weight;
 //        arrWeights.sort(by: { $0.date?.compare($1.date! as Date) == ComparisonResult.orderedDescending });
 
         let cell = tableView.dequeueReusableCell(withIdentifier: "weightTableViewCell", for: indexPath) as! WeightTableViewCell;
@@ -195,7 +183,8 @@ class WeightViewController: UIViewController, UITableViewDelegate, UITableViewDa
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
         if(editingStyle == .delete){
             // delete row from allergy table
-            let wt = ((kid?.weights?.array) as! [Weight])[indexPath.row] as Weight;
+            let sortedWeightArray: [Any] = sortWeightArray();
+            let wt = (sortedWeightArray as! [Weight])[indexPath.row] as Weight;
             
             let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext;
             context.delete(wt);

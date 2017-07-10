@@ -136,6 +136,11 @@ class HeightViewController: UIViewController, UITableViewDataSource, UITableView
         self.view.endEditing(true);
     }
     
+    // sort the height values
+    func sortHeightArray() -> [Any]{
+        return kid!.heights!.sortedArray(using: [NSSortDescriptor(key: "date", ascending: false)]);
+    }
+    
     /************************/
     // MARK: - tableView methods
     /************************/
@@ -151,7 +156,8 @@ class HeightViewController: UIViewController, UITableViewDataSource, UITableView
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let ht: Height = ((kid!.heights!.array) as! [Height])[indexPath.row] as Height;
+        let sortedHeightArray: [Any] = sortHeightArray();
+        let ht: Height = (sortedHeightArray as! [Height])[indexPath.row] as Height;
         
         let cell = tableView.dequeueReusableCell(withIdentifier: "heightTableViewCell", for: indexPath) as! HeightTableViewCell;
         
@@ -169,13 +175,13 @@ class HeightViewController: UIViewController, UITableViewDataSource, UITableView
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
         if(editingStyle == .delete){
             // delete row from allergy table
-            let ht = ((kid?.heights?.array) as! [Height])[indexPath.row] as Height;
+            let sortedHeightArray: [Any] = sortHeightArray();
+            let ht = (sortedHeightArray as! [Height])[indexPath.row] as Height;
             
             let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext;
             context.delete(ht);
             (UIApplication.shared.delegate as! AppDelegate).saveContext();
             
-            arrHeights.remove(at: indexPath.row);
             heightTableView.reloadData();
         }
     }
