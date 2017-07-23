@@ -17,6 +17,10 @@
 		954CE6851EE0AB6F00C1160F /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 954CE6831EE0AB6F00C1160F /* LaunchScreen.storyboard */; };
 		954CE6911EE0EEB700C1160F /* KidInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 954CE6901EE0EEB700C1160F /* KidInfoViewController.swift */; };
 		954CE6931EE1E4FD00C1160F /* KidTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 954CE6921EE1E4FD00C1160F /* KidTableViewCell.swift */; };
+		95630AE21F24273F00B45A08 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95630AE11F24273F00B45A08 /* SettingsViewController.swift */; };
+		95630AF01F243AF900B45A08 /* Pods_KidInfo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4AAE6004FEF714C3472B2D06 /* Pods_KidInfo.framework */; };
+		95630B011F243BF500B45A08 /* SwiftyDropbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 95630B001F243BBF00B45A08 /* SwiftyDropbox.framework */; };
+		95630B021F243BF500B45A08 /* SwiftyDropbox.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 95630B001F243BBF00B45A08 /* SwiftyDropbox.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		959C6B1D1EEAE38D00C32353 /* DoctorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 959C6B1C1EEAE38D00C32353 /* DoctorViewController.swift */; };
 		95CA48DE1EF0063D00401E07 /* WeightViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95CA48DD1EF0063D00401E07 /* WeightViewController.swift */; };
 		95CA48E01EF0078900401E07 /* HeightViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95CA48DF1EF0078900401E07 /* HeightViewController.swift */; };
@@ -31,6 +35,34 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		95630AFB1F243BBF00B45A08 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 95630AF41F243BBE00B45A08 /* Pods.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = ED4DAEB0BCE685657662A979BA6A221A;
+			remoteInfo = Alamofire;
+		};
+		95630AFD1F243BBF00B45A08 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 95630AF41F243BBE00B45A08 /* Pods.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 6737F7237CA0E0396733ACB7C61AB4C5;
+			remoteInfo = "Pods-KidInfo";
+		};
+		95630AFF1F243BBF00B45A08 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 95630AF41F243BBE00B45A08 /* Pods.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = DAC37F58B545615CD48776946D9FB645;
+			remoteInfo = SwiftyDropbox;
+		};
+		95630B031F243BF500B45A08 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 95630AF41F243BBE00B45A08 /* Pods.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = A174C2ECAFE1B7D58297B11AD61C418D;
+			remoteInfo = SwiftyDropbox;
+		};
 		95CA49021EF5F77A00401E07 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 95CA48ED1EF5F76300401E07 /* Charts.xcodeproj */;
@@ -62,6 +94,7 @@
 			dstSubfolderSpec = 10;
 			files = (
 				95CA490C1EF5F7FE00401E07 /* Charts.framework in Embed Frameworks */,
+				95630B021F243BF500B45A08 /* SwiftyDropbox.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -69,6 +102,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		4AAE6004FEF714C3472B2D06 /* Pods_KidInfo.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_KidInfo.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		951FEF251EF85EAD00067E1C /* MedicationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MedicationViewController.swift; sourceTree = "<group>"; };
 		9537B1C71EE878DF00CF5E1B /* AllergyViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AllergyViewController.swift; sourceTree = "<group>"; };
 		954CE6741EE0AB6F00C1160F /* KidInfo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = KidInfo.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -81,6 +115,9 @@
 		954CE6861EE0AB6F00C1160F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		954CE6901EE0EEB700C1160F /* KidInfoViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KidInfoViewController.swift; sourceTree = "<group>"; };
 		954CE6921EE1E4FD00C1160F /* KidTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KidTableViewCell.swift; sourceTree = "<group>"; };
+		95630AE11F24273F00B45A08 /* SettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
+		95630AE71F24348000B45A08 /* KidInfo.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = KidInfo.entitlements; sourceTree = "<group>"; };
+		95630AF41F243BBE00B45A08 /* Pods.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Pods.xcodeproj; path = Pods/Pods.xcodeproj; sourceTree = "<group>"; };
 		959C6B1C1EEAE38D00C32353 /* DoctorViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DoctorViewController.swift; sourceTree = "<group>"; };
 		95CA48DD1EF0063D00401E07 /* WeightViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WeightViewController.swift; sourceTree = "<group>"; };
 		95CA48DF1EF0078900401E07 /* HeightViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HeightViewController.swift; sourceTree = "<group>"; };
@@ -91,6 +128,8 @@
 		95CA48E91EF4BF2100401E07 /* WeightTabBarController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WeightTabBarController.swift; sourceTree = "<group>"; };
 		95CA48EB1EF4C33500401E07 /* HeightTabBarController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HeightTabBarController.swift; sourceTree = "<group>"; };
 		95CA48ED1EF5F76300401E07 /* Charts.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Charts.xcodeproj; path = Charts/Charts.xcodeproj; sourceTree = "<group>"; };
+		E1EA76A39929D7507E4325F1 /* Pods-KidInfo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-KidInfo.release.xcconfig"; path = "Pods/Target Support Files/Pods-KidInfo/Pods-KidInfo.release.xcconfig"; sourceTree = "<group>"; };
+		EA5BC5BE0D3567B89DC46D6E /* Pods-KidInfo.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-KidInfo.debug.xcconfig"; path = "Pods/Target Support Files/Pods-KidInfo/Pods-KidInfo.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -99,6 +138,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				95CA490B1EF5F7FE00401E07 /* Charts.framework in Frameworks */,
+				95630B011F243BF500B45A08 /* SwiftyDropbox.framework in Frameworks */,
+				95630AF01F243AF900B45A08 /* Pods_KidInfo.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -165,8 +206,11 @@
 			isa = PBXGroup;
 			children = (
 				954CE6761EE0AB6F00C1160F /* KidInfo */,
-				954CE6751EE0AB6F00C1160F /* Products */,
 				95CA48ED1EF5F76300401E07 /* Charts.xcodeproj */,
+				DC4192AF4663B11DC5674548 /* Frameworks */,
+				9BB2A1F309D37A9684F585CA /* Pods */,
+				95630AF41F243BBE00B45A08 /* Pods.xcodeproj */,
+				954CE6751EE0AB6F00C1160F /* Products */,
 			);
 			sourceTree = "<group>";
 		};
@@ -181,6 +225,7 @@
 		954CE6761EE0AB6F00C1160F /* KidInfo */ = {
 			isa = PBXGroup;
 			children = (
+				95630AE71F24348000B45A08 /* KidInfo.entitlements */,
 				954CE68D1EE0EB7B00C1160F /* ViewControllers */,
 				954CE68C1EE0EB7300C1160F /* classes */,
 				954CE6771EE0AB6F00C1160F /* AppDelegate.swift */,
@@ -203,14 +248,33 @@
 		954CE68D1EE0EB7B00C1160F /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
-				951FEF231EF758BD00067E1C /* Medication */,
 				951FEF1F1EF6D24500067E1C /* Allergy */,
 				951FEF201EF6D25100067E1C /* Doctor */,
 				951FEF1D1EF6D1FF00067E1C /* Height */,
 				951FEF1E1EF6D23900067E1C /* Kids */,
+				951FEF231EF758BD00067E1C /* Medication */,
+				95630AE41F24278700B45A08 /* Settings */,
 				951FEF1B1EF6D1F000067E1C /* Weight */,
 			);
 			name = ViewControllers;
+			sourceTree = "<group>";
+		};
+		95630AE41F24278700B45A08 /* Settings */ = {
+			isa = PBXGroup;
+			children = (
+				95630AE11F24273F00B45A08 /* SettingsViewController.swift */,
+			);
+			name = Settings;
+			sourceTree = "<group>";
+		};
+		95630AF51F243BBE00B45A08 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				95630AFC1F243BBF00B45A08 /* Alamofire.framework */,
+				95630AFE1F243BBF00B45A08 /* Pods_KidInfo.framework */,
+				95630B001F243BBF00B45A08 /* SwiftyDropbox.framework */,
+			);
+			name = Products;
 			sourceTree = "<group>";
 		};
 		95CA48FE1EF5F77A00401E07 /* Products */ = {
@@ -222,6 +286,23 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
+		9BB2A1F309D37A9684F585CA /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				EA5BC5BE0D3567B89DC46D6E /* Pods-KidInfo.debug.xcconfig */,
+				E1EA76A39929D7507E4325F1 /* Pods-KidInfo.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
+		DC4192AF4663B11DC5674548 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				4AAE6004FEF714C3472B2D06 /* Pods_KidInfo.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -229,15 +310,19 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 954CE6891EE0AB6F00C1160F /* Build configuration list for PBXNativeTarget "KidInfo" */;
 			buildPhases = (
+				030EC982383CE7A0D7D5DA75 /* [CP] Check Pods Manifest.lock */,
 				954CE6701EE0AB6F00C1160F /* Sources */,
 				954CE6711EE0AB6F00C1160F /* Frameworks */,
 				954CE6721EE0AB6F00C1160F /* Resources */,
 				95CA490F1EF5F7FE00401E07 /* Embed Frameworks */,
+				AB1794D27A4DB7FB3ECBF4A6 /* [CP] Embed Pods Frameworks */,
+				AEC15570FD57CAB98D99BDAD /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
 			dependencies = (
 				95CA490E1EF5F7FE00401E07 /* PBXTargetDependency */,
+				95630B041F243BF500B45A08 /* PBXTargetDependency */,
 			);
 			name = KidInfo;
 			productName = KidInfo;
@@ -258,6 +343,11 @@
 						CreatedOnToolsVersion = 8.3.2;
 						DevelopmentTeam = YZSE9EKZ5C;
 						ProvisioningStyle = Automatic;
+						SystemCapabilities = {
+							com.apple.Keychain = {
+								enabled = 1;
+							};
+						};
 					};
 				};
 			};
@@ -277,6 +367,10 @@
 					ProductGroup = 95CA48FE1EF5F77A00401E07 /* Products */;
 					ProjectRef = 95CA48ED1EF5F76300401E07 /* Charts.xcodeproj */;
 				},
+				{
+					ProductGroup = 95630AF51F243BBE00B45A08 /* Products */;
+					ProjectRef = 95630AF41F243BBE00B45A08 /* Pods.xcodeproj */;
+				},
 			);
 			projectRoot = "";
 			targets = (
@@ -286,6 +380,27 @@
 /* End PBXProject section */
 
 /* Begin PBXReferenceProxy section */
+		95630AFC1F243BBF00B45A08 /* Alamofire.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = Alamofire.framework;
+			remoteRef = 95630AFB1F243BBF00B45A08 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		95630AFE1F243BBF00B45A08 /* Pods_KidInfo.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = Pods_KidInfo.framework;
+			remoteRef = 95630AFD1F243BBF00B45A08 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		95630B001F243BBF00B45A08 /* SwiftyDropbox.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = SwiftyDropbox.framework;
+			remoteRef = 95630AFF1F243BBF00B45A08 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
 		95CA49031EF5F77A00401E07 /* Charts.framework */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.framework;
@@ -315,6 +430,54 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		030EC982383CE7A0D7D5DA75 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		AB1794D27A4DB7FB3ECBF4A6 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-KidInfo/Pods-KidInfo-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		AEC15570FD57CAB98D99BDAD /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-KidInfo/Pods-KidInfo-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		954CE6701EE0AB6F00C1160F /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
@@ -332,6 +495,7 @@
 				95CA48E41EF063B100401E07 /* HeightTableViewCell.swift in Sources */,
 				95CA48E61EF4BD0100401E07 /* WeightGrowthChartViewController.swift in Sources */,
 				954CE6931EE1E4FD00C1160F /* KidTableViewCell.swift in Sources */,
+				95630AE21F24273F00B45A08 /* SettingsViewController.swift in Sources */,
 				954CE6801EE0AB6F00C1160F /* KidInfo.xcdatamodeld in Sources */,
 				95CA48E21EF062B400401E07 /* WeightTableViewCell.swift in Sources */,
 				95CA48E81EF4BD5200401E07 /* HeightGrowthChartViewController.swift in Sources */,
@@ -342,6 +506,11 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		95630B041F243BF500B45A08 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = SwiftyDropbox;
+			targetProxy = 95630B031F243BF500B45A08 /* PBXContainerItemProxy */;
+		};
 		95CA490E1EF5F7FE00401E07 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			name = Charts;
@@ -466,9 +635,11 @@
 		};
 		954CE68A1EE0AB6F00C1160F /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = EA5BC5BE0D3567B89DC46D6E /* Pods-KidInfo.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = KidInfo/KidInfo.entitlements;
 				DEVELOPMENT_TEAM = YZSE9EKZ5C;
 				INFOPLIST_FILE = KidInfo/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -480,9 +651,11 @@
 		};
 		954CE68B1EE0AB6F00C1160F /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = E1EA76A39929D7507E4325F1 /* Pods-KidInfo.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = KidInfo/KidInfo.entitlements;
 				DEVELOPMENT_TEAM = YZSE9EKZ5C;
 				INFOPLIST_FILE = KidInfo/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
