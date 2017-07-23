@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import SwiftyDropbox
 
 class SettingsViewController: UIViewController {
 
@@ -26,13 +25,6 @@ class SettingsViewController: UIViewController {
     
     @IBAction func doneTapped(_ sender: Any) {
         self.dismiss(animated: true, completion: nil);
-    }
-    @IBAction func authorizeDropbox(_ sender: Any) {
-        DropboxClientsManager.authorizeFromController(UIApplication.shared,
-                                                      controller: self,
-                                                      openURL: { (url: URL) -> Void in
-                                                        UIApplication.shared.open(url);
-        });
     }
 
     /*
