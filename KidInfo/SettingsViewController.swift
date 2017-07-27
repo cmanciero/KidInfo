@@ -27,6 +27,10 @@ class SettingsViewController: UIViewController {
         self.dismiss(animated: true, completion: nil);
     }
 
+    @IBAction func fetchFromCloud(_ sender: Any) {
+        
+    }
+    
     /*
     // MARK: - Navigation
 
