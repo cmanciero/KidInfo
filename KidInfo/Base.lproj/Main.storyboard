@@ -858,7 +858,11 @@
                                 <rect key="frame" x="0.0" y="20" width="375" height="44"/>
                                 <items>
                                     <navigationItem title="Growth Chart" id="EJo-jL-GDC">
-                                        <barButtonItem key="leftBarButtonItem" title="Close" id="LEe-CT-1Xr"/>
+                                        <barButtonItem key="leftBarButtonItem" title="Close" id="LEe-CT-1Xr">
+                                            <connections>
+                                                <action selector="closeTapped:" destination="c5N-gJ-nAs" id="q7Q-Um-BhN"/>
+                                            </connections>
+                                        </barButtonItem>
                                     </navigationItem>
                                 </items>
                             </navigationBar>
@@ -877,6 +881,7 @@
                     <extendedEdge key="edgesForExtendedLayout" bottom="YES"/>
                     <tabBarItem key="tabBarItem" title="Growth Chart" image="chart" id="MwM-lR-VtR"/>
                     <connections>
+                        <outlet property="btnClose" destination="LEe-CT-1Xr" id="Ext-2D-or9"/>
                         <outlet property="lineChart" destination="xVw-4H-XNL" id="NWe-al-dmy"/>
                     </connections>
                 </viewController>
@@ -1041,7 +1046,11 @@
                                 <rect key="frame" x="0.0" y="20" width="375" height="44"/>
                                 <items>
                                     <navigationItem title="Growth Chart" id="n9E-Hc-9kE">
-                                        <barButtonItem key="leftBarButtonItem" title="Close" id="w2r-8P-gUp"/>
+                                        <barButtonItem key="leftBarButtonItem" title="Close" id="w2r-8P-gUp">
+                                            <connections>
+                                                <action selector="closeTapped:" destination="iqN-tq-Hy9" id="01c-HG-d5v"/>
+                                            </connections>
+                                        </barButtonItem>
                                     </navigationItem>
                                 </items>
                             </navigationBar>
@@ -1059,6 +1068,7 @@
                     </view>
                     <tabBarItem key="tabBarItem" title="Growth Chart" image="chart" id="hxk-Lq-56B"/>
                     <connections>
+                        <outlet property="btnClose" destination="w2r-8P-gUp" id="IRt-6N-DtH"/>
                         <outlet property="lineChart" destination="UWU-Xn-m1h" id="8Nj-pK-Lmo"/>
                     </connections>
                 </viewController>
