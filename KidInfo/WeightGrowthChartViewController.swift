@@ -17,6 +17,7 @@ class WeightGrowthChartViewController: UIViewController {
     var arrWeights: [Double]! = [];
     
     @IBOutlet weak var lineChart: LineChartView!
+    @IBOutlet weak var btnClose: UIBarButtonItem!
     
    
     override func viewDidLoad() {
@@ -69,6 +70,9 @@ class WeightGrowthChartViewController: UIViewController {
         lineChart.chartDescription?.text = "";
     }
     
+    @IBAction func closeTapped(_ sender: Any) {
+        self.dismiss(animated: true, completion: nil);
+    }
 
     /*
     // MARK: - Navigation

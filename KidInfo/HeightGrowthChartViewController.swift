@@ -17,6 +17,7 @@ class HeightGrowthChartViewController: UIViewController {
     var arrHeights: [Double]! = [];
 
     @IBOutlet weak var lineChart: LineChartView!
+    @IBOutlet weak var btnClose: UIBarButtonItem!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -69,6 +70,9 @@ class HeightGrowthChartViewController: UIViewController {
         return nHeight;
     }
     
+    @IBAction func closeTapped(_ sender: Any) {
+        self.dismiss(animated: true, completion: nil);
+    }
 
     /*
     // MARK: - Navigation

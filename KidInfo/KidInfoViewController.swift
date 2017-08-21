@@ -142,8 +142,10 @@ UIPickerViewDelegate, UIPickerViewDataSource{
                 }
             }
             
-            // reload kid data
-            loadKidInfo();
+            if(kid != nil){
+                // reload kid data
+                loadKidInfo();
+            }
             
         } catch {}
     }
@@ -298,7 +300,6 @@ UIPickerViewDelegate, UIPickerViewDataSource{
         btnSave.isEnabled = true;
         txtName.text = kid!.name;
         titleName.title = txtName.text;
-        
         btnDelete.isHidden = false;
         
         // check if avatar is set
@@ -390,9 +391,11 @@ UIPickerViewDelegate, UIPickerViewDataSource{
                 allergyTableView.isHidden = false;
             }
             
+            lblAllergyCount.isHidden = false;
             lblAllergyCount.text = "(\(allergyCount))";
         } else {
             allergyTableView.isHidden = true;
+            lblAllergyCount.isHidden = true;
             lblAllergyCount.text = "";
         }
     }
@@ -413,10 +416,11 @@ UIPickerViewDelegate, UIPickerViewDataSource{
             if(doctorTableView.isHidden){
                 doctorTableView.isHidden = false;
             }
-            
+            lblDoctorCount.isHidden = false;
             lblDoctorCount.text = "(\(doctorCount))";
         } else {
             doctorTableView.isHidden = true;
+            lblDoctorCount.isHidden = true;
             lblDoctorCount.text = "";
         }
     }
@@ -438,9 +442,11 @@ UIPickerViewDelegate, UIPickerViewDataSource{
                 medicationTableView.isHidden = false;
             }
             
+            lblMedicationCount.isHidden = false;
             lblMedicationCount.text = "(\(medicationCount))";
         } else {
             medicationTableView.isHidden = true;
+            lblMedicationCount.isHidden = true;
             lblMedicationCount.text = "";
         }
     }
