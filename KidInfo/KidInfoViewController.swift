@@ -27,7 +27,6 @@ UIPickerViewDelegate, UIPickerViewDataSource{
     @IBOutlet weak var allergyTableView: UITableView!
     @IBOutlet weak var doctorTableView: UITableView!
     @IBOutlet weak var medicationTableView: UITableView!
-    @IBOutlet weak var btnSave: UIBarButtonItem!
     @IBOutlet weak var txtBloodType: UITextField!
     @IBOutlet weak var lblAllergies: UILabel!
     @IBOutlet weak var lblDoctors: UILabel!
@@ -93,9 +92,6 @@ UIPickerViewDelegate, UIPickerViewDataSource{
         bloodTypePicker.dataSource = self;
         bloodTypePicker.delegate = self;
         createBloodTypePicker();
-        
-        // disable save button
-        btnSave.isEnabled = false;
         
         // check if kid exist
         if(kid != nil){
@@ -294,10 +290,47 @@ UIPickerViewDelegate, UIPickerViewDataSource{
     // MARK: - Functions
     /************************/
     
+    // save kid information
+    func saveKidInfo(){
+        // check if kid name is empty, if so don't save
+        if(!txtName.text!.isEmpty){
+            if(kid != nil){
+                kid!.name = txtName.text;
+                kid!.avatar = UIImagePNGRepresentation(btnAvatar.backgroundImage(for: .normal)!)! as NSData;
+                
+                // save DOB
+                kid!.dob = dobPicker.date as NSDate;
+                
+                // save blood type
+                kid!.bloodType = txtBloodType.text;
+            } else {
+                let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext;
+                
+                kid = Kid(context: context);
+                kid!.name = txtName.text;
+                
+                // check if avatar image was set
+                if(btnAvatar.backgroundImage(for: .normal) != nil){
+                    kid!.avatar = UIImagePNGRepresentation(btnAvatar.backgroundImage(for: .normal)!)! as NSData;
+                }
+                
+                // save DOB
+                if(txtDOB.text != nil && txtDOB.text != ""){
+                    kid!.dob = dobPicker.date as NSDate;
+                }
+                
+                // save blood type
+                if(txtBloodType.text != nil && txtBloodType.text != ""){
+                    kid!.bloodType = txtBloodType.text;
+                }
+            }
+            
+            (UIApplication.shared.delegate as! AppDelegate).saveContext();
+        }
+    }
+    
     // load kid information
     func loadKidInfo(){
-        // disable save button
-        btnSave.isEnabled = true;
         txtName.text = kid!.name;
         titleName.title = txtName.text;
         btnDelete.isHidden = false;
@@ -529,12 +562,18 @@ UIPickerViewDelegate, UIPickerViewDataSource{
         
         btnAvatar.setBackgroundImage(image, for: .normal);
         imagePicker.dismiss(animated: true, completion: nil);
+        
+        // save image for kid
+        saveKidInfo();
     }
     
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         // Get the new view controller using segue.destinationViewController.
         // Pass the selected object to the new view controller.
+        
+        // save kid information
+        saveKidInfo();
         
         if(segue.identifier == "allergySegue"){
             let nextVC: AllergyViewController = segue.destination as! AllergyViewController;
@@ -589,12 +628,10 @@ UIPickerViewDelegate, UIPickerViewDataSource{
     // MARK: - Actions
     /************************/
     
-    // check to see if a kid name exists
-    @IBAction func checkForName(_ sender: Any) {
-        if(txtName.text!.isEmpty){
-            btnSave.isEnabled = false;
-        } else {
-            btnSave.isEnabled = true;
+    // fire when value changes
+    @IBAction func valueChanged(_ sender: Any) {
+        if(!txtName.text!.isEmpty){
+            saveKidInfo();
         }
     }
     
@@ -612,44 +649,6 @@ UIPickerViewDelegate, UIPickerViewDataSource{
     // Add doctor
     @IBAction func addDoctorTapped(_ sender: Any) {
         selectedDoctor = nil;
-    }
-    
-    // Save kid
-    @IBAction func saveTapped(_ sender: Any) {
-        if(kid != nil){
-            kid!.name = txtName.text;
-            kid!.avatar = UIImagePNGRepresentation(btnAvatar.backgroundImage(for: .normal)!)! as NSData;
-            
-            // save DOB
-            kid!.dob = dobPicker.date as NSDate;
-            
-            // save blood type
-            kid!.bloodType = txtBloodType.text;
-        } else {
-            let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext;
-            
-            let kid = Kid(context: context);
-            kid.name = txtName.text;
-            
-            // check if avatar image was set
-            if(btnAvatar.backgroundImage(for: .normal) != nil){
-                kid.avatar = UIImagePNGRepresentation(btnAvatar.backgroundImage(for: .normal)!)! as NSData;
-            }
-            
-            // save DOB
-            if(txtDOB.text != nil && txtDOB.text != ""){
-                kid.dob = dobPicker.date as NSDate;
-            }
-            
-            // save blood type
-            if(txtBloodType.text != nil && txtBloodType.text != ""){
-                kid.bloodType = txtBloodType.text;
-            }
-        }
-        
-        (UIApplication.shared.delegate as! AppDelegate).saveContext();
-        
-        navigationController?.popViewController(animated: true);
     }
     
     // change/set avatar image

@@ -30,7 +30,7 @@ class WeightGrowthChartViewController: UIViewController {
         if(kid?.weights != nil){
             arrKidWeights = kid!.weights!.array as! [Weight];
         }
-        
+        print(arrKidWeights);
         for wt in arrKidWeights{
             arrDates.append(wt.date! as Date);
             arrWeights.append(wt.weight);
