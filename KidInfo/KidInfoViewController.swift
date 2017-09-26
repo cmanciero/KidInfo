@@ -27,6 +27,7 @@ UIPickerViewDelegate, UIPickerViewDataSource{
     @IBOutlet weak var allergyTableView: UITableView!
     @IBOutlet weak var doctorTableView: UITableView!
     @IBOutlet weak var medicationTableView: UITableView!
+    @IBOutlet weak var btnSave: UIBarButtonItem!
     @IBOutlet weak var txtBloodType: UITextField!
     @IBOutlet weak var lblAllergies: UILabel!
     @IBOutlet weak var lblDoctors: UILabel!
@@ -93,10 +94,8 @@ UIPickerViewDelegate, UIPickerViewDataSource{
         bloodTypePicker.delegate = self;
         createBloodTypePicker();
         
-        // check if kid exist
-        if(kid != nil){
-            loadKidInfo();
-        }
+        // disable save button
+        btnSave.isEnabled = false;
     }
     
     override func didReceiveMemoryWarning() {
@@ -138,8 +137,8 @@ UIPickerViewDelegate, UIPickerViewDataSource{
                 }
             }
             
+            // reload kid data
             if(kid != nil){
-                // reload kid data
                 loadKidInfo();
             }
             
@@ -290,49 +289,13 @@ UIPickerViewDelegate, UIPickerViewDataSource{
     // MARK: - Functions
     /************************/
     
-    // save kid information
-    func saveKidInfo(){
-        // check if kid name is empty, if so don't save
-        if(!txtName.text!.isEmpty){
-            if(kid != nil){
-                kid!.name = txtName.text;
-                kid!.avatar = UIImagePNGRepresentation(btnAvatar.backgroundImage(for: .normal)!)! as NSData;
-                
-                // save DOB
-                kid!.dob = dobPicker.date as NSDate;
-                
-                // save blood type
-                kid!.bloodType = txtBloodType.text;
-            } else {
-                let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext;
-                
-                kid = Kid(context: context);
-                kid!.name = txtName.text;
-                
-                // check if avatar image was set
-                if(btnAvatar.backgroundImage(for: .normal) != nil){
-                    kid!.avatar = UIImagePNGRepresentation(btnAvatar.backgroundImage(for: .normal)!)! as NSData;
-                }
-                
-                // save DOB
-                if(txtDOB.text != nil && txtDOB.text != ""){
-                    kid!.dob = dobPicker.date as NSDate;
-                }
-                
-                // save blood type
-                if(txtBloodType.text != nil && txtBloodType.text != ""){
-                    kid!.bloodType = txtBloodType.text;
-                }
-            }
-            
-            (UIApplication.shared.delegate as! AppDelegate).saveContext();
-        }
-    }
-    
     // load kid information
     func loadKidInfo(){
+        // disable save button
+        btnSave.isEnabled = true;
         txtName.text = kid!.name;
         titleName.title = txtName.text;
+        
         btnDelete.isHidden = false;
         
         // check if avatar is set
@@ -424,11 +387,9 @@ UIPickerViewDelegate, UIPickerViewDataSource{
                 allergyTableView.isHidden = false;
             }
             
-            lblAllergyCount.isHidden = false;
             lblAllergyCount.text = "(\(allergyCount))";
         } else {
             allergyTableView.isHidden = true;
-            lblAllergyCount.isHidden = true;
             lblAllergyCount.text = "";
         }
     }
@@ -449,11 +410,10 @@ UIPickerViewDelegate, UIPickerViewDataSource{
             if(doctorTableView.isHidden){
                 doctorTableView.isHidden = false;
             }
-            lblDoctorCount.isHidden = false;
+            
             lblDoctorCount.text = "(\(doctorCount))";
         } else {
             doctorTableView.isHidden = true;
-            lblDoctorCount.isHidden = true;
             lblDoctorCount.text = "";
         }
     }
@@ -475,11 +435,9 @@ UIPickerViewDelegate, UIPickerViewDataSource{
                 medicationTableView.isHidden = false;
             }
             
-            lblMedicationCount.isHidden = false;
             lblMedicationCount.text = "(\(medicationCount))";
         } else {
             medicationTableView.isHidden = true;
-            lblMedicationCount.isHidden = true;
             lblMedicationCount.text = "";
         }
     }
@@ -515,7 +473,7 @@ UIPickerViewDelegate, UIPickerViewDataSource{
     }
     
     // Done clicked for DOB picker
-    func dobDonePressed(){
+    @objc func dobDonePressed(){
         // format results
         let dateFormatter = DateFormatter();
         dateFormatter.dateStyle = .medium;
@@ -546,13 +504,13 @@ UIPickerViewDelegate, UIPickerViewDataSource{
     }
     
     // Done pressed for Blood Type
-    func bloodTypeDonePressed(){
+    @objc func bloodTypeDonePressed(){
         txtBloodType.text = aBloodTypes[bloodTypePicker.selectedRow(inComponent: 0)];
         closePicker();
     }
     
     // Close all pickers
-    func closePicker(){
+    @objc func closePicker(){
         self.view.endEditing(true);
     }
     
@@ -562,18 +520,12 @@ UIPickerViewDelegate, UIPickerViewDataSource{
         
         btnAvatar.setBackgroundImage(image, for: .normal);
         imagePicker.dismiss(animated: true, completion: nil);
-        
-        // save image for kid
-        saveKidInfo();
     }
     
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         // Get the new view controller using segue.destinationViewController.
         // Pass the selected object to the new view controller.
-        
-        // save kid information
-        saveKidInfo();
         
         if(segue.identifier == "allergySegue"){
             let nextVC: AllergyViewController = segue.destination as! AllergyViewController;
@@ -628,10 +580,12 @@ UIPickerViewDelegate, UIPickerViewDataSource{
     // MARK: - Actions
     /************************/
     
-    // fire when value changes
-    @IBAction func valueChanged(_ sender: Any) {
-        if(!txtName.text!.isEmpty){
-            saveKidInfo();
+    // check to see if a kid name exists
+    @IBAction func checkForName(_ sender: Any) {
+        if(txtName.text!.isEmpty){
+            btnSave.isEnabled = false;
+        } else {
+            btnSave.isEnabled = true;
         }
     }
     
@@ -649,6 +603,46 @@ UIPickerViewDelegate, UIPickerViewDataSource{
     // Add doctor
     @IBAction func addDoctorTapped(_ sender: Any) {
         selectedDoctor = nil;
+    }
+    
+    // Save kid
+    @IBAction func saveTapped(_ sender: Any) {
+        if(kid != nil){
+            kid!.name = txtName.text;
+            if(btnAvatar.backgroundImage(for: .normal) != nil){
+                kid!.avatar = UIImagePNGRepresentation(btnAvatar.backgroundImage(for: .normal)!)!;// as NSData;
+            }
+            
+            // save DOB
+            kid!.dob = dobPicker.date;// as NSDate;
+            
+            // save blood type
+            kid!.bloodType = txtBloodType.text;
+        } else {
+            let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext;
+            
+            let kid = Kid(context: context);
+            kid.name = txtName.text;
+            
+            // check if avatar image was set
+            if(btnAvatar.backgroundImage(for: .normal) != nil){
+                kid.avatar = UIImagePNGRepresentation(btnAvatar.backgroundImage(for: .normal)!)!;// as NSData;
+            }
+            
+            // save DOB
+            if(txtDOB.text != nil && txtDOB.text != ""){
+                kid.dob = dobPicker.date;// as NSDate;
+            }
+            
+            // save blood type
+            if(txtBloodType.text != nil && txtBloodType.text != ""){
+                kid.bloodType = txtBloodType.text;
+            }
+        }
+        
+        (UIApplication.shared.delegate as! AppDelegate).saveContext();
+        
+        navigationController?.popViewController(animated: true);
     }
     
     // change/set avatar image

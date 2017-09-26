@@ -59,13 +59,13 @@ class AllergyViewController: UIViewController {
     // MARK: - Notification Center
     //---------------------------------
     
-    func keyboardWillHide(noti: Notification) {
+    @objc func keyboardWillHide(noti: Notification) {
         let contentInsets = UIEdgeInsets.zero
         scrollView.contentInset = contentInsets
         scrollView.scrollIndicatorInsets = contentInsets
     }
     
-    func keyboardWillShow(noti: Notification) {
+    @objc func keyboardWillShow(noti: Notification) {
         
         guard let userInfo = noti.userInfo else { return }
         guard var keyboardFrame: CGRect = (userInfo[UIKeyboardFrameBeginUserInfoKey] as? NSValue)?.cgRectValue else { return }
