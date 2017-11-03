@@ -125,14 +125,14 @@ class HeightViewController: UIViewController, UITableViewDataSource, UITableView
     }
     
     // Done clicked for DOB picker
-    func dateDonePressed(){
+    @objc func dateDonePressed(){
         // format results
         txtDate.text = dateFormatter.string(from: datePicker.date);
         closePicker();
     }
     
     // Close all pickers
-    func closePicker(){
+    @objc func closePicker(){
         self.view.endEditing(true);
     }
     
@@ -210,7 +210,7 @@ class HeightViewController: UIViewController, UITableViewDataSource, UITableView
             height!.height = calcHeight;
         }
         
-        height!.date = datePicker.date as NSDate;
+        height!.date = datePicker.date;// as NSDate;
         height!.kid = kid;
         
         appDelegate.saveContext();

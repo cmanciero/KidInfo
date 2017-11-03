@@ -17,7 +17,6 @@ class WeightGrowthChartViewController: UIViewController {
     var arrWeights: [Double]! = [];
     
     @IBOutlet weak var lineChart: LineChartView!
-    @IBOutlet weak var btnClose: UIBarButtonItem!
     
    
     override func viewDidLoad() {
@@ -30,7 +29,7 @@ class WeightGrowthChartViewController: UIViewController {
         if(kid?.weights != nil){
             arrKidWeights = kid!.weights!.array as! [Weight];
         }
-        print(arrKidWeights);
+        
         for wt in arrKidWeights{
             arrDates.append(wt.date! as Date);
             arrWeights.append(wt.weight);
@@ -70,9 +69,6 @@ class WeightGrowthChartViewController: UIViewController {
         lineChart.chartDescription?.text = "";
     }
     
-    @IBAction func closeTapped(_ sender: Any) {
-        self.dismiss(animated: true, completion: nil);
-    }
 
     /*
     // MARK: - Navigation

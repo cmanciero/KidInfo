@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12121" systemVersion="16G29" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="fud-AF-oN2">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12121" systemVersion="16F73" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="fud-AF-oN2">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
@@ -92,7 +92,7 @@
             </objects>
             <point key="canvasLocation" x="712.79999999999995" y="-545.57721139430294"/>
         </scene>
-        <!--Add Kid-->
+        <!--Kid Info View Controller-->
         <scene sceneID="j4I-xj-NjM">
             <objects>
                 <viewController automaticallyAdjustsScrollViewInsets="NO" id="fzg-PN-b9J" customClass="KidInfoViewController" customModule="KidInfo" customModuleProvider="target" sceneMemberID="viewController">
@@ -125,7 +125,6 @@
                                                 </state>
                                                 <connections>
                                                     <action selector="avatarTapped:" destination="fzg-PN-b9J" eventType="touchUpInside" id="pFw-Ip-rNl"/>
-                                                    <action selector="valueChanged:" destination="fzg-PN-b9J" eventType="editingDidEnd" id="Vf4-1e-6Mv"/>
                                                 </connections>
                                             </button>
                                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="3FB-3E-dFv">
@@ -133,11 +132,10 @@
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 <nil key="textColor"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                <textInputTraits key="textInputTraits" autocapitalizationType="words"/>
+                                                <textInputTraits key="textInputTraits"/>
                                                 <connections>
                                                     <action selector="checkForName:" destination="fzg-PN-b9J" eventType="editingChanged" id="uNP-b2-Kqr"/>
                                                     <action selector="nameUpdating:" destination="fzg-PN-b9J" eventType="editingChanged" id="cvW-cu-k85"/>
-                                                    <action selector="valueChanged:" destination="fzg-PN-b9J" eventType="editingDidEnd" id="yrA-fR-irF"/>
                                                 </connections>
                                             </textField>
                                             <button hidden="YES" opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zjn-Bk-uKM">
@@ -157,9 +155,6 @@
                                                 <nil key="textColor"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                 <textInputTraits key="textInputTraits"/>
-                                                <connections>
-                                                    <action selector="valueChanged:" destination="fzg-PN-b9J" eventType="editingDidEnd" id="rGf-HO-ZhC"/>
-                                                </connections>
                                             </textField>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Kfe-8m-TLv">
                                                 <rect key="frame" x="8" y="142" width="45" height="21"/>
@@ -200,9 +195,6 @@
                                                 <nil key="textColor"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                 <textInputTraits key="textInputTraits"/>
-                                                <connections>
-                                                    <action selector="valueChanged:" destination="fzg-PN-b9J" eventType="editingDidEnd" id="u1L-EJ-CET"/>
-                                                </connections>
                                             </textField>
                                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="contactAdd" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vcM-NU-Gg0">
                                                 <rect key="frame" x="345" y="220" width="22" height="22"/>
@@ -241,7 +233,7 @@
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
-                                            <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="allergyCount" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="d8Y-Ji-6B9">
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="allergyCount" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="d8Y-Ji-6B9">
                                                 <rect key="frame" x="82" y="350" width="98" height="21"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
@@ -262,7 +254,7 @@
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
-                                            <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="doctorCount" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WKp-Oo-WZS">
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="doctorCount" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WKp-Oo-WZS">
                                                 <rect key="frame" x="82" y="527" width="97" height="21"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
@@ -297,7 +289,7 @@
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
-                                            <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="medicationCount" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vqK-Ii-DnL">
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="medicationCount" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vqK-Ii-DnL">
                                                 <rect key="frame" x="110" y="718" width="131" height="21"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
@@ -340,13 +332,20 @@
                             <constraint firstItem="gMf-Wn-MiU" firstAttribute="top" secondItem="R1m-nJ-fTP" secondAttribute="bottom" id="lJt-tO-RQ8"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" title="Add Kid" id="DI3-oi-3tJ"/>
+                    <navigationItem key="navigationItem" id="DI3-oi-3tJ">
+                        <barButtonItem key="rightBarButtonItem" systemItem="save" id="qoX-09-cne">
+                            <connections>
+                                <action selector="saveTapped:" destination="fzg-PN-b9J" id="lxL-ix-dl2"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
                     <size key="freeformSize" width="375" height="1064"/>
                     <connections>
                         <outlet property="allergyTableView" destination="TQu-kw-IEO" id="7lI-Qh-kd8"/>
                         <outlet property="btnAvatar" destination="Yia-5L-Ppr" id="VCb-TG-lTS"/>
                         <outlet property="btnDelete" destination="zjn-Bk-uKM" id="nkL-ka-cIr"/>
+                        <outlet property="btnSave" destination="qoX-09-cne" id="peu-P7-pJB"/>
                         <outlet property="doctorTableView" destination="Zuj-Xe-tlx" id="jo6-JD-p8O"/>
                         <outlet property="lblAllergies" destination="sFc-xu-ynX" id="udl-xH-dkc"/>
                         <outlet property="lblAllergyCount" destination="d8Y-Ji-6B9" id="TEn-Jm-eZa"/>
@@ -397,7 +396,7 @@
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 <nil key="textColor"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                <textInputTraits key="textInputTraits" autocapitalizationType="words"/>
+                                                <textInputTraits key="textInputTraits"/>
                                             </textField>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Address" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rCP-hy-tcH">
                                                 <rect key="frame" x="20" y="60" width="63" height="21"/>
@@ -411,35 +410,35 @@
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 <nil key="textColor"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                <textInputTraits key="textInputTraits" autocapitalizationType="words"/>
+                                                <textInputTraits key="textInputTraits"/>
                                             </textField>
                                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Street line 2" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="80o-47-u0a">
                                                 <rect key="frame" x="101" y="93" width="254" height="30"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 <nil key="textColor"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                <textInputTraits key="textInputTraits" autocapitalizationType="words"/>
+                                                <textInputTraits key="textInputTraits"/>
                                             </textField>
                                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="City" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Er5-sv-tYa">
                                                 <rect key="frame" x="101" y="131" width="254" height="30"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 <nil key="textColor"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                <textInputTraits key="textInputTraits" autocapitalizationType="words"/>
+                                                <textInputTraits key="textInputTraits"/>
                                             </textField>
                                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="State" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="FUm-N0-cy4">
                                                 <rect key="frame" x="101" y="169" width="115" height="30"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 <nil key="textColor"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                <textInputTraits key="textInputTraits" autocapitalizationType="words"/>
+                                                <textInputTraits key="textInputTraits"/>
                                             </textField>
                                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Postal Code" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="DIP-jI-vzd">
                                                 <rect key="frame" x="240" y="169" width="115" height="30"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 <nil key="textColor"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                <textInputTraits key="textInputTraits" autocapitalizationType="words"/>
+                                                <textInputTraits key="textInputTraits"/>
                                             </textField>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Phone" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Hb2-kf-CLp">
                                                 <rect key="frame" x="20" y="212" width="49" height="21"/>
@@ -453,7 +452,7 @@
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 <nil key="textColor"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                <textInputTraits key="textInputTraits" keyboardType="phonePad"/>
+                                                <textInputTraits key="textInputTraits"/>
                                                 <connections>
                                                     <action selector="phoneNumberFormat:" destination="EMz-lJ-qhS" eventType="editingChanged" id="cXi-rT-n30"/>
                                                 </connections>
@@ -470,7 +469,7 @@
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 <nil key="textColor"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                <textInputTraits key="textInputTraits" keyboardType="emailAddress"/>
+                                                <textInputTraits key="textInputTraits"/>
                                             </textField>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Notes" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Dg4-lt-1r4">
                                                 <rect key="frame" x="20" y="305" width="46" height="21"/>
@@ -618,7 +617,7 @@
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 <nil key="textColor"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                <textInputTraits key="textInputTraits" autocapitalizationType="words"/>
+                                                <textInputTraits key="textInputTraits"/>
                                             </textField>
                                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="nOx-5a-ndA">
                                                 <rect key="frame" x="124" y="51" width="243" height="30"/>
@@ -852,43 +851,27 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xVw-4H-XNL" customClass="LineChartView" customModule="Charts">
-                                <rect key="frame" x="16" y="73" width="343" height="545"/>
+                                <rect key="frame" x="16" y="20" width="343" height="598"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             </view>
-                            <navigationBar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="w4Y-wi-A0T">
-                                <rect key="frame" x="0.0" y="20" width="375" height="44"/>
-                                <items>
-                                    <navigationItem title="Growth Chart" id="EJo-jL-GDC">
-                                        <barButtonItem key="leftBarButtonItem" title="Close" id="LEe-CT-1Xr">
-                                            <connections>
-                                                <action selector="closeTapped:" destination="c5N-gJ-nAs" id="q7Q-Um-BhN"/>
-                                            </connections>
-                                        </barButtonItem>
-                                    </navigationItem>
-                                </items>
-                            </navigationBar>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="xVw-4H-XNL" firstAttribute="leading" secondItem="P8V-t7-cZ2" secondAttribute="leadingMargin" id="3oV-NI-fDz"/>
-                            <constraint firstItem="w4Y-wi-A0T" firstAttribute="leading" secondItem="P8V-t7-cZ2" secondAttribute="leading" id="9dW-3W-P32"/>
                             <constraint firstAttribute="trailingMargin" secondItem="xVw-4H-XNL" secondAttribute="trailing" id="CtH-du-aCr"/>
-                            <constraint firstItem="w4Y-wi-A0T" firstAttribute="top" secondItem="R9R-rw-32l" secondAttribute="bottom" id="QoU-xN-ZhS"/>
-                            <constraint firstItem="w4Y-wi-A0T" firstAttribute="centerX" secondItem="xVw-4H-XNL" secondAttribute="centerX" id="Uci-d2-NeO"/>
-                            <constraint firstItem="xVw-4H-XNL" firstAttribute="top" secondItem="w4Y-wi-A0T" secondAttribute="bottom" constant="9" id="cdz-nm-svf"/>
+                            <constraint firstItem="xVw-4H-XNL" firstAttribute="top" secondItem="R9R-rw-32l" secondAttribute="bottom" id="iZ9-uR-hWR"/>
                             <constraint firstItem="Num-Ax-0hE" firstAttribute="top" secondItem="xVw-4H-XNL" secondAttribute="bottom" id="rU9-IZ-qnm"/>
                         </constraints>
                     </view>
                     <extendedEdge key="edgesForExtendedLayout" bottom="YES"/>
                     <tabBarItem key="tabBarItem" title="Growth Chart" image="chart" id="MwM-lR-VtR"/>
                     <connections>
-                        <outlet property="btnClose" destination="LEe-CT-1Xr" id="Ext-2D-or9"/>
                         <outlet property="lineChart" destination="xVw-4H-XNL" id="NWe-al-dmy"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Duj-Af-q0f" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2720.8000000000002" y="-1567.4662668665669"/>
+            <point key="canvasLocation" x="2721" y="-1567"/>
         </scene>
         <!--Info-->
         <scene sceneID="9J1-Xy-F8U">
@@ -1039,37 +1022,16 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="UWU-Xn-m1h" userLabel="LineChart" customClass="LineChartView" customModule="Charts">
-                                <rect key="frame" x="16" y="76" width="343" height="534"/>
+                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="UWU-Xn-m1h" userLabel="LineChart" customClass="LineChartView" customModule="Charts">
+                                <rect key="frame" x="16" y="28" width="343" height="582"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             </view>
-                            <navigationBar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="SDn-q0-WJN">
-                                <rect key="frame" x="0.0" y="20" width="375" height="44"/>
-                                <items>
-                                    <navigationItem title="Growth Chart" id="n9E-Hc-9kE">
-                                        <barButtonItem key="leftBarButtonItem" title="Close" id="w2r-8P-gUp">
-                                            <connections>
-                                                <action selector="closeTapped:" destination="iqN-tq-Hy9" id="01c-HG-d5v"/>
-                                            </connections>
-                                        </barButtonItem>
-                                    </navigationItem>
-                                </items>
-                            </navigationBar>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        <constraints>
-                            <constraint firstItem="SDn-q0-WJN" firstAttribute="top" secondItem="SjI-Zb-eaQ" secondAttribute="bottom" id="4Ga-gU-Bf9"/>
-                            <constraint firstAttribute="trailing" secondItem="SDn-q0-WJN" secondAttribute="trailing" id="5jD-e0-piw"/>
-                            <constraint firstItem="SDn-q0-WJN" firstAttribute="centerX" secondItem="UWU-Xn-m1h" secondAttribute="centerX" id="D5l-3p-nQy"/>
-                            <constraint firstItem="vLZ-SF-k9J" firstAttribute="top" secondItem="UWU-Xn-m1h" secondAttribute="bottom" constant="8" symbolic="YES" id="ITf-DX-qog"/>
-                            <constraint firstItem="SDn-q0-WJN" firstAttribute="leading" secondItem="V4D-F7-N0e" secondAttribute="leading" id="lLI-QU-sJu"/>
-                            <constraint firstItem="UWU-Xn-m1h" firstAttribute="top" secondItem="SDn-q0-WJN" secondAttribute="bottom" constant="12" id="ldG-J8-2wQ"/>
-                            <constraint firstItem="UWU-Xn-m1h" firstAttribute="leading" secondItem="V4D-F7-N0e" secondAttribute="leadingMargin" id="uzW-4V-6bL"/>
-                        </constraints>
                     </view>
                     <tabBarItem key="tabBarItem" title="Growth Chart" image="chart" id="hxk-Lq-56B"/>
                     <connections>
-                        <outlet property="btnClose" destination="w2r-8P-gUp" id="IRt-6N-DtH"/>
                         <outlet property="lineChart" destination="UWU-Xn-m1h" id="8Nj-pK-Lmo"/>
                     </connections>
                 </viewController>
@@ -1107,7 +1069,7 @@
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 <nil key="textColor"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                <textInputTraits key="textInputTraits" autocapitalizationType="words"/>
+                                                <textInputTraits key="textInputTraits"/>
                                                 <connections>
                                                     <action selector="changingAllergyName:" destination="D6y-xn-m0R" eventType="editingChanged" id="wd4-8t-KgQ"/>
                                                 </connections>
@@ -1258,12 +1220,12 @@
                                     </navigationItem>
                                 </items>
                             </navigationBar>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wWy-kg-UkM">
-                                <rect key="frame" x="117" y="207" width="119" height="30"/>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1Ta-Oz-Yhw">
+                                <rect key="frame" x="123" y="183" width="128" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="Fetch from Cloud"/>
+                                <state key="normal" title="Dropbox Authorize"/>
                                 <connections>
-                                    <action selector="fetchFromCloud:" destination="Nt6-9w-Arq" eventType="touchUpInside" id="hUt-Jc-47d"/>
+                                    <action selector="authorizeDropbox:" destination="Nt6-9w-Arq" eventType="touchUpInside" id="PdB-x9-td4"/>
                                 </connections>
                             </button>
                         </subviews>

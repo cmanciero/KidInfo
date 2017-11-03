@@ -3,17 +3,6 @@
    version = "1.0">
    <ContextStates>
       <ContextState
-         contextName = "KidInfoViewController.prepare(for : UIStoryboardSegue, sender : Any?) -&gt; ():KidInfoViewController.swift">
-         <PersistentStrings>
-            <PersistentString
-               value = "type(of: sender)">
-            </PersistentString>
-            <PersistentString
-               value = "segue.identifier">
-            </PersistentString>
-         </PersistentStrings>
-      </ContextState>
-      <ContextState
          contextName = "KidInfoViewController.deleteTapped(Any) -&gt; ():KidInfoViewController.swift">
          <PersistentStrings>
             <PersistentString
@@ -26,6 +15,36 @@
          <PersistentStrings>
             <PersistentString
                value = "txtWeightOz.text">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "KidInfoViewController.loadKidInfo():KidInfoViewController.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "kid">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "KidInfoViewController.saveTapped(_:):KidInfoViewController.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "txtBloodType.text">
+            </PersistentString>
+            <PersistentString
+               value = "btnAvatar.backgroundImage(for: .normal)">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "KidInfoViewController.prepare(for : UIStoryboardSegue, sender : Any?) -&gt; ():KidInfoViewController.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "type(of: sender)">
+            </PersistentString>
+            <PersistentString
+               value = "segue.identifier">
             </PersistentString>
          </PersistentStrings>
       </ContextState>

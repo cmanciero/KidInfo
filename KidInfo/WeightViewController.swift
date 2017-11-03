@@ -108,14 +108,14 @@ class WeightViewController: UIViewController, UITableViewDelegate, UITableViewDa
     }
     
     // Done clicked for DOB picker
-    func dateDonePressed(){
+    @objc func dateDonePressed(){
         // format results
         txtDate.text = dateFormatter.string(from: datePicker.date);
         closePicker();
     }
     
     // Close all pickers
-    func closePicker(){
+    @objc func closePicker(){
         self.view.endEditing(true);
     }
     
@@ -133,7 +133,7 @@ class WeightViewController: UIViewController, UITableViewDelegate, UITableViewDa
                 weight += 1;
                 convertWeightOz = convertWeightOz - 16;
             }
-            weight += convertWeightOz * 0.1;
+            weight += convertWeightOz * 0.01;
         }
         
         return weight;
@@ -213,7 +213,7 @@ class WeightViewController: UIViewController, UITableViewDelegate, UITableViewDa
             weight!.weight = calWeight;
         }
         
-        weight!.date = datePicker.date as NSDate;
+        weight!.date = datePicker.date;// as NSDate;
         weight!.kid = kid;
         
         appDelegate.saveContext();

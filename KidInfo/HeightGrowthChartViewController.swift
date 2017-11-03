@@ -17,7 +17,6 @@ class HeightGrowthChartViewController: UIViewController {
     var arrHeights: [Double]! = [];
 
     @IBOutlet weak var lineChart: LineChartView!
-    @IBOutlet weak var btnClose: UIBarButtonItem!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -44,7 +43,7 @@ class HeightGrowthChartViewController: UIViewController {
         lineChart.noDataText = "You need to provide data for the chart";
         
         var dataEntries: [ChartDataEntry] = [];
-        
+
         for i in 0..<dataPoints.count {
             let dataEntry = ChartDataEntry(x: Double(i), y: values[i]);
             dataEntries.append(dataEntry)
@@ -55,7 +54,7 @@ class HeightGrowthChartViewController: UIViewController {
         // display values on xaxis
         //        lineChart.xAxis.valueFormatter = IndexAxisValueFormatter(values: dataPoints);
         lineChart.animate(xAxisDuration: 1.0, yAxisDuration: 1.0);
-        
+
         let lineChartDataSet = LineChartDataSet(values: dataEntries, label: "Unites");
         let lineChartData = LineChartData(dataSet: lineChartDataSet);
         // set colors, array of colors to loop through for data point
@@ -70,9 +69,6 @@ class HeightGrowthChartViewController: UIViewController {
         return nHeight;
     }
     
-    @IBAction func closeTapped(_ sender: Any) {
-        self.dismiss(animated: true, completion: nil);
-    }
 
     /*
     // MARK: - Navigation
