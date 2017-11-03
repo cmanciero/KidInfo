@@ -7,12 +7,15 @@
 //
 
 import UIKit
+import Contacts
+import ContactsUI
 
 class KidInfoViewController: UIViewController,
     UIImagePickerControllerDelegate,
     UINavigationControllerDelegate,
     UITableViewDelegate, UITableViewDataSource,
-UIPickerViewDelegate, UIPickerViewDataSource{
+UIPickerViewDelegate, UIPickerViewDataSource,
+CNContactPickerDelegate{
     
     @IBOutlet weak var txtName: UITextField!
     @IBOutlet weak var txtWeightLbs: UITextField!
@@ -36,6 +39,60 @@ UIPickerViewDelegate, UIPickerViewDataSource{
     @IBOutlet weak var lblAllergyCount: UILabel!
     @IBOutlet weak var lblDoctorCount: UILabel!
     @IBOutlet weak var lblMedicationCount: UILabel!
+    @IBOutlet weak var btnPickDr: UIButton!
+    
+    /************************/
+    // MARK: - contact store methods
+    /************************/
+    @IBAction func showContacts(_ sender: Any) {
+        let contactPickerViewController = CNContactPickerViewController();
+        contactPickerViewController.delegate = self;
+        
+        present(contactPickerViewController, animated: true, completion: nil);
+    }
+    
+    func contactPicker(_ picker: CNContactPickerViewController, didSelect contact: CNContact) {
+        print([contact]);
+    }
+    
+    // store contact store
+    var contactStore = CNContactStore();
+    
+    func showMessage(message: String){
+        let alertController = UIAlertController(title: "Contacts", message: message, preferredStyle: .alert);
+        let dismissAction = UIAlertAction(title: "OK", style: .default, handler: {(alert) -> Void in });
+        
+        alertController.addAction(dismissAction);
+        
+        self.present(alertController, animated: true, completion: nil);
+    }
+    
+    func requestForAccess(completionHandler: @escaping (_ accessGranted: Bool) -> Void) {
+        let authorizationStatus = CNContactStore.authorizationStatus(for: CNEntityType.contacts);
+        
+        switch authorizationStatus {
+        case .authorized:
+            completionHandler(true)
+            
+        case .denied, .notDetermined:
+            self.contactStore.requestAccess(for: CNEntityType.contacts, completionHandler: { (access, accessError) -> Void in
+                if access {
+                    completionHandler(access);
+                }
+                else {
+                    if authorizationStatus == CNAuthorizationStatus.denied {
+//                        dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                            let message = "\(accessError!.localizedDescription)\n\nPlease allow the app to access your contacts through the Settings."
+                        self.showMessage(message: message);
+//                        })
+                    }
+                }
+            })
+            
+        default:
+            completionHandler(false)
+        }
+    }
     
     var kid: Kid? = nil;
     var imagePicker = UIImagePickerController();
