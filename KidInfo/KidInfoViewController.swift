@@ -41,6 +41,8 @@ CNContactPickerDelegate{
     @IBOutlet weak var lblMedicationCount: UILabel!
     @IBOutlet weak var btnPickDr: UIButton!
     
+    var doctors = [CNContact]();
+    
     /************************/
     // MARK: - contact store methods
     /************************/
@@ -53,6 +55,13 @@ CNContactPickerDelegate{
     
     func contactPicker(_ picker: CNContactPickerViewController, didSelect contact: CNContact) {
         print([contact]);
+        print("First name: \(contact.givenName) Last name: \(contact.familyName)");
+        
+//        let doctor = Doctor();
+//        doctor.name = "\(contact.givenName) \(contact.familyName)";
+        doctorTableView.isHidden = false;
+        self.doctors.append(contact);
+        doctorTableView.reloadData();
     }
     
     // store contact store
@@ -213,9 +222,15 @@ CNContactPickerDelegate{
             selectedAllergy = (sortedAllergies as! [Allergy])[indexPath.row] as Allergy;
             performSegue(withIdentifier: "allergySegue", sender: nil);
         } else if(tableView.isEqual(doctorTableView)) {
-            let sortedDoctors = sortDoctors();
-            selectedDoctor = (sortedDoctors as! [Doctor])[indexPath.row] as Doctor;
-            performSegue(withIdentifier: "doctorSegue", sender: nil);
+//            let sortedDoctors = sortDoctors();
+//            selectedDoctor = (sortedDoctors as! [Doctor])[indexPath.row] as Doctor;
+//            performSegue(withIdentifier: "doctorSegue", sender: nil);
+            let selectedDoctor = doctors[indexPath.row];
+            
+            let contactViewController = CNContactViewController(for: selectedDoctor)
+            contactViewController.contactStore = self.contactStore;
+            
+            navigationController?.pushViewController(contactViewController, animated: true)
         } else if(tableView.isEqual(medicationTableView)) {
             let sortedMedications = sortMedications();
             selectedMedication = (sortedMedications as! [Medication])[indexPath.row] as Medication;
@@ -234,9 +249,10 @@ CNContactPickerDelegate{
                 rowCount = (kid!.allergies!.count);
             }
         } else if(tableView.isEqual(doctorTableView)) {
-            if(kid?.doctors != nil){
-                rowCount = (kid!.doctors!.count);
-            }
+//            if(kid?.doctors != nil){
+//                rowCount = (kid!.doctors!.count);
+//            }
+            rowCount = doctors.count;
         } else if(tableView.isEqual(medicationTableView)) {
             if(kid?.medications != nil){
                 rowCount = (kid!.medications!.count);
@@ -261,9 +277,14 @@ CNContactPickerDelegate{
             
             cell.imageView?.image = image;
         } else if(tableView.isEqual(doctorTableView)) {
-            let sortedDoctors = sortDoctors();
-            let doctor: Doctor = (sortedDoctors as! [Doctor])[indexPath.row] as Doctor;
-            cell.textLabel?.text = doctor.name;
+//            let sortedDoctors = sortDoctors();
+//            let doctor: Doctor = (sortedDoctors as! [Doctor])[indexPath.row] as Doctor;
+//            cell.textLabel?.text = doctor.name;
+        
+            let currentDoctor = doctors[indexPath.row]
+            
+            cell.textLabel?.text = "\(currentDoctor.givenName) \(currentDoctor.familyName)";
+            
         } else if(tableView.isEqual(medicationTableView)) {
             let sortedMedications = sortMedications();
             let medication: Medication = (sortedMedications as! [Medication])[indexPath.row] as Medication;
@@ -473,6 +494,7 @@ CNContactPickerDelegate{
             doctorTableView.isHidden = true;
             lblDoctorCount.text = "";
         }
+        doctorTableView.isHidden = false;
     }
     
     // sort doctors array

@@ -3,6 +3,14 @@
    version = "1.0">
    <ContextStates>
       <ContextState
+         contextName = "KidInfoViewController.contactPicker(_:didSelect:):KidInfoViewController.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "contact">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
          contextName = "KidInfoViewController.deleteTapped(Any) -&gt; ():KidInfoViewController.swift">
          <PersistentStrings>
             <PersistentString
