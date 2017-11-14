@@ -466,6 +466,7 @@ CNContactPickerDelegate{
             }
             
             lblAllergyCount.text = "(\(allergyCount))";
+            lblAllergyCount.isHidden = false;
         } else {
             allergyTableView.isHidden = true;
             lblAllergyCount.text = "";
@@ -490,6 +491,7 @@ CNContactPickerDelegate{
             }
             
             lblDoctorCount.text = "(\(doctorCount))";
+            lblDoctorCount.isHidden = false;
         } else {
             doctorTableView.isHidden = true;
             lblDoctorCount.text = "";
@@ -515,6 +517,7 @@ CNContactPickerDelegate{
             }
             
             lblMedicationCount.text = "(\(medicationCount))";
+            lblMedicationCount.isHidden = false;
         } else {
             medicationTableView.isHidden = true;
             lblMedicationCount.text = "";

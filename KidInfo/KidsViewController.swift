@@ -13,6 +13,9 @@ class KidsViewController: UIViewController, UITableViewDelegate, UITableViewData
     @IBOutlet weak var kidsTableView: UITableView!
     
     var arrKids: [Kid] = [];
+    let activityIndicator = UIActivityIndicatorView(activityIndicatorStyle: UIActivityIndicatorViewStyle.gray);
+    let activityView = UIView();
+    var activityViewConstraints: [NSLayoutConstraint] = [];
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -52,6 +55,9 @@ class KidsViewController: UIViewController, UITableViewDelegate, UITableViewData
         // Dispose of any resources that can be recreated.
     }
     
+    @IBAction func addNewKidTapped(_ sender: Any) {
+        self.showAddNewKidPopUp();
+    }
     /************************/
     // MARK: - Functions
     /************************/
@@ -66,6 +72,53 @@ class KidsViewController: UIViewController, UITableViewDelegate, UITableViewData
         let age = ageComponents.year!;
         
         return age;
+    }
+    
+    func showAddNewKidPopUp() -> Void{
+        // show waiting icon
+        activityView.isHidden = false;
+        activityIndicator.center = activityView.center;
+        activityIndicator.hidesWhenStopped = true;
+        activityView.addSubview(activityIndicator);
+        
+        // start animating
+        activityIndicator.startAnimating();
+        
+        let newKidAlert = UIAlertController(title: "Add kid", message: "Enter the name of the kid you want to add.", preferredStyle: .alert);
+        newKidAlert.addTextField { (textField: UITextField) in
+            textField.placeholder = "Enter kid's name";
+        }
+        newKidAlert.addAction(UIAlertAction(title: "Add", style: .default, handler: { action in
+            UIApplication.shared.beginIgnoringInteractionEvents();
+            
+            if let textFields = newKidAlert.textFields{
+                // get context
+                let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext;
+                
+                let theTextFields = textFields as [UITextField];
+                let kidName = theTextFields[0].text;
+                let kid = Kid(context: context);
+                kid.name = kidName;
+                
+                // save context
+                (UIApplication.shared.delegate as! AppDelegate).saveContext();
+                
+                UIApplication.shared.endIgnoringInteractionEvents();
+                
+                // navigate to kid info
+                self.navigateToSelectedKid(kid: kid);
+            }
+        }));
+        newKidAlert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: { action in
+            self.activityIndicator.stopAnimating();
+            self.activityView.isHidden = true;
+        }));
+        self.present(newKidAlert, animated: true, completion: nil);
+    }
+    
+    func navigateToSelectedKid(kid: Kid) -> Void{
+        // navigate to kid info, show selected kid
+        performSegue(withIdentifier: "showKidSegue", sender: kid);
     }
     
     /************************/
@@ -83,7 +136,7 @@ class KidsViewController: UIViewController, UITableViewDelegate, UITableViewData
         let kid = arrKids[indexPath.row];
         
         // navigate to kid info, show selected kid
-        performSegue(withIdentifier: "showKidSegue", sender: kid);
+        self.navigateToSelectedKid(kid: kid);
         
         // deselect selected row
         tableView.deselectRow(at: indexPath, animated: true);
