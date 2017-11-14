@@ -87,6 +87,7 @@ class KidsViewController: UIViewController, UITableViewDelegate, UITableViewData
         let newKidAlert = UIAlertController(title: "Add kid", message: "Enter the name of the kid you want to add.", preferredStyle: .alert);
         newKidAlert.addTextField { (textField: UITextField) in
             textField.placeholder = "Enter kid's name";
+            textField.autocapitalizationType = UITextAutocapitalizationType.words;
         }
         newKidAlert.addAction(UIAlertAction(title: "Add", style: .default, handler: { action in
             UIApplication.shared.beginIgnoringInteractionEvents();
