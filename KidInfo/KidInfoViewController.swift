@@ -14,9 +14,10 @@ class KidInfoViewController: UIViewController,
     UIImagePickerControllerDelegate,
     UINavigationControllerDelegate,
     UITableViewDelegate, UITableViewDataSource,
-UIPickerViewDelegate, UIPickerViewDataSource,
+    UIPickerViewDelegate, UIPickerViewDataSource,
 CNContactPickerDelegate{
     
+    @IBOutlet weak var viewDoctor: UIView!
     @IBOutlet weak var txtName: UITextField!
     @IBOutlet weak var txtWeightLbs: UITextField!
     @IBOutlet weak var txtWeightOz: UITextField!
@@ -30,7 +31,6 @@ CNContactPickerDelegate{
     @IBOutlet weak var allergyTableView: UITableView!
     @IBOutlet weak var doctorTableView: UITableView!
     @IBOutlet weak var medicationTableView: UITableView!
-    @IBOutlet weak var btnSave: UIBarButtonItem!
     @IBOutlet weak var txtBloodType: UITextField!
     @IBOutlet weak var lblAllergies: UILabel!
     @IBOutlet weak var lblDoctors: UILabel!
@@ -57,8 +57,8 @@ CNContactPickerDelegate{
         print([contact]);
         print("First name: \(contact.givenName) Last name: \(contact.familyName)");
         
-//        let doctor = Doctor();
-//        doctor.name = "\(contact.givenName) \(contact.familyName)";
+        //        let doctor = Doctor();
+        //        doctor.name = "\(contact.givenName) \(contact.familyName)";
         doctorTableView.isHidden = false;
         self.doctors.append(contact);
         doctorTableView.reloadData();
@@ -90,10 +90,10 @@ CNContactPickerDelegate{
                 }
                 else {
                     if authorizationStatus == CNAuthorizationStatus.denied {
-//                        dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                            let message = "\(accessError!.localizedDescription)\n\nPlease allow the app to access your contacts through the Settings."
+                        //                        dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                        let message = "\(accessError!.localizedDescription)\n\nPlease allow the app to access your contacts through the Settings."
                         self.showMessage(message: message);
-//                        })
+                        //                        })
                     }
                 }
             })
@@ -159,9 +159,6 @@ CNContactPickerDelegate{
         bloodTypePicker.dataSource = self;
         bloodTypePicker.delegate = self;
         createBloodTypePicker();
-        
-        // disable save button
-        btnSave.isEnabled = false;
     }
     
     override func didReceiveMemoryWarning() {
@@ -222,9 +219,9 @@ CNContactPickerDelegate{
             selectedAllergy = (sortedAllergies as! [Allergy])[indexPath.row] as Allergy;
             performSegue(withIdentifier: "allergySegue", sender: nil);
         } else if(tableView.isEqual(doctorTableView)) {
-//            let sortedDoctors = sortDoctors();
-//            selectedDoctor = (sortedDoctors as! [Doctor])[indexPath.row] as Doctor;
-//            performSegue(withIdentifier: "doctorSegue", sender: nil);
+            //            let sortedDoctors = sortDoctors();
+            //            selectedDoctor = (sortedDoctors as! [Doctor])[indexPath.row] as Doctor;
+            //            performSegue(withIdentifier: "doctorSegue", sender: nil);
             let selectedDoctor = doctors[indexPath.row];
             
             let contactViewController = CNContactViewController(for: selectedDoctor)
@@ -249,9 +246,9 @@ CNContactPickerDelegate{
                 rowCount = (kid!.allergies!.count);
             }
         } else if(tableView.isEqual(doctorTableView)) {
-//            if(kid?.doctors != nil){
-//                rowCount = (kid!.doctors!.count);
-//            }
+            //            if(kid?.doctors != nil){
+            //                rowCount = (kid!.doctors!.count);
+            //            }
             rowCount = doctors.count;
         } else if(tableView.isEqual(medicationTableView)) {
             if(kid?.medications != nil){
@@ -277,10 +274,10 @@ CNContactPickerDelegate{
             
             cell.imageView?.image = image;
         } else if(tableView.isEqual(doctorTableView)) {
-//            let sortedDoctors = sortDoctors();
-//            let doctor: Doctor = (sortedDoctors as! [Doctor])[indexPath.row] as Doctor;
-//            cell.textLabel?.text = doctor.name;
-        
+            //            let sortedDoctors = sortDoctors();
+            //            let doctor: Doctor = (sortedDoctors as! [Doctor])[indexPath.row] as Doctor;
+            //            cell.textLabel?.text = doctor.name;
+            
             let currentDoctor = doctors[indexPath.row]
             
             cell.textLabel?.text = "\(currentDoctor.givenName) \(currentDoctor.familyName)";
@@ -367,10 +364,28 @@ CNContactPickerDelegate{
     // MARK: - Functions
     /************************/
     
+    // save kid information
+    func saveKidInfo(){
+        kid!.name = txtName.text;
+        if(btnAvatar.backgroundImage(for: .normal) != nil){
+            kid!.avatar = UIImagePNGRepresentation(btnAvatar.backgroundImage(for: .normal)!)!;// as NSData;
+        }
+        
+        // save DOB
+        if(txtDOB.text != nil && txtDOB.text != ""){
+            kid!.dob = dobPicker.date;// as NSDate;
+        }
+        
+        // save blood type
+        if(txtBloodType.text != nil && txtBloodType.text != ""){
+            kid!.bloodType = txtBloodType.text;
+        }
+        
+        (UIApplication.shared.delegate as! AppDelegate).saveContext();
+    }
+    
     // load kid information
     func loadKidInfo(){
-        // disable save button
-        btnSave.isEnabled = true;
         txtName.text = kid!.name;
         titleName.title = txtName.text;
         
@@ -486,17 +501,19 @@ CNContactPickerDelegate{
         }
         
         if(doctorCount > 0){
-            if(doctorTableView.isHidden){
-                doctorTableView.isHidden = false;
-            }
+//            if(doctorTableView.isHidden){
+//                doctorTableView.isHidden = false;
+//            }
             
+//            viewDoctor.frame = CGRect(x: 0, y: 0, width: 375, height: 170);
             lblDoctorCount.text = "(\(doctorCount))";
             lblDoctorCount.isHidden = false;
         } else {
-            doctorTableView.isHidden = true;
+//            doctorTableView.isHidden = true;
             lblDoctorCount.text = "";
+//            viewDoctor.frame = CGRect(x: 0, y: 0, width: 375, height: 50);
         }
-        doctorTableView.isHidden = false;
+//        doctorTableView.isHidden = false;
     }
     
     // sort doctors array
@@ -563,6 +580,8 @@ CNContactPickerDelegate{
         
         txtDOB.text = dateFormatter.string(from: dobPicker.date);
         closePicker();
+        
+        self.saveKidInfo();
     }
     
     // create blood type picker
@@ -589,6 +608,8 @@ CNContactPickerDelegate{
     @objc func bloodTypeDonePressed(){
         txtBloodType.text = aBloodTypes[bloodTypePicker.selectedRow(inComponent: 0)];
         closePicker();
+        
+        self.saveKidInfo();
     }
     
     // Close all pickers
@@ -602,6 +623,7 @@ CNContactPickerDelegate{
         
         btnAvatar.setBackgroundImage(image, for: .normal);
         imagePicker.dismiss(animated: true, completion: nil);
+        self.saveKidInfo();
     }
     
     // In a storyboard-based application, you will often want to do a little preparation before navigation
@@ -664,10 +686,8 @@ CNContactPickerDelegate{
     
     // check to see if a kid name exists
     @IBAction func checkForName(_ sender: Any) {
-        if(txtName.text!.isEmpty){
-            btnSave.isEnabled = false;
-        } else {
-            btnSave.isEnabled = true;
+        if(!txtName.text!.isEmpty){
+            self.saveKidInfo();
         }
     }
     
@@ -689,42 +709,7 @@ CNContactPickerDelegate{
     
     // Save kid
     @IBAction func saveTapped(_ sender: Any) {
-        if(kid != nil){
-            kid!.name = txtName.text;
-            if(btnAvatar.backgroundImage(for: .normal) != nil){
-                kid!.avatar = UIImagePNGRepresentation(btnAvatar.backgroundImage(for: .normal)!)!;// as NSData;
-            }
-            
-            // save DOB
-            kid!.dob = dobPicker.date;// as NSDate;
-            
-            // save blood type
-            kid!.bloodType = txtBloodType.text;
-        } else {
-            let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext;
-            
-            let kid = Kid(context: context);
-            kid.name = txtName.text;
-            
-            // check if avatar image was set
-            if(btnAvatar.backgroundImage(for: .normal) != nil){
-                kid.avatar = UIImagePNGRepresentation(btnAvatar.backgroundImage(for: .normal)!)!;// as NSData;
-            }
-            
-            // save DOB
-            if(txtDOB.text != nil && txtDOB.text != ""){
-                kid.dob = dobPicker.date;// as NSDate;
-            }
-            
-            // save blood type
-            if(txtBloodType.text != nil && txtBloodType.text != ""){
-                kid.bloodType = txtBloodType.text;
-            }
-        }
-        
-        (UIApplication.shared.delegate as! AppDelegate).saveContext();
-        
-        navigationController?.popViewController(animated: true);
+        self.saveKidInfo();
     }
     
     // change/set avatar image

@@ -3,6 +3,14 @@
    version = "1.0">
    <ContextStates>
       <ContextState
+         contextName = "KidInfoViewController.loadKidInfo():KidInfoViewController.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "kid">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
          contextName = "KidInfoViewController.contactPicker(_:didSelect:):KidInfoViewController.swift">
          <PersistentStrings>
             <PersistentString
@@ -27,14 +35,6 @@
          </PersistentStrings>
       </ContextState>
       <ContextState
-         contextName = "KidInfoViewController.loadKidInfo():KidInfoViewController.swift">
-         <PersistentStrings>
-            <PersistentString
-               value = "kid">
-            </PersistentString>
-         </PersistentStrings>
-      </ContextState>
-      <ContextState
          contextName = "KidInfoViewController.saveTapped(_:):KidInfoViewController.swift">
          <PersistentStrings>
             <PersistentString
@@ -42,6 +42,14 @@
             </PersistentString>
             <PersistentString
                value = "btnAvatar.backgroundImage(for: .normal)">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "KidInfoViewController.checkDoctorTableView():KidInfoViewController.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "viewDoctor.frame.size.height">
             </PersistentString>
          </PersistentStrings>
       </ContextState>
