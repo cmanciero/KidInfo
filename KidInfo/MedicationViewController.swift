@@ -18,6 +18,7 @@ class MedicationViewController: UIViewController {
     @IBOutlet weak var scrollView: UIScrollView!
     @IBOutlet weak var btnCheckMeds: UIButton!
     @IBOutlet weak var titleBar: UINavigationItem!
+    @IBOutlet weak var btnSave: UIBarButtonItem!
     
     var kid: Kid? = nil;
     var medication: Medication? = nil;
@@ -28,7 +29,7 @@ class MedicationViewController: UIViewController {
         // Do any additional setup after loading the view.
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide(noti:)), name: NSNotification.Name.UIKeyboardWillHide, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow(noti:)), name: NSNotification.Name.UIKeyboardWillShow, object: nil)
-        
+    
         if(medication != nil){
             titleBar.title = "Update Medication"
             txtDosage.text = medication!.dosage;
@@ -36,6 +37,7 @@ class MedicationViewController: UIViewController {
             tvNotes.text = medication!.howToTake;
             txtName.text = medication!.name;
             txtType.text = medication!.type;
+            btnSave.isEnabled = true;
         }
     }
 
@@ -52,6 +54,14 @@ class MedicationViewController: UIViewController {
         self.dismiss(animated: true, completion: nil);
     }
 
+    @IBAction func medNameChanged(_ sender: Any) {
+        // check is medication name is empty
+        if(txtName.text!.isEmpty){
+            btnSave.isEnabled = false;
+        } else {
+            btnSave.isEnabled = true;
+        }
+    }
     // save medication to kid
     @IBAction func saveTapped(_ sender: Any) {
         let appDelegate = (UIApplication.shared.delegate as! AppDelegate);
