@@ -11,11 +11,11 @@ import UIKit
 class AllergyViewController: UIViewController {
     
     @IBOutlet weak var txtAllergyName: UITextField!
-    @IBOutlet weak var segAllergyLevel: UISegmentedControl!
     @IBOutlet weak var titleBar: UINavigationItem!
     @IBOutlet weak var txtNotes: UITextView!
     @IBOutlet weak var btnDone: UIBarButtonItem!
     @IBOutlet weak var scrollView: UIScrollView!
+    @IBOutlet weak var swSevereAllergy: UISwitch!
     
     var kid: Kid? = nil;
     var allergy: Allergy? = nil;
@@ -39,14 +39,18 @@ class AllergyViewController: UIViewController {
             txtAllergyName.text = allergy!.type;
             txtNotes.text = allergy!.notes;
             
-            // loop through segments to find which one to select
-            let segments = segAllergyLevel.numberOfSegments;
-            for i in 0..<segments{
-                if(segAllergyLevel.titleForSegment(at: i) == allergy!.level){
-                    segAllergyLevel.selectedSegmentIndex = i;
-                    break;
-                }
+            if(allergy!.level == "Severe"){
+                swSevereAllergy.isOn = true;
             }
+            
+            // loop through segments to find which one to select
+//            let segments = segAllergyLevel.numberOfSegments;
+//            for i in 0..<segments{
+//                if(segAllergyLevel.titleForSegment(at: i) == allergy!.level){
+//                    segAllergyLevel.selectedSegmentIndex = i;
+//                    break;
+//                }
+//            }
         }
     }
     
@@ -104,7 +108,12 @@ class AllergyViewController: UIViewController {
         }
         
         allergy!.type = txtAllergyName.text;
-        allergy!.level = segAllergyLevel!.titleForSegment(at: segAllergyLevel.selectedSegmentIndex)!;
+//        allergy!.level = segAllergyLevel!.titleForSegment(at: segAllergyLevel.selectedSegmentIndex)!;
+        if(swSevereAllergy.isOn){
+            allergy!.level = "Severe";
+        } else {
+            allergy!.level = "Mild";
+        }
         allergy!.notes = txtNotes.text;
         allergy!.kid = kid;
         

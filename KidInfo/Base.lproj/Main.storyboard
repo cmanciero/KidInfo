@@ -1112,21 +1112,13 @@
                                                     <action selector="changingAllergyName:" destination="D6y-xn-m0R" eventType="editingChanged" id="wd4-8t-KgQ"/>
                                                 </connections>
                                             </textField>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Level of allergy" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jdo-eh-NNg">
-                                                <rect key="frame" x="8" y="61" width="115" height="21"/>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Severe allergy" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jdo-eh-NNg">
+                                                <rect key="frame" x="8" y="61" width="108" height="21"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
-                                            <segmentedControl opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="ZQC-1z-4II">
-                                                <rect key="frame" x="36" y="90" width="303" height="29"/>
-                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                <segments>
-                                                    <segment title="Mild"/>
-                                                    <segment title="Severe"/>
-                                                </segments>
-                                            </segmentedControl>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Notes" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JVX-AV-AHl">
                                                 <rect key="frame" x="8" y="137" width="46" height="21"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -1141,6 +1133,10 @@
                                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                             </textView>
+                                            <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="58A-Cf-RAg">
+                                                <rect key="frame" x="300" y="56" width="49" height="31"/>
+                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            </switch>
                                         </subviews>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                     </view>
@@ -1186,7 +1182,7 @@
                     <connections>
                         <outlet property="btnDone" destination="Lpa-ds-9TO" id="T1G-7J-H9e"/>
                         <outlet property="scrollView" destination="Poy-pG-VE4" id="dZS-AW-RT0"/>
-                        <outlet property="segAllergyLevel" destination="ZQC-1z-4II" id="m7z-Lf-rXQ"/>
+                        <outlet property="swSevereAllergy" destination="58A-Cf-RAg" id="zye-M9-EsY"/>
                         <outlet property="titleBar" destination="qjn-Wx-fJA" id="CQy-yT-72u"/>
                         <outlet property="txtAllergyName" destination="7Hb-mO-EkP" id="6md-6c-Dpy"/>
                         <outlet property="txtNotes" destination="cbG-Qz-3US" id="h4c-e3-3rI"/>
