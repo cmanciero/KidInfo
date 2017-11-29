@@ -39,7 +39,7 @@ class AllergyViewController: UIViewController {
             txtAllergyName.text = allergy!.type;
             txtNotes.text = allergy!.notes;
             
-            if(allergy!.level == "Severe"){
+            if(allergy!.level == "Severe"){    
                 swSevereAllergy.isOn = true;
             }
             

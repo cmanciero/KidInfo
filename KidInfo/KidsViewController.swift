@@ -11,6 +11,8 @@ import UIKit
 class KidsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
     @IBOutlet weak var kidsTableView: UITableView!
+    @IBOutlet weak var noKidView: UIView!
+    @IBOutlet weak var lblTapKid: UILabel!
     
     var arrKids: [Kid] = [];
     let activityIndicator = UIActivityIndicatorView(activityIndicatorStyle: UIActivityIndicatorViewStyle.gray);
@@ -47,6 +49,12 @@ class KidsViewController: UIViewController, UITableViewDelegate, UITableViewData
             
             // reload table view
             kidsTableView.reloadData();
+            
+            if(arrKids.count == 0){
+                self.showNoKidOverlay();
+            } else {
+                self.hideNoKidOverlay();
+            }
         } catch {}
     }
     
@@ -74,6 +82,18 @@ class KidsViewController: UIViewController, UITableViewDelegate, UITableViewData
         return age;
     }
     
+    // show no kid overlay
+    func showNoKidOverlay() -> Void{
+        noKidView.isHidden = false;
+        lblTapKid.isHidden = false;
+    }
+    
+    // hide no kid overlay
+    func hideNoKidOverlay() -> Void{
+        noKidView.isHidden = true;
+        lblTapKid.isHidden = true;
+    }
+    
     func showAddNewKidPopUp() -> Void{
         // show waiting icon
         activityView.isHidden = false;
@@ -84,7 +104,7 @@ class KidsViewController: UIViewController, UITableViewDelegate, UITableViewData
         // start animating
         activityIndicator.startAnimating();
         
-        let newKidAlert = UIAlertController(title: "Add kid", message: "Enter the name of the kid you want to add.", preferredStyle: .alert);
+        let newKidAlert = UIAlertController(title: "Add kid", message: nil, preferredStyle: .alert);
         newKidAlert.addTextField { (textField: UITextField) in
             textField.placeholder = "Enter kid's name";
             textField.autocapitalizationType = UITextAutocapitalizationType.words;

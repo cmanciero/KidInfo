@@ -61,13 +61,32 @@
                                     </tableViewCell>
                                 </prototypes>
                             </tableView>
+                            <view hidden="YES" alpha="0.5" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="d1x-mx-awW" userLabel="No Kid View">
+                                <rect key="frame" x="0.0" y="64" width="375" height="603"/>
+                                <color key="backgroundColor" red="0.47449719930000001" green="0.89112770860000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="603" id="sIC-jO-urv"/>
+                                    <constraint firstAttribute="width" constant="375" id="tcs-2l-2jj"/>
+                                </constraints>
+                            </view>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Tap + to add a kid" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QCa-CU-HKH">
+                                <rect key="frame" x="57" y="314" width="260" height="39"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="32"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="dvE-8K-Szk" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" id="GmG-La-mnk"/>
                             <constraint firstAttribute="trailing" secondItem="dvE-8K-Szk" secondAttribute="trailing" id="MUk-b2-eyG"/>
+                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="d1x-mx-awW" secondAttribute="bottom" id="QDp-Rw-5rv"/>
+                            <constraint firstItem="d1x-mx-awW" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" id="ssE-Sc-N1e"/>
                             <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="dvE-8K-Szk" secondAttribute="bottom" id="t94-sf-5cm"/>
                             <constraint firstItem="dvE-8K-Szk" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="uuL-fE-lI8"/>
+                            <constraint firstAttribute="trailing" secondItem="d1x-mx-awW" secondAttribute="trailing" id="wQO-Rf-y0e"/>
+                            <constraint firstItem="d1x-mx-awW" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="xXJ-Qd-W4y"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="KidInfo" id="aRW-LG-3Dc">
@@ -85,12 +104,14 @@
                     </navigationItem>
                     <connections>
                         <outlet property="kidsTableView" destination="dvE-8K-Szk" id="2d3-Bh-0EO"/>
+                        <outlet property="lblTapKid" destination="QCa-CU-HKH" id="DfT-PD-QOR"/>
+                        <outlet property="noKidView" destination="d1x-mx-awW" id="87u-ua-Ykj"/>
                         <segue destination="fzg-PN-b9J" kind="show" identifier="showKidSegue" id="es7-cQ-RYP"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="644" y="-711"/>
+            <point key="canvasLocation" x="644" y="-711.09445277361328"/>
         </scene>
         <!--Kid Info View Controller-->
         <scene sceneID="j4I-xj-NjM">
