@@ -17,15 +17,9 @@ class KidInfoViewController: UIViewController,
     UIPickerViewDelegate, UIPickerViewDataSource,
 CNContactPickerDelegate{
     
-    @IBOutlet weak var viewDoctor: UIView!
     @IBOutlet weak var txtName: UITextField!
-    @IBOutlet weak var txtWeightLbs: UITextField!
-    @IBOutlet weak var txtWeightOz: UITextField!
-    @IBOutlet weak var txtHeightFt: UITextField!
-    @IBOutlet weak var txtHeightInches: UITextField!
     @IBOutlet weak var txtDOB: UITextField!
     @IBOutlet weak var btnDelete: UIButton!
-    @IBOutlet weak var btnAvatar: UIButton!
     @IBOutlet weak var titleName: UINavigationItem!
     @IBOutlet weak var mainView: UIView!
     @IBOutlet weak var allergyTableView: UITableView!
@@ -40,6 +34,8 @@ CNContactPickerDelegate{
     @IBOutlet weak var lblDoctorCount: UILabel!
     @IBOutlet weak var lblMedicationCount: UILabel!
     @IBOutlet weak var btnPickDr: UIButton!
+    @IBOutlet weak var loadingView: UIView!
+    @IBOutlet weak var imgAvatar: UIImageView!
     
     var doctors = [CNContact]();
     
@@ -146,11 +142,10 @@ CNContactPickerDelegate{
         medicationTableView.delegate = self;
         medicationTableView.dataSource = self;
         
-        // style avatar button
-        btnAvatar.layer.cornerRadius = btnAvatar.layer.frame.width / 2;
-        btnAvatar.layer.borderWidth = 3;
-        btnAvatar.layer.borderColor = UIColor.white.cgColor;
-        btnAvatar.setTitle("Add photo", for: .normal);
+        // add border radius to avatar image
+        imgAvatar.layer.cornerRadius = imgAvatar.frame.size.width / 2;
+        imgAvatar.layer.borderWidth = 3;
+        imgAvatar.layer.borderColor = UIColor.white.cgColor;
         
         // create date picker for DOB
         createDatePicker();
@@ -367,8 +362,8 @@ CNContactPickerDelegate{
     // save kid information
     func saveKidInfo(){
         kid!.name = txtName.text;
-        if(btnAvatar.backgroundImage(for: .normal) != nil){
-            kid!.avatar = UIImagePNGRepresentation(btnAvatar.backgroundImage(for: .normal)!)!;// as NSData;
+        if(imgAvatar.image != nil){
+            kid!.avatar = UIImagePNGRepresentation(imgAvatar.image!);
         }
         
         // save DOB
@@ -394,8 +389,8 @@ CNContactPickerDelegate{
         // check if avatar is set
         if(kid!.avatar != nil){
             let image = UIImage(data: kid!.avatar! as Data);
-            btnAvatar.setBackgroundImage(image, for: .normal);
-            btnAvatar.setTitle("Update photo", for: .normal);
+            
+            imgAvatar.image = image;
         }
         
         // set date of birth
@@ -448,6 +443,13 @@ CNContactPickerDelegate{
         
         // check if kid has medications
         checkMedicationTableView();
+        
+        self.hideLoadingScreen();
+    }
+    
+    // hide loading screen
+    func hideLoadingScreen(){
+        loadingView.isHidden = true;
     }
     
     // create the activity view
@@ -477,13 +479,13 @@ CNContactPickerDelegate{
         
         if(allergyCount > 0){
             if(allergyTableView.isHidden){
-                allergyTableView.isHidden = false;
+//                allergyTableView.isHidden = false;
             }
             
             lblAllergyCount.text = "(\(allergyCount))";
-            lblAllergyCount.isHidden = false;
+//            lblAllergyCount.isHidden = false;
         } else {
-            allergyTableView.isHidden = true;
+//            allergyTableView.isHidden = true;
             lblAllergyCount.text = "";
         }
     }
@@ -507,7 +509,7 @@ CNContactPickerDelegate{
             
 //            viewDoctor.frame = CGRect(x: 0, y: 0, width: 375, height: 170);
             lblDoctorCount.text = "(\(doctorCount))";
-            lblDoctorCount.isHidden = false;
+//            lblDoctorCount.isHidden = false;
         } else {
 //            doctorTableView.isHidden = true;
             lblDoctorCount.text = "";
@@ -530,13 +532,13 @@ CNContactPickerDelegate{
         
         if(medicationCount > 0){
             if(medicationTableView.isHidden){
-                medicationTableView.isHidden = false;
+//                medicationTableView.isHidden = false;
             }
             
             lblMedicationCount.text = "(\(medicationCount))";
-            lblMedicationCount.isHidden = false;
+//            lblMedicationCount.isHidden = false;
         } else {
-            medicationTableView.isHidden = true;
+//            medicationTableView.isHidden = true;
             lblMedicationCount.text = "";
         }
     }
@@ -621,7 +623,7 @@ CNContactPickerDelegate{
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
         let image = info[UIImagePickerControllerOriginalImage] as! UIImage;
         
-        btnAvatar.setBackgroundImage(image, for: .normal);
+        imgAvatar.image = image;
         imagePicker.dismiss(animated: true, completion: nil);
         self.saveKidInfo();
     }
@@ -707,11 +709,6 @@ CNContactPickerDelegate{
         selectedDoctor = nil;
     }
     
-    // Save kid
-    @IBAction func saveTapped(_ sender: Any) {
-        self.saveKidInfo();
-    }
-    
     // change/set avatar image
     @IBAction func avatarTapped(_ sender: Any) {
         imagePicker.sourceType = .photoLibrary;
@@ -730,7 +727,7 @@ CNContactPickerDelegate{
         // start animating
         activityIndicator.startAnimating();
         
-        let warningAlert = UIAlertController(title: "Delete kid", message: "Are you sure you want to delete \(txtName!.text!)? This cannot be undone.", preferredStyle: .alert);
+        let warningAlert = UIAlertController(title: "Delete \(txtName!.text!)", message: "Are you sure? This cannot be undone.", preferredStyle: .alert);
         warningAlert.addAction(UIAlertAction(title: "Yes", style: .default, handler: { action in
             UIApplication.shared.beginIgnoringInteractionEvents();
             
