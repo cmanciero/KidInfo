@@ -22,6 +22,7 @@ class MedicationViewController: UIViewController {
     
     var kid: Kid? = nil;
     var medication: Medication? = nil;
+    let drugsDotComURL = "https://www.drugs.com/drug_interactions.html";
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -86,7 +87,7 @@ class MedicationViewController: UIViewController {
     
     // open URL to check for drug interactions
     @IBAction func checkMedsTapped(_ sender: Any) {
-        let url = URL(string: "https://www.drugs.com/drug_interactions.html")!;
+        let url = URL(string: drugsDotComURL)!;
         
         UIApplication.shared.open(url, options: [:], completionHandler: nil);
     }
