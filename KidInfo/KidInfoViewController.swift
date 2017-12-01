@@ -33,74 +33,23 @@ CNContactPickerDelegate{
     @IBOutlet weak var lblAllergyCount: UILabel!
     @IBOutlet weak var lblDoctorCount: UILabel!
     @IBOutlet weak var lblMedicationCount: UILabel!
-    @IBOutlet weak var btnPickDr: UIButton!
-    @IBOutlet weak var loadingView: UIView!
     @IBOutlet weak var imgAvatar: UIImageView!
     
+    // array of doctor contacts
     var doctors = [CNContact]();
-    
-    /************************/
-    // MARK: - contact store methods
-    /************************/
-    @IBAction func showContacts(_ sender: Any) {
-        let contactPickerViewController = CNContactPickerViewController();
-        contactPickerViewController.delegate = self;
-        
-        present(contactPickerViewController, animated: true, completion: nil);
-    }
-    
-    func contactPicker(_ picker: CNContactPickerViewController, didSelect contact: CNContact) {
-        print([contact]);
-        print("First name: \(contact.givenName) Last name: \(contact.familyName)");
-        
-        //        let doctor = Doctor();
-        //        doctor.name = "\(contact.givenName) \(contact.familyName)";
-        doctorTableView.isHidden = false;
-        self.doctors.append(contact);
-        doctorTableView.reloadData();
-    }
     
     // store contact store
     var contactStore = CNContactStore();
-    
-    func showMessage(message: String){
-        let alertController = UIAlertController(title: "Contacts", message: message, preferredStyle: .alert);
-        let dismissAction = UIAlertAction(title: "OK", style: .default, handler: {(alert) -> Void in });
-        
-        alertController.addAction(dismissAction);
-        
-        self.present(alertController, animated: true, completion: nil);
-    }
-    
-    func requestForAccess(completionHandler: @escaping (_ accessGranted: Bool) -> Void) {
-        let authorizationStatus = CNContactStore.authorizationStatus(for: CNEntityType.contacts);
-        
-        switch authorizationStatus {
-        case .authorized:
-            completionHandler(true)
-            
-        case .denied, .notDetermined:
-            self.contactStore.requestAccess(for: CNEntityType.contacts, completionHandler: { (access, accessError) -> Void in
-                if access {
-                    completionHandler(access);
-                }
-                else {
-                    if authorizationStatus == CNAuthorizationStatus.denied {
-                        //                        dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                        let message = "\(accessError!.localizedDescription)\n\nPlease allow the app to access your contacts through the Settings."
-                        self.showMessage(message: message);
-                        //                        })
-                    }
-                }
-            })
-            
-        default:
-            completionHandler(false)
-        }
-    }
-    
+
+    // selected kid object
     var kid: Kid? = nil;
+    
+    // image picker control for avatar
     var imagePicker = UIImagePickerController();
+    
+    // selected doctor contact to add to list of doctors
+    var selectedDoctorContact: DoctorContact? = nil;
+    
     let activityIndicator = UIActivityIndicatorView(activityIndicatorStyle: UIActivityIndicatorViewStyle.gray);
     let activityView = UIView();
     var activityViewConstraints: [NSLayoutConstraint] = [];
@@ -122,11 +71,12 @@ CNContactPickerDelegate{
         // create the activity view
         createActivityView();
         
+        self.showActivityIndicator();
+        
         // hide activity indicator if running
-        if(activityIndicator.isAnimating){
-            activityView.isHidden = true;
-            activityIndicator.stopAnimating();
-        }
+//        if(activityIndicator.isAnimating){
+//            self.hideActivityIndicator();
+//        }
         
         imagePicker.delegate = self;
         
@@ -217,11 +167,25 @@ CNContactPickerDelegate{
             //            let sortedDoctors = sortDoctors();
             //            selectedDoctor = (sortedDoctors as! [Doctor])[indexPath.row] as Doctor;
             //            performSegue(withIdentifier: "doctorSegue", sender: nil);
-            let selectedDoctor = doctors[indexPath.row];
+//            let selectedDoctor = doctors[indexPath.row];
             
-            let contactViewController = CNContactViewController(for: selectedDoctor)
+            // get selected contact
+            let contact = kid!.doctorContacts![indexPath.row] as! DoctorContact;
+            
+            // get contact object
+            var selectedDoctor = self.findContactById(contact: contact);
+            
+            // check if required keys are set
+            if !selectedDoctor.areKeysAvailable([CNContactViewController.descriptorForRequiredKeys()]) {
+                do {
+                    selectedDoctor = try self.contactStore.unifiedContact(withIdentifier: selectedDoctor.identifier, keysToFetch: [CNContactViewController.descriptorForRequiredKeys()])
+                }
+                catch { }
+            }
+            
+            // create/display controller for contacs
+            let contactViewController = CNContactViewController(for: selectedDoctor);
             contactViewController.contactStore = self.contactStore;
-            
             navigationController?.pushViewController(contactViewController, animated: true)
         } else if(tableView.isEqual(medicationTableView)) {
             let sortedMedications = sortMedications();
@@ -244,7 +208,7 @@ CNContactPickerDelegate{
             //            if(kid?.doctors != nil){
             //                rowCount = (kid!.doctors!.count);
             //            }
-            rowCount = doctors.count;
+            rowCount = (kid!.doctorContacts!.count);//doctors.count;
         } else if(tableView.isEqual(medicationTableView)) {
             if(kid?.medications != nil){
                 rowCount = (kid!.medications!.count);
@@ -273,9 +237,12 @@ CNContactPickerDelegate{
             //            let doctor: Doctor = (sortedDoctors as! [Doctor])[indexPath.row] as Doctor;
             //            cell.textLabel?.text = doctor.name;
             
-            let currentDoctor = doctors[indexPath.row]
+//            let currentDoctor = doctors[indexPath.row]
+            let currentDoctor = kid!.doctorContacts![indexPath.row] as! DoctorContact;
             
-            cell.textLabel?.text = "\(currentDoctor.givenName) \(currentDoctor.familyName)";
+            let foundDoctor = self.findContactById(contact: currentDoctor);
+//            cell.textLabel?.text = currentDoctor.contactId;//"\(currentDoctor.givenName) \(currentDoctor.familyName)";
+            cell.textLabel?.text = CNContactFormatter.string(from: foundDoctor, style: .fullName);
             
         } else if(tableView.isEqual(medicationTableView)) {
             let sortedMedications = sortMedications();
@@ -304,8 +271,10 @@ CNContactPickerDelegate{
             }
                 // delete row from doctor table
             else if(tableView.isEqual(doctorTableView)){
-                let sortedDoctors = sortDoctors();
-                let doctor = (sortedDoctors as! [Doctor])[indexPath.row] as Doctor;
+//                let sortedDoctors = sortDoctors();
+//                let doctor = (sortedDoctors as! [Doctor])[indexPath.row] as Doctor;
+                
+                let doctor = kid!.doctorContacts![indexPath.row] as! DoctorContact;
                 
                 let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext;
                 context.delete(doctor);
@@ -444,12 +413,25 @@ CNContactPickerDelegate{
         // check if kid has medications
         checkMedicationTableView();
         
-        self.hideLoadingScreen();
+        self.hideActivityIndicator();
     }
     
-    // hide loading screen
-    func hideLoadingScreen(){
-        loadingView.isHidden = true;
+    // Find contact
+    func findContactById(contact: DoctorContact) -> CNContact{
+        var foundContact: CNContact = CNContact();
+        
+        do {
+            //            let keys = [CNContactGivenNameKey, CNContactFamilyNameKey, CNContactEmailAddressesKey, CNContactBirthdayKey, CNContactImageDataKey, CNContainerNameKey];
+            let keys = [CNContactFormatter.descriptorForRequiredKeys(for: .fullName)];
+            let contactRefetched = try (UIApplication.shared.delegate as! AppDelegate).contactStore.unifiedContact(withIdentifier: contact.contactId!, keysToFetch: keys as [CNKeyDescriptor]);
+            
+            foundContact = contactRefetched;
+        }
+        catch{
+            print("Unable to find contact with identifier: \(contact.contactId ?? "")");
+        }
+        
+        return foundContact;
     }
     
     // create the activity view
@@ -498,18 +480,21 @@ CNContactPickerDelegate{
     // check if doctor table should be shown
     func checkDoctorTableView(){
         var doctorCount = 0;
-        if(kid?.doctors != nil){
-            doctorCount = (kid!.doctors?.count)!;
+//        if(kid?.doctors != nil){
+//            doctorCount = (kid!.doctors?.count)!;
+//        }
+        
+        if(kid?.doctorContacts != nil){
+            doctorCount = (kid!.doctorContacts?.count)!;
         }
         
         if(doctorCount > 0){
 //            if(doctorTableView.isHidden){
 //                doctorTableView.isHidden = false;
 //            }
-            
 //            viewDoctor.frame = CGRect(x: 0, y: 0, width: 375, height: 170);
             lblDoctorCount.text = "(\(doctorCount))";
-//            lblDoctorCount.isHidden = false;
+            lblDoctorCount.isHidden = false;
         } else {
 //            doctorTableView.isHidden = true;
             lblDoctorCount.text = "";
@@ -628,6 +613,83 @@ CNContactPickerDelegate{
         self.saveKidInfo();
     }
     
+    // show activity indicator
+    func showActivityIndicator(){
+        // show waiting icon
+        activityView.isHidden = false;
+        activityIndicator.center = activityView.center;
+        activityIndicator.hidesWhenStopped = true;
+        activityView.addSubview(activityIndicator);
+        
+        // start animating
+        activityIndicator.startAnimating();
+    }
+    
+    // hide activity indicator
+    func hideActivityIndicator(){
+        self.activityIndicator.stopAnimating();
+        self.activityView.isHidden = true;
+    }
+    
+    /************************/
+    // MARK: - contact store methods
+    /************************/
+    
+    // execute after selection of doctor/contact
+    func contactPicker(_ picker: CNContactPickerViewController, didSelect contact: CNContact) {
+        let appDelegate = (UIApplication.shared.delegate as! AppDelegate);
+        
+        // get context
+        let context = appDelegate.persistentContainer.viewContext;
+        selectedDoctorContact = DoctorContact(context: context);
+        selectedDoctorContact!.contactId = contact.identifier;
+        selectedDoctorContact!.kid = kid;
+        
+        appDelegate.saveContext();
+        
+//        doctorTableView.isHidden = false;
+//        self.doctors.append(contact);
+        doctorTableView.reloadData();
+    }
+    
+    // show authorization message for Contact selector
+    func showMessage(message: String){
+        let alertController = UIAlertController(title: "Contacts", message: message, preferredStyle: .alert);
+        let dismissAction = UIAlertAction(title: "OK", style: .default, handler: {(alert) -> Void in });
+        
+        alertController.addAction(dismissAction);
+        
+        self.present(alertController, animated: true, completion: nil);
+    }
+    
+    // request access for Contact selection
+    func requestForAccess(completionHandler: @escaping (_ accessGranted: Bool) -> Void) {
+        let authorizationStatus = CNContactStore.authorizationStatus(for: CNEntityType.contacts);
+        
+        switch authorizationStatus {
+        case .authorized:
+            completionHandler(true)
+            
+        case .denied, .notDetermined:
+            self.contactStore.requestAccess(for: CNEntityType.contacts, completionHandler: { (access, accessError) -> Void in
+                if access {
+                    completionHandler(access);
+                }
+                else {
+                    if authorizationStatus == CNAuthorizationStatus.denied {
+                        //                        dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                        let message = "\(accessError!.localizedDescription)\n\nPlease allow the app to access your contacts through the Settings."
+                        self.showMessage(message: message);
+                        //                        })
+                    }
+                }
+            })
+            
+        default:
+            completionHandler(false)
+        }
+    }
+    
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         // Get the new view controller using segue.destinationViewController.
@@ -686,6 +748,14 @@ CNContactPickerDelegate{
     // MARK: - Actions
     /************************/
     
+    // show contact picker
+    @IBAction func showContacts(_ sender: Any) {
+        let contactPickerViewController = CNContactPickerViewController();
+        contactPickerViewController.delegate = self;
+        
+        present(contactPickerViewController, animated: true, completion: nil);
+    }
+    
     // check to see if a kid name exists
     @IBAction func checkForName(_ sender: Any) {
         if(!txtName.text!.isEmpty){
@@ -718,14 +788,7 @@ CNContactPickerDelegate{
     
     // delete kid
     @IBAction func deleteTapped(_ sender: Any) {
-        // show waiting icon
-        activityView.isHidden = false;
-        activityIndicator.center = activityView.center;
-        activityIndicator.hidesWhenStopped = true;
-        activityView.addSubview(activityIndicator);
-        
-        // start animating
-        activityIndicator.startAnimating();
+        self.showActivityIndicator();
         
         let warningAlert = UIAlertController(title: "Delete \(txtName!.text!)", message: "Are you sure? This cannot be undone.", preferredStyle: .alert);
         warningAlert.addAction(UIAlertAction(title: "Yes", style: .default, handler: { action in
@@ -744,8 +807,7 @@ CNContactPickerDelegate{
             self.navigationController?.popViewController(animated: true);
         }));
         warningAlert.addAction(UIAlertAction(title: "No", style: .cancel, handler: { action in
-            self.activityIndicator.stopAnimating();
-            self.activityView.isHidden = true;
+            self.hideActivityIndicator();
         }));
         self.present(warningAlert, animated: true, completion: nil);
     }
