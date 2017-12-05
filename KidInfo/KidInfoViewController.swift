@@ -191,7 +191,6 @@ CNContactPickerDelegate{
             let sortedMedications = sortMedications();
             selectedMedication = (sortedMedications as! [Medication])[indexPath.row] as Medication;
             performSegue(withIdentifier: "medicationSegue", sender: nil);
-            
         }
         
         // deselect selected row
@@ -607,7 +606,6 @@ CNContactPickerDelegate{
     // set avatar button after selection
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
         let image = info[UIImagePickerControllerOriginalImage] as! UIImage;
-        
         imgAvatar.image = image;
         imagePicker.dismiss(animated: true, completion: nil);
         self.saveKidInfo();

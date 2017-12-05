@@ -142,6 +142,12 @@ class KidsViewController: UIViewController, UITableViewDelegate, UITableViewData
         performSegue(withIdentifier: "showKidSegue", sender: kid);
     }
     
+    // sort kids array
+    func sortKids() -> [Any]{
+        let sortedKids = arrKids.sorted(by: {$0.dob! < $1.dob!})
+        return sortedKids;
+    }
+    
     /************************/
     // MARK: - tableView methods
     /************************/
@@ -154,7 +160,8 @@ class KidsViewController: UIViewController, UITableViewDelegate, UITableViewData
     // select kid
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         // get selected kid
-        let kid = arrKids[indexPath.row];
+        let sortedKids = sortKids();
+        let kid = (sortedKids as! [Kid])[indexPath.row] as Kid;
         
         // navigate to kid info, show selected kid
         self.navigateToSelectedKid(kid: kid);
@@ -165,8 +172,9 @@ class KidsViewController: UIViewController, UITableViewDelegate, UITableViewData
     
     // display kids in table cell
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let sortedKids = sortKids();
+        let kid = (sortedKids as! [Kid])[indexPath.row] as Kid;
         let cell = tableView.dequeueReusableCell(withIdentifier: "kidInfoTableViewCell", for: indexPath) as! KidTableViewCell;
-        let kid = arrKids[indexPath.row];
         
         // set kid name
         cell.lblName.text = kid.name;
