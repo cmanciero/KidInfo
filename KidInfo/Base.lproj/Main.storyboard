@@ -768,7 +768,7 @@
                                                 <action selector="cancelTapped:" destination="fGV-5C-T08" id="72K-Ja-sbU"/>
                                             </connections>
                                         </barButtonItem>
-                                        <barButtonItem key="rightBarButtonItem" title="Save" id="39X-NM-9h1">
+                                        <barButtonItem key="rightBarButtonItem" title="Done" id="39X-NM-9h1">
                                             <connections>
                                                 <action selector="saveTapped:" destination="fGV-5C-T08" id="EeH-lG-y5q"/>
                                             </connections>
@@ -940,7 +940,7 @@
                                                 <action selector="cancelTapped:" destination="ptI-ym-fHu" id="70W-IZ-teH"/>
                                             </connections>
                                         </barButtonItem>
-                                        <barButtonItem key="rightBarButtonItem" title="Save" id="6Uo-PC-ODK">
+                                        <barButtonItem key="rightBarButtonItem" title="Done" id="6Uo-PC-ODK">
                                             <connections>
                                                 <action selector="saveTapped:" destination="ptI-ym-fHu" id="Awe-iV-2ZW"/>
                                             </connections>

@@ -22,6 +22,8 @@ class DoctorViewController: UIViewController {
     @IBOutlet weak var txtEmail: UITextField!
     @IBOutlet weak var txtNotes: UITextView!
     @IBOutlet weak var scrollView: UIScrollView!
+    
+    let appDelegate = Utilities.getApplicationDelegate()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -85,8 +87,6 @@ class DoctorViewController: UIViewController {
     }
     
     @IBAction func saveTapped(_ sender: Any) {
-        let appDelegate = (UIApplication.shared.delegate as! AppDelegate);
-        
         // if allergy is not available
         if(doctor == nil){
             let context = appDelegate.persistentContainer.viewContext;

@@ -24,6 +24,7 @@ class HeightViewController: UIViewController, UITableViewDataSource, UITableView
     var arrDates: [Date] = [];
     var datePicker = UIDatePicker();
     let dateFormatter = DateFormatter();
+    let appDelegate = Utilities.getApplicationDelegate()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -35,7 +36,7 @@ class HeightViewController: UIViewController, UITableViewDataSource, UITableView
         heightTableView.delegate = self;
         
         // Do any additional setup after loading the view.
-        btnSave.isEnabled = false;
+//        btnSave.isEnabled = false;
         
         // create date picker
         createDatePicker();
@@ -178,9 +179,9 @@ class HeightViewController: UIViewController, UITableViewDataSource, UITableView
             let sortedHeightArray: [Any] = sortHeightArray();
             let ht = (sortedHeightArray as! [Height])[indexPath.row] as Height;
             
-            let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext;
+            let context = appDelegate.persistentContainer.viewContext;
             context.delete(ht);
-            (UIApplication.shared.delegate as! AppDelegate).saveContext();
+            appDelegate.saveContext();
             
             heightTableView.reloadData();
         }
@@ -196,8 +197,6 @@ class HeightViewController: UIViewController, UITableViewDataSource, UITableView
     /************************/
     
     @IBAction func saveTapped(_ sender: Any) {
-        let appDelegate = (UIApplication.shared.delegate as! AppDelegate);
-        
         // if allergy is not available
         if(height == nil){
             let context = appDelegate.persistentContainer.viewContext;
