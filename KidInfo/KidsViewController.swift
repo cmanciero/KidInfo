@@ -15,15 +15,17 @@ class KidsViewController: UIViewController, UITableViewDelegate, UITableViewData
     @IBOutlet weak var lblTapKid: UILabel!
     
     var arrKids: [Kid] = [];
-    let activityIndicator = UIActivityIndicatorView(activityIndicatorStyle: UIActivityIndicatorViewStyle.gray);
-    let activityView = UIView();
-    var activityViewConstraints: [NSLayoutConstraint] = [];
+    let utilities = Utilities();
+    let appDelegate = Utilities.getApplicationDelegate()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
         kidsTableView.delegate = self;
         kidsTableView.dataSource = self;
+        
+        // create activity view
+        utilities.createActivityView(view: self.view);
     }
     
     // get ready to segue
@@ -41,7 +43,7 @@ class KidsViewController: UIViewController, UITableViewDelegate, UITableViewData
         }
         
         // get context for CoreData
-        let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext;
+        let context = appDelegate.persistentContainer.viewContext;
         
         do{
             // fetch to get all kids
@@ -95,14 +97,8 @@ class KidsViewController: UIViewController, UITableViewDelegate, UITableViewData
     }
     
     func showAddNewKidPopUp() -> Void{
-        // show waiting icon
-        activityView.isHidden = false;
-        activityIndicator.center = activityView.center;
-        activityIndicator.hidesWhenStopped = true;
-        activityView.addSubview(activityIndicator);
-        
-        // start animating
-        activityIndicator.startAnimating();
+        // show activity indicator
+        utilities.showActivityIndicator();
         
         let newKidAlert = UIAlertController(title: "Add kid", message: nil, preferredStyle: .alert);
         newKidAlert.addTextField { (textField: UITextField) in
@@ -114,7 +110,7 @@ class KidsViewController: UIViewController, UITableViewDelegate, UITableViewData
             
             if let textFields = newKidAlert.textFields{
                 // get context
-                let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext;
+                let context = self.appDelegate.persistentContainer.viewContext;
                 
                 let theTextFields = textFields as [UITextField];
                 let kidName = theTextFields[0].text;
@@ -122,8 +118,9 @@ class KidsViewController: UIViewController, UITableViewDelegate, UITableViewData
                 kid.name = kidName;
                 
                 // save context
-                (UIApplication.shared.delegate as! AppDelegate).saveContext();
+                self.appDelegate.saveContext();
                 
+                self.utilities.hideActivityIndicator();
                 UIApplication.shared.endIgnoringInteractionEvents();
                 
                 // navigate to kid info
@@ -131,8 +128,8 @@ class KidsViewController: UIViewController, UITableViewDelegate, UITableViewData
             }
         }));
         newKidAlert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: { action in
-            self.activityIndicator.stopAnimating();
-            self.activityView.isHidden = true;
+            // hide activity indicator
+            self.utilities.hideActivityIndicator();
         }));
         self.present(newKidAlert, animated: true, completion: nil);
     }
@@ -144,8 +141,26 @@ class KidsViewController: UIViewController, UITableViewDelegate, UITableViewData
     
     // sort kids array
     func sortKids() -> [Any]{
-        let sortedKids = arrKids.sorted(by: {$0.dob! < $1.dob!})
-        return sortedKids;
+        var arrSortedKids: [Any] = [];
+        var bDOBExists = false;
+        
+        // check if all kids have DOB entered,
+        for (_, kid) in arrKids.enumerated(){
+            if(kid.dob != nil){
+                bDOBExists = true;
+            } else {
+                bDOBExists = false;
+                break;
+            }
+        }
+        // if DOB exists then sort by DOB
+        if(bDOBExists){
+            arrSortedKids = arrKids.sorted(by: {$0.dob! < $1.dob!})
+        } else {
+            arrSortedKids = arrKids;
+        }
+        
+        return arrSortedKids;
     }
     
     /************************/

@@ -22,10 +22,26 @@
          </PersistentStrings>
       </ContextState>
       <ContextState
+         contextName = "KidInfoViewController.findContactById(contact:):KidInfoViewController.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "contact.contactId">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
          contextName = "KidInfoViewController.deleteTapped(Any) -&gt; ():KidInfoViewController.swift">
          <PersistentStrings>
             <PersistentString
                value = "activityIndicator.isHidden">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "KidInfoViewController.tableView(_:didSelectRowAt:):KidInfoViewController.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "doctors">
             </PersistentString>
          </PersistentStrings>
       </ContextState>
@@ -49,22 +65,6 @@
          </PersistentStrings>
       </ContextState>
       <ContextState
-         contextName = "KidInfoViewController.tableView(_:didSelectRowAt:):KidInfoViewController.swift">
-         <PersistentStrings>
-            <PersistentString
-               value = "doctors">
-            </PersistentString>
-         </PersistentStrings>
-      </ContextState>
-      <ContextState
-         contextName = "KidInfoViewController.findContactById(contact:):KidInfoViewController.swift">
-         <PersistentStrings>
-            <PersistentString
-               value = "contact.contactId">
-            </PersistentString>
-         </PersistentStrings>
-      </ContextState>
-      <ContextState
          contextName = "KidInfoViewController.checkDoctorTableView():KidInfoViewController.swift">
          <PersistentStrings>
             <PersistentString
@@ -83,6 +83,20 @@
             </PersistentString>
             <PersistentString
                value = "segue.identifier">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "KidsViewController.sortKids():KidsViewController.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "kid.dob">
+            </PersistentString>
+            <PersistentString
+               value = "kid.name">
+            </PersistentString>
+            <PersistentString
+               value = "bDOBExists">
             </PersistentString>
          </PersistentStrings>
       </ContextState>

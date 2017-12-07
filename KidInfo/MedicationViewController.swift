@@ -23,6 +23,7 @@ class MedicationViewController: UIViewController {
     var kid: Kid? = nil;
     var medication: Medication? = nil;
     let drugsDotComURL = "https://www.drugs.com/drug_interactions.html";
+    let appDelegate = Utilities.getApplicationDelegate()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -65,8 +66,6 @@ class MedicationViewController: UIViewController {
     }
     // save medication to kid
     @IBAction func saveTapped(_ sender: Any) {
-        let appDelegate = (UIApplication.shared.delegate as! AppDelegate);
-        
         // if medication is not available
         if(medication == nil){
             let context = appDelegate.persistentContainer.viewContext;

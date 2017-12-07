@@ -29,6 +29,7 @@
 		95CA48E81EF4BD5200401E07 /* HeightGrowthChartViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95CA48E71EF4BD5200401E07 /* HeightGrowthChartViewController.swift */; };
 		95CA48EA1EF4BF2100401E07 /* WeightTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95CA48E91EF4BF2100401E07 /* WeightTabBarController.swift */; };
 		95CA48EC1EF4C33500401E07 /* HeightTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95CA48EB1EF4C33500401E07 /* HeightTabBarController.swift */; };
+		95CFB8CC1FD8309F00C06820 /* utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95CFB8CB1FD8309F00C06820 /* utilities.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -96,6 +97,7 @@
 		95CA48E71EF4BD5200401E07 /* HeightGrowthChartViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HeightGrowthChartViewController.swift; sourceTree = "<group>"; };
 		95CA48E91EF4BF2100401E07 /* WeightTabBarController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WeightTabBarController.swift; sourceTree = "<group>"; };
 		95CA48EB1EF4C33500401E07 /* HeightTabBarController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HeightTabBarController.swift; sourceTree = "<group>"; };
+		95CFB8CB1FD8309F00C06820 /* utilities.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = utilities.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -213,6 +215,7 @@
 		954CE68C1EE0EB7300C1160F /* classes */ = {
 			isa = PBXGroup;
 			children = (
+				95CFB8CB1FD8309F00C06820 /* utilities.swift */,
 			);
 			name = classes;
 			sourceTree = "<group>";
@@ -410,6 +413,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				95CFB8CC1FD8309F00C06820 /* utilities.swift in Sources */,
 				954CE67A1EE0AB6F00C1160F /* KidsViewController.swift in Sources */,
 				9537B1C81EE878DF00CF5E1B /* AllergyViewController.swift in Sources */,
 				95CA48E01EF0078900401E07 /* HeightViewController.swift in Sources */,

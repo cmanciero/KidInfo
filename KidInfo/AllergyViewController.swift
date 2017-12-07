@@ -19,6 +19,7 @@ class AllergyViewController: UIViewController {
     
     var kid: Kid? = nil;
     var allergy: Allergy? = nil;
+    let appDelegate = Utilities.getApplicationDelegate()
     
     override func viewDidLoad() {
         super.viewDidLoad();
@@ -99,8 +100,6 @@ class AllergyViewController: UIViewController {
     
     // Done adding/updating allergy
     @IBAction func doneTapped(_ sender: Any) {
-        let appDelegate = (UIApplication.shared.delegate as! AppDelegate);
-        
         // if allergy is not available
         if(allergy == nil){
             let context = appDelegate.persistentContainer.viewContext;

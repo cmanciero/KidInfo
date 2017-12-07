@@ -21,6 +21,7 @@ class WeightViewController: UIViewController, UITableViewDelegate, UITableViewDa
     var weight: Weight? = nil;
     let datePicker = UIDatePicker();
     let dateFormatter = DateFormatter();
+    let appDelegate = Utilities.getApplicationDelegate()
     
     override func viewDidLoad() {
         super.viewDidLoad();
@@ -29,7 +30,7 @@ class WeightViewController: UIViewController, UITableViewDelegate, UITableViewDa
 //        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow(noti:)), name: NSNotification.Name.UIKeyboardWillShow, object: nil)
         
         // Do any additional setup after loading the view.
-        btnSave.isEnabled = false;
+//        btnSave.isEnabled = false;
         
         // create date picker
         createDatePicker();
@@ -186,9 +187,9 @@ class WeightViewController: UIViewController, UITableViewDelegate, UITableViewDa
             let sortedWeightArray: [Any] = sortWeightArray();
             let wt = (sortedWeightArray as! [Weight])[indexPath.row] as Weight;
             
-            let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext;
+            let context = appDelegate.persistentContainer.viewContext;
             context.delete(wt);
-            (UIApplication.shared.delegate as! AppDelegate).saveContext();
+            appDelegate.saveContext();
             
             weightTableView.reloadData();
         }
@@ -199,8 +200,6 @@ class WeightViewController: UIViewController, UITableViewDelegate, UITableViewDa
     /************************/
     
     @IBAction func saveTapped(_ sender: Any) {
-        let appDelegate = (UIApplication.shared.delegate as! AppDelegate);
-        
         // if allergy is not available
         if(weight == nil){
             let context = appDelegate.persistentContainer.viewContext;
@@ -218,7 +217,10 @@ class WeightViewController: UIViewController, UITableViewDelegate, UITableViewDa
         
         appDelegate.saveContext();
         
-        self.dismiss(animated: true, completion: nil);
+        txtPounds.text! = "";
+        txtOunces.text! = "";
+        
+        weightTableView.reloadData();
     }
     
     @IBAction func checkForWeightVal(_ sender: Any) {

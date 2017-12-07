@@ -34,6 +34,7 @@ CNContactPickerDelegate{
     @IBOutlet weak var lblDoctorCount: UILabel!
     @IBOutlet weak var lblMedicationCount: UILabel!
     @IBOutlet weak var imgAvatar: UIImageView!
+    @IBOutlet weak var segGender: UISegmentedControl!
     
     // array of doctor contacts
     var doctors = [CNContact]();
@@ -50,10 +51,6 @@ CNContactPickerDelegate{
     // selected doctor contact to add to list of doctors
     var selectedDoctorContact: DoctorContact? = nil;
     
-    let activityIndicator = UIActivityIndicatorView(activityIndicatorStyle: UIActivityIndicatorViewStyle.gray);
-    let activityView = UIView();
-    var activityViewConstraints: [NSLayoutConstraint] = [];
-    
     var selectedAllergy: Allergy? = nil;
     var selectedDoctor: Doctor? = nil;
     var selectedMedication: Medication? = nil;
@@ -65,13 +62,18 @@ CNContactPickerDelegate{
     // UIDatePicker for DOB
     let dobPicker = UIDatePicker();
     
+    let utilities = Utilities();
+    
+    let appDelegate = Utilities.getApplicationDelegate()
+    
     override func viewDidLoad() {
         super.viewDidLoad();
         
         // create the activity view
-        createActivityView();
+        utilities.createActivityView(view: self.view);
         
-        self.showActivityIndicator();
+        // show activity indicator
+        utilities.showActivityIndicator();
         
         imagePicker.delegate = self;
         
@@ -126,7 +128,7 @@ CNContactPickerDelegate{
         checkMedicationTableView();
         
         // get context for CoreData
-        let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext;
+        let context = appDelegate.persistentContainer.viewContext;
         
         do{
             // fetch to get all kids
@@ -149,7 +151,7 @@ CNContactPickerDelegate{
     }
     
     /************************/
-    // MARK: - tableView methods
+    // MARK: - TABLEVIEW METHODS
     /************************/
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -254,9 +256,9 @@ CNContactPickerDelegate{
                 let sortedAllergies = sortAllergies();
                 let allergy = (sortedAllergies as! [Allergy])[indexPath.row] as Allergy;
                 
-                let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext;
+                let context = appDelegate.persistentContainer.viewContext;
                 context.delete(allergy);
-                (UIApplication.shared.delegate as! AppDelegate).saveContext();
+                appDelegate.saveContext();
                 
                 allergyTableView.reloadData();
                 
@@ -270,9 +272,9 @@ CNContactPickerDelegate{
                 
                 let doctor = kid!.doctorContacts![indexPath.row] as! DoctorContact;
                 
-                let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext;
+                let context = appDelegate.persistentContainer.viewContext;
                 context.delete(doctor);
-                (UIApplication.shared.delegate as! AppDelegate).saveContext();
+                appDelegate.saveContext();
                 
                 doctorTableView.reloadData();
                 
@@ -284,9 +286,9 @@ CNContactPickerDelegate{
                 let sortedMedications = sortMedications();
                 let medication = (sortedMedications as! [Medication])[indexPath.row] as Medication;
                 
-                let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext;
+                let context = appDelegate.persistentContainer.viewContext;
                 context.delete(medication);
-                (UIApplication.shared.delegate as! AppDelegate).saveContext();
+                appDelegate.saveContext();
                 
                 medicationTableView.reloadData();
                 
@@ -297,7 +299,7 @@ CNContactPickerDelegate{
     }
     
     /************************/
-    // MARK: - PickerView methods
+    // MARK: - PICKERVIEW METHODS
     /************************/
     
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
@@ -319,7 +321,7 @@ CNContactPickerDelegate{
     }
     
     /************************/
-    // MARK: - Functions
+    // MARK: - FUNCTIONS
     /************************/
     
     // save kid information
@@ -327,6 +329,11 @@ CNContactPickerDelegate{
         kid!.name = txtName.text;
         if(imgAvatar.image != nil){
             kid!.avatar = UIImagePNGRepresentation(imgAvatar.image!);
+        }
+        
+        // save gender
+        if(segGender.selectedSegmentIndex > -1){
+            kid!.gender = segGender.titleForSegment(at: segGender.selectedSegmentIndex);
         }
         
         // save DOB
@@ -339,7 +346,7 @@ CNContactPickerDelegate{
             kid!.bloodType = txtBloodType.text;
         }
         
-        (UIApplication.shared.delegate as! AppDelegate).saveContext();
+        appDelegate.saveContext();
     }
     
     // load kid information
@@ -366,6 +373,18 @@ CNContactPickerDelegate{
             dobPicker.setDate(kid!.dob! as Date, animated: false);
         }
         
+        // set gender
+        if(kid!.gender != nil){
+            // loop through segments to find which one to select
+            let segments = segGender.numberOfSegments;
+            for i in 0..<segments{
+                if(segGender.titleForSegment(at: i) == kid!.gender){
+                    segGender.selectedSegmentIndex = i;
+                    break;
+                }
+            }
+        }
+        
         // set blood type
         if(kid!.bloodType != nil){
             txtBloodType.text = kid!.bloodType;
@@ -374,7 +393,8 @@ CNContactPickerDelegate{
         // set weight
         if((kid!.weights?.count)! > 0){
             lblWeightVal.isHidden = false;
-            let latestKidWeight = kid!.weights?[kid!.weights!.count - 1] as! Weight;
+            let sortedWeightArray = sortWeightArray();
+            let latestKidWeight = sortedWeightArray[0] as! Weight;
             
             // set pounds
             let pounds = String(Int(latestKidWeight.weight));
@@ -387,7 +407,8 @@ CNContactPickerDelegate{
         // set height
         if((kid!.heights?.count)! > 0){
             lblHeightVal.isHidden = false;
-            let latestKidHeight = kid!.heights?[kid!.heights!.count - 1] as! Height;
+            let sortedHeightArray = sortHeightArray();
+            let latestKidHeight = sortedHeightArray[0] as! Height;
             
             // set height feet
             let feet = String(Int(latestKidHeight.height / 12.0));
@@ -406,7 +427,18 @@ CNContactPickerDelegate{
         // check if kid has medications
         checkMedicationTableView();
         
-        self.hideActivityIndicator();
+        // hide activity indicator
+        utilities.hideActivityIndicator();
+    }
+    
+    // sort the weight values
+    func sortWeightArray() -> [Any]{
+        return kid!.weights!.sortedArray(using: [NSSortDescriptor(key: "date", ascending: false)]);
+    }
+    
+    // sort the height values
+    func sortHeightArray() -> [Any]{
+        return kid!.heights!.sortedArray(using: [NSSortDescriptor(key: "date", ascending: false)]);
     }
     
     // Find contact
@@ -416,7 +448,7 @@ CNContactPickerDelegate{
         do {
             //            let keys = [CNContactGivenNameKey, CNContactFamilyNameKey, CNContactEmailAddressesKey, CNContactBirthdayKey, CNContactImageDataKey, CNContainerNameKey];
             let keys = [CNContactFormatter.descriptorForRequiredKeys(for: .fullName)];
-            let contactRefetched = try (UIApplication.shared.delegate as! AppDelegate).contactStore.unifiedContact(withIdentifier: contact.contactId!, keysToFetch: keys as [CNKeyDescriptor]);
+            let contactRefetched = try appDelegate.contactStore.unifiedContact(withIdentifier: contact.contactId!, keysToFetch: keys as [CNKeyDescriptor]);
             
             foundContact = contactRefetched;
         }
@@ -427,22 +459,22 @@ CNContactPickerDelegate{
         return foundContact;
     }
     
-    // create the activity view
-    func createActivityView(){
-        activityView.alpha = 0.5;
-        activityView.translatesAutoresizingMaskIntoConstraints = false;
-        activityView.isHidden = true;
-        activityView.backgroundColor = UIColor.white;
-        self.view.addSubview(activityView);
-        
-        let topConstraint = activityView.topAnchor.constraint(equalTo: self.view.topAnchor);
-        let bottomConstraint = activityView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor);
-        let leftConstraint = activityView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor);
-        let rightConstraint = activityView.rightAnchor.constraint(equalTo: self.view.rightAnchor);
-        
-        activityViewConstraints = [topConstraint, bottomConstraint, leftConstraint, rightConstraint];
-        NSLayoutConstraint.activate(activityViewConstraints);
-    }
+//    // create the activity view
+//    func createActivityView(){
+//        activityView.alpha = 0.5;
+//        activityView.translatesAutoresizingMaskIntoConstraints = false;
+//        activityView.isHidden = true;
+//        activityView.backgroundColor = UIColor.white;
+//        self.view.addSubview(activityView);
+//        
+//        let topConstraint = activityView.topAnchor.constraint(equalTo: self.view.topAnchor);
+//        let bottomConstraint = activityView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor);
+//        let leftConstraint = activityView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor);
+//        let rightConstraint = activityView.rightAnchor.constraint(equalTo: self.view.rightAnchor);
+//        
+//        activityViewConstraints = [topConstraint, bottomConstraint, leftConstraint, rightConstraint];
+//        NSLayoutConstraint.activate(activityViewConstraints);
+//    }
     
     // check if allergy table should be shown
     func checkAllergyTableView(){
@@ -601,90 +633,17 @@ CNContactPickerDelegate{
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
         let image = info[UIImagePickerControllerOriginalImage] as! UIImage;
         
-        imgAvatar.image = self.imageOrientation(image);
+        imgAvatar.image = Utilities.imageOrientation(image);
         imagePicker.dismiss(animated: true, completion: nil);
         self.saveKidInfo();
     }
     
-    func imageOrientation(_ src:UIImage)->UIImage {
-        if src.imageOrientation == UIImageOrientation.up {
-            return src
-        }
-        var transform: CGAffineTransform = CGAffineTransform.identity
-        switch src.imageOrientation {
-        case UIImageOrientation.down, UIImageOrientation.downMirrored:
-            transform = transform.translatedBy(x: src.size.width, y: src.size.height)
-            transform = transform.rotated(by: CGFloat(M_PI))
-            break
-        case UIImageOrientation.left, UIImageOrientation.leftMirrored:
-            transform = transform.translatedBy(x: src.size.width, y: 0)
-            transform = transform.rotated(by: CGFloat(M_PI_2))
-            break
-        case UIImageOrientation.right, UIImageOrientation.rightMirrored:
-            transform = transform.translatedBy(x: 0, y: src.size.height)
-            transform = transform.rotated(by: CGFloat(-M_PI_2))
-            break
-        case UIImageOrientation.up, UIImageOrientation.upMirrored:
-            break
-        }
-        
-        switch src.imageOrientation {
-        case UIImageOrientation.upMirrored, UIImageOrientation.downMirrored:
-            transform.translatedBy(x: src.size.width, y: 0)
-            transform.scaledBy(x: -1, y: 1)
-            break
-        case UIImageOrientation.leftMirrored, UIImageOrientation.rightMirrored:
-            transform.translatedBy(x: src.size.height, y: 0)
-            transform.scaledBy(x: -1, y: 1)
-        case UIImageOrientation.up, UIImageOrientation.down, UIImageOrientation.left, UIImageOrientation.right:
-            break
-        }
-        
-        let ctx:CGContext = CGContext(data: nil, width: Int(src.size.width), height: Int(src.size.height), bitsPerComponent: (src.cgImage)!.bitsPerComponent, bytesPerRow: 0, space: (src.cgImage)!.colorSpace!, bitmapInfo: CGImageAlphaInfo.premultipliedLast.rawValue)!
-        
-        ctx.concatenate(transform)
-        
-        switch src.imageOrientation {
-        case UIImageOrientation.left, UIImageOrientation.leftMirrored, UIImageOrientation.right, UIImageOrientation.rightMirrored:
-            ctx.draw(src.cgImage!, in: CGRect(x: 0, y: 0, width: src.size.height, height: src.size.width))
-            break
-        default:
-            ctx.draw(src.cgImage!, in: CGRect(x: 0, y: 0, width: src.size.width, height: src.size.height))
-            break
-        }
-        
-        let cgimg:CGImage = ctx.makeImage()!
-        let img:UIImage = UIImage(cgImage: cgimg)
-        
-        return img
-    }
-    
-    // show activity indicator
-    func showActivityIndicator(){
-        // show waiting icon
-        activityView.isHidden = false;
-        activityIndicator.center = activityView.center;
-        activityIndicator.hidesWhenStopped = true;
-        activityView.addSubview(activityIndicator);
-        
-        // start animating
-        activityIndicator.startAnimating();
-    }
-    
-    // hide activity indicator
-    func hideActivityIndicator(){
-        self.activityIndicator.stopAnimating();
-        self.activityView.isHidden = true;
-    }
-    
     /************************/
-    // MARK: - contact store methods
+    // MARK: - CONTACT STORE METHODS
     /************************/
     
     // execute after selection of doctor/contact
     func contactPicker(_ picker: CNContactPickerViewController, didSelect contact: CNContact) {
-        let appDelegate = (UIApplication.shared.delegate as! AppDelegate);
-        
         // get context
         let context = appDelegate.persistentContainer.viewContext;
         selectedDoctorContact = DoctorContact(context: context);
@@ -791,7 +750,7 @@ CNContactPickerDelegate{
     }
     
     /************************/
-    // MARK: - Actions
+    // MARK: - ACTIONS
     /************************/
     
     // show contact picker
@@ -807,6 +766,11 @@ CNContactPickerDelegate{
         if(!txtName.text!.isEmpty){
             self.saveKidInfo();
         }
+    }
+    
+    // save gender pick
+    @IBAction func genderPicked(_ sender: Any) {
+        self.saveKidInfo();
     }
     
     // update title on name change
@@ -834,26 +798,28 @@ CNContactPickerDelegate{
     
     // delete kid
     @IBAction func deleteTapped(_ sender: Any) {
-        self.showActivityIndicator();
+        // show activity indicator
+        utilities.showActivityIndicator();
         
         let warningAlert = UIAlertController(title: "Delete \(txtName!.text!)", message: "Are you sure? This cannot be undone.", preferredStyle: .alert);
         warningAlert.addAction(UIAlertAction(title: "Yes", style: .default, handler: { action in
             UIApplication.shared.beginIgnoringInteractionEvents();
             
             // get context
-            let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext;
+            let context = self.appDelegate.persistentContainer.viewContext;
             
             // delete kid
             context.delete(self.kid!);
             
             // save context
-            (UIApplication.shared.delegate as! AppDelegate).saveContext();
+            self.appDelegate.saveContext();
             
             // navigate back to main view
             self.navigationController?.popViewController(animated: true);
         }));
         warningAlert.addAction(UIAlertAction(title: "No", style: .cancel, handler: { action in
-            self.hideActivityIndicator();
+            // hide activity indicator
+            self.utilities.hideActivityIndicator();
         }));
         self.present(warningAlert, animated: true, completion: nil);
     }
