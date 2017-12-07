@@ -217,7 +217,10 @@ class WeightViewController: UIViewController, UITableViewDelegate, UITableViewDa
         
         appDelegate.saveContext();
         
-        self.dismiss(animated: true, completion: nil);
+        txtPounds.text! = "";
+        txtOunces.text! = "";
+        
+        weightTableView.reloadData();
     }
     
     @IBAction func checkForWeightVal(_ sender: Any) {

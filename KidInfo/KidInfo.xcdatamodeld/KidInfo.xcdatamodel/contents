@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="13533" systemVersion="17B1003" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="13772" systemVersion="17B1003" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
     <entity name="Allergy" representedClassName="Allergy" syncable="YES" codeGenerationType="class">
         <attribute name="level" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="notes" optional="YES" attributeType="String" syncable="YES"/>
@@ -32,6 +32,7 @@
         <attribute name="avatar" optional="YES" attributeType="Binary" allowsExternalBinaryDataStorage="YES" syncable="YES"/>
         <attribute name="bloodType" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="dob" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
+        <attribute name="gender" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="allergies" optional="YES" toMany="YES" deletionRule="Nullify" ordered="YES" destinationEntity="Allergy" inverseName="kid" inverseEntity="Allergy" syncable="YES"/>
         <relationship name="doctorContacts" optional="YES" toMany="YES" deletionRule="Nullify" ordered="YES" destinationEntity="DoctorContact" inverseName="kid" inverseEntity="DoctorContact" syncable="YES"/>
@@ -56,10 +57,10 @@
     <elements>
         <element name="Allergy" positionX="-63" positionY="18" width="128" height="120"/>
         <element name="Doctor" positionX="-171" positionY="72" width="128" height="195"/>
+        <element name="DoctorContact" positionX="-171" positionY="126" width="128" height="75"/>
         <element name="Height" positionX="-162" positionY="135" width="128" height="90"/>
-        <element name="Kid" positionX="-288" positionY="18" width="128" height="195"/>
+        <element name="Kid" positionX="-288" positionY="18" width="128" height="210"/>
         <element name="Medication" positionX="-171" positionY="126" width="128" height="135"/>
         <element name="Weight" positionX="-171" positionY="126" width="128" height="90"/>
-        <element name="DoctorContact" positionX="-171" positionY="126" width="128" height="75"/>
     </elements>
 </model>

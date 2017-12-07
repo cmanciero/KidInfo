@@ -15,6 +15,7 @@ class WeightGrowthChartViewController: UIViewController {
     var arrKidWeights: [Weight]!;
     var arrDates: [Date]! = [];
     var arrWeights: [Double]! = [];
+    var arrWeights2: [Double]! = [];
     
     @IBOutlet weak var lineChart: LineChartView!
     
@@ -33,6 +34,7 @@ class WeightGrowthChartViewController: UIViewController {
         for wt in arrKidWeights{
             arrDates.append(wt.date! as Date);
             arrWeights.append(wt.weight);
+            arrWeights2.append(wt.weight + 0.5);
         }
         
         setChart(dataPoints: arrDates, values: arrWeights);

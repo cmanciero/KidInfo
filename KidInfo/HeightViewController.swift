@@ -214,7 +214,10 @@ class HeightViewController: UIViewController, UITableViewDataSource, UITableView
         
         appDelegate.saveContext();
         
-        self.dismiss(animated: true, completion: nil);
+        txtFeet.text! = "";
+        txtInches.text! = "";
+        
+        heightTableView.reloadData();
     }
     @IBAction func checkForHeightVal(_ sender: Any) {
         if(!txtFeet.text!.isEmpty || !txtInches.text!.isEmpty){

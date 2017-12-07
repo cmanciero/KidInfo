@@ -120,6 +120,7 @@ class KidsViewController: UIViewController, UITableViewDelegate, UITableViewData
                 // save context
                 self.appDelegate.saveContext();
                 
+                self.utilities.hideActivityIndicator();
                 UIApplication.shared.endIgnoringInteractionEvents();
                 
                 // navigate to kid info
@@ -140,8 +141,26 @@ class KidsViewController: UIViewController, UITableViewDelegate, UITableViewData
     
     // sort kids array
     func sortKids() -> [Any]{
-        let sortedKids = arrKids.sorted(by: {$0.dob! < $1.dob!})
-        return sortedKids;
+        var arrSortedKids: [Any] = [];
+        var bDOBExists = false;
+        
+        // check if all kids have DOB entered,
+        for (_, kid) in arrKids.enumerated(){
+            if(kid.dob != nil){
+                bDOBExists = true;
+            } else {
+                bDOBExists = false;
+                break;
+            }
+        }
+        // if DOB exists then sort by DOB
+        if(bDOBExists){
+            arrSortedKids = arrKids.sorted(by: {$0.dob! < $1.dob!})
+        } else {
+            arrSortedKids = arrKids;
+        }
+        
+        return arrSortedKids;
     }
     
     /************************/

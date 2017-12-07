@@ -34,6 +34,7 @@ CNContactPickerDelegate{
     @IBOutlet weak var lblDoctorCount: UILabel!
     @IBOutlet weak var lblMedicationCount: UILabel!
     @IBOutlet weak var imgAvatar: UIImageView!
+    @IBOutlet weak var segGender: UISegmentedControl!
     
     // array of doctor contacts
     var doctors = [CNContact]();
@@ -150,7 +151,7 @@ CNContactPickerDelegate{
     }
     
     /************************/
-    // MARK: - tableView methods
+    // MARK: - TABLEVIEW METHODS
     /************************/
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -298,7 +299,7 @@ CNContactPickerDelegate{
     }
     
     /************************/
-    // MARK: - PickerView methods
+    // MARK: - PICKERVIEW METHODS
     /************************/
     
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
@@ -320,7 +321,7 @@ CNContactPickerDelegate{
     }
     
     /************************/
-    // MARK: - Functions
+    // MARK: - FUNCTIONS
     /************************/
     
     // save kid information
@@ -328,6 +329,11 @@ CNContactPickerDelegate{
         kid!.name = txtName.text;
         if(imgAvatar.image != nil){
             kid!.avatar = UIImagePNGRepresentation(imgAvatar.image!);
+        }
+        
+        // save gender
+        if(segGender.selectedSegmentIndex > -1){
+            kid!.gender = segGender.titleForSegment(at: segGender.selectedSegmentIndex);
         }
         
         // save DOB
@@ -367,6 +373,18 @@ CNContactPickerDelegate{
             dobPicker.setDate(kid!.dob! as Date, animated: false);
         }
         
+        // set gender
+        if(kid!.gender != nil){
+            // loop through segments to find which one to select
+            let segments = segGender.numberOfSegments;
+            for i in 0..<segments{
+                if(segGender.titleForSegment(at: i) == kid!.gender){
+                    segGender.selectedSegmentIndex = i;
+                    break;
+                }
+            }
+        }
+        
         // set blood type
         if(kid!.bloodType != nil){
             txtBloodType.text = kid!.bloodType;
@@ -375,7 +393,8 @@ CNContactPickerDelegate{
         // set weight
         if((kid!.weights?.count)! > 0){
             lblWeightVal.isHidden = false;
-            let latestKidWeight = kid!.weights?[kid!.weights!.count - 1] as! Weight;
+            let sortedWeightArray = sortWeightArray();
+            let latestKidWeight = sortedWeightArray[0] as! Weight;
             
             // set pounds
             let pounds = String(Int(latestKidWeight.weight));
@@ -388,7 +407,8 @@ CNContactPickerDelegate{
         // set height
         if((kid!.heights?.count)! > 0){
             lblHeightVal.isHidden = false;
-            let latestKidHeight = kid!.heights?[kid!.heights!.count - 1] as! Height;
+            let sortedHeightArray = sortHeightArray();
+            let latestKidHeight = sortedHeightArray[0] as! Height;
             
             // set height feet
             let feet = String(Int(latestKidHeight.height / 12.0));
@@ -409,6 +429,16 @@ CNContactPickerDelegate{
         
         // hide activity indicator
         utilities.hideActivityIndicator();
+    }
+    
+    // sort the weight values
+    func sortWeightArray() -> [Any]{
+        return kid!.weights!.sortedArray(using: [NSSortDescriptor(key: "date", ascending: false)]);
+    }
+    
+    // sort the height values
+    func sortHeightArray() -> [Any]{
+        return kid!.heights!.sortedArray(using: [NSSortDescriptor(key: "date", ascending: false)]);
     }
     
     // Find contact
@@ -609,7 +639,7 @@ CNContactPickerDelegate{
     }
     
     /************************/
-    // MARK: - contact store methods
+    // MARK: - CONTACT STORE METHODS
     /************************/
     
     // execute after selection of doctor/contact
@@ -720,7 +750,7 @@ CNContactPickerDelegate{
     }
     
     /************************/
-    // MARK: - Actions
+    // MARK: - ACTIONS
     /************************/
     
     // show contact picker
@@ -736,6 +766,11 @@ CNContactPickerDelegate{
         if(!txtName.text!.isEmpty){
             self.saveKidInfo();
         }
+    }
+    
+    // save gender pick
+    @IBAction func genderPicked(_ sender: Any) {
+        self.saveKidInfo();
     }
     
     // update title on name change
