@@ -22,26 +22,10 @@
          </PersistentStrings>
       </ContextState>
       <ContextState
-         contextName = "KidInfoViewController.findContactById(contact:):KidInfoViewController.swift">
-         <PersistentStrings>
-            <PersistentString
-               value = "contact.contactId">
-            </PersistentString>
-         </PersistentStrings>
-      </ContextState>
-      <ContextState
          contextName = "KidInfoViewController.deleteTapped(Any) -&gt; ():KidInfoViewController.swift">
          <PersistentStrings>
             <PersistentString
                value = "activityIndicator.isHidden">
-            </PersistentString>
-         </PersistentStrings>
-      </ContextState>
-      <ContextState
-         contextName = "KidInfoViewController.tableView(_:didSelectRowAt:):KidInfoViewController.swift">
-         <PersistentStrings>
-            <PersistentString
-               value = "doctors">
             </PersistentString>
          </PersistentStrings>
       </ContextState>
@@ -61,6 +45,30 @@
             </PersistentString>
             <PersistentString
                value = "btnAvatar.backgroundImage(for: .normal)">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "KidInfoViewController.tableView(_:didSelectRowAt:):KidInfoViewController.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "doctors">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "KidInfoViewController.findContactById(contact:):KidInfoViewController.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "contact.contactId">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "Model.saveKidInfo(kid:):Model.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "kid.name">
             </PersistentString>
          </PersistentStrings>
       </ContextState>

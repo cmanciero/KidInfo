@@ -36,6 +36,9 @@ CNContactPickerDelegate{
     @IBOutlet weak var imgAvatar: UIImageView!
     @IBOutlet weak var segGender: UISegmentedControl!
     
+    // CloudKit model
+    let cloudModel:CloudHelper = CloudHelper()
+    
     // array of doctor contacts
     var doctors = [CNContact]();
     
@@ -328,7 +331,8 @@ CNContactPickerDelegate{
     func saveKidInfo(){
         kid!.name = txtName.text;
         if(imgAvatar.image != nil){
-            kid!.avatar = UIImagePNGRepresentation(imgAvatar.image!);
+            kid!.avatar = UIImageJPEGRepresentation(imgAvatar.image!, 1);
+//            kid!.avatar = UIImagePNGRepresentation(imgAvatar.image!);
         }
         
         // save gender
@@ -338,13 +342,16 @@ CNContactPickerDelegate{
         
         // save DOB
         if(txtDOB.text != nil && txtDOB.text != ""){
-            kid!.dob = dobPicker.date;// as NSDate;
+            kid!.dob = dobPicker.date;
         }
         
         // save blood type
         if(txtBloodType.text != nil && txtBloodType.text != ""){
             kid!.bloodType = txtBloodType.text;
         }
+    
+        // save kid to iCloud
+        cloudModel.saveKidInfo(kid: kid!);
         
         appDelegate.saveContext();
     }
@@ -446,7 +453,6 @@ CNContactPickerDelegate{
         var foundContact: CNContact = CNContact();
         
         do {
-            //            let keys = [CNContactGivenNameKey, CNContactFamilyNameKey, CNContactEmailAddressesKey, CNContactBirthdayKey, CNContactImageDataKey, CNContainerNameKey];
             let keys = [CNContactFormatter.descriptorForRequiredKeys(for: .fullName)];
             let contactRefetched = try appDelegate.contactStore.unifiedContact(withIdentifier: contact.contactId!, keysToFetch: keys as [CNKeyDescriptor]);
             
@@ -458,23 +464,6 @@ CNContactPickerDelegate{
         
         return foundContact;
     }
-    
-//    // create the activity view
-//    func createActivityView(){
-//        activityView.alpha = 0.5;
-//        activityView.translatesAutoresizingMaskIntoConstraints = false;
-//        activityView.isHidden = true;
-//        activityView.backgroundColor = UIColor.white;
-//        self.view.addSubview(activityView);
-//        
-//        let topConstraint = activityView.topAnchor.constraint(equalTo: self.view.topAnchor);
-//        let bottomConstraint = activityView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor);
-//        let leftConstraint = activityView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor);
-//        let rightConstraint = activityView.rightAnchor.constraint(equalTo: self.view.rightAnchor);
-//        
-//        activityViewConstraints = [topConstraint, bottomConstraint, leftConstraint, rightConstraint];
-//        NSLayoutConstraint.activate(activityViewConstraints);
-//    }
     
     // check if allergy table should be shown
     func checkAllergyTableView(){
@@ -804,6 +793,9 @@ CNContactPickerDelegate{
         let warningAlert = UIAlertController(title: "Delete \(txtName!.text!)", message: "Are you sure? This cannot be undone.", preferredStyle: .alert);
         warningAlert.addAction(UIAlertAction(title: "Yes", style: .default, handler: { action in
             UIApplication.shared.beginIgnoringInteractionEvents();
+            
+            // delete from iCloud
+            self.cloudModel.deleteKid(kid: self.kid!)
             
             // get context
             let context = self.appDelegate.persistentContainer.viewContext;

@@ -35,7 +35,7 @@ class MedicationViewController: UIViewController {
         if(medication != nil){
             titleBar.title = "Update Medication"
             txtDosage.text = medication!.dosage;
-            txtFreq.text = medication!.frequence;
+            txtFreq.text = medication!.frequency;
             tvNotes.text = medication!.howToTake;
             txtName.text = medication!.name;
             txtType.text = medication!.type;
@@ -73,7 +73,7 @@ class MedicationViewController: UIViewController {
         }
         
         medication?.dosage = txtDosage.text;
-        medication?.frequence = txtFreq.text;
+        medication?.frequency = txtFreq.text;
         medication?.howToTake = tvNotes.text;
         medication?.name = txtName.text;
         medication?.type = txtType.text;

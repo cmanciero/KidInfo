@@ -33,6 +33,7 @@
         <attribute name="bloodType" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="dob" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
         <attribute name="gender" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="id" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="allergies" optional="YES" toMany="YES" deletionRule="Nullify" ordered="YES" destinationEntity="Allergy" inverseName="kid" inverseEntity="Allergy" syncable="YES"/>
         <relationship name="doctorContacts" optional="YES" toMany="YES" deletionRule="Nullify" ordered="YES" destinationEntity="DoctorContact" inverseName="kid" inverseEntity="DoctorContact" syncable="YES"/>
@@ -43,7 +44,7 @@
     </entity>
     <entity name="Medication" representedClassName="Medication" syncable="YES" codeGenerationType="class">
         <attribute name="dosage" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="frequence" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="frequency" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="howToTake" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="type" optional="YES" attributeType="String" syncable="YES"/>
@@ -59,7 +60,7 @@
         <element name="Doctor" positionX="-171" positionY="72" width="128" height="195"/>
         <element name="DoctorContact" positionX="-171" positionY="126" width="128" height="75"/>
         <element name="Height" positionX="-162" positionY="135" width="128" height="90"/>
-        <element name="Kid" positionX="-288" positionY="18" width="128" height="210"/>
+        <element name="Kid" positionX="-288" positionY="18" width="128" height="225"/>
         <element name="Medication" positionX="-171" positionY="126" width="128" height="135"/>
         <element name="Weight" positionX="-171" positionY="126" width="128" height="90"/>
     </elements>

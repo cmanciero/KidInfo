@@ -11,6 +11,7 @@
 		950A3A5E1F7A91A100064708 /* Charts.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 950A3A5A1F7A919A00064708 /* Charts.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		951FEF261EF85EAD00067E1C /* MedicationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 951FEF251EF85EAD00067E1C /* MedicationViewController.swift */; };
 		9537B1C81EE878DF00CF5E1B /* AllergyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9537B1C71EE878DF00CF5E1B /* AllergyViewController.swift */; };
+		953EE4B31FDA264900A9B434 /* CloudKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 953EE4B21FDA264900A9B434 /* CloudKit.framework */; };
 		954CE6781EE0AB6F00C1160F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 954CE6771EE0AB6F00C1160F /* AppDelegate.swift */; };
 		954CE67A1EE0AB6F00C1160F /* KidsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 954CE6791EE0AB6F00C1160F /* KidsViewController.swift */; };
 		954CE67D1EE0AB6F00C1160F /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 954CE67B1EE0AB6F00C1160F /* Main.storyboard */; };
@@ -29,7 +30,8 @@
 		95CA48E81EF4BD5200401E07 /* HeightGrowthChartViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95CA48E71EF4BD5200401E07 /* HeightGrowthChartViewController.swift */; };
 		95CA48EA1EF4BF2100401E07 /* WeightTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95CA48E91EF4BF2100401E07 /* WeightTabBarController.swift */; };
 		95CA48EC1EF4C33500401E07 /* HeightTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95CA48EB1EF4C33500401E07 /* HeightTabBarController.swift */; };
-		95CFB8CC1FD8309F00C06820 /* utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95CFB8CB1FD8309F00C06820 /* utilities.swift */; };
+		95E7757A1FDF203600909631 /* CloudHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95E775791FDF203600909631 /* CloudHelper.swift */; };
+		95E7757D1FDF20DF00909631 /* Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95E7757C1FDF20DF00909631 /* Utilities.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -76,6 +78,7 @@
 		950A3A541F7A919A00064708 /* Charts.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Charts.xcodeproj; path = ../Charts/Charts.xcodeproj; sourceTree = "<group>"; };
 		951FEF251EF85EAD00067E1C /* MedicationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MedicationViewController.swift; sourceTree = "<group>"; };
 		9537B1C71EE878DF00CF5E1B /* AllergyViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AllergyViewController.swift; sourceTree = "<group>"; };
+		953EE4B21FDA264900A9B434 /* CloudKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CloudKit.framework; path = System/Library/Frameworks/CloudKit.framework; sourceTree = SDKROOT; };
 		954CE6741EE0AB6F00C1160F /* KidInfo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = KidInfo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		954CE6771EE0AB6F00C1160F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		954CE6791EE0AB6F00C1160F /* KidsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KidsViewController.swift; sourceTree = "<group>"; };
@@ -97,7 +100,8 @@
 		95CA48E71EF4BD5200401E07 /* HeightGrowthChartViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HeightGrowthChartViewController.swift; sourceTree = "<group>"; };
 		95CA48E91EF4BF2100401E07 /* WeightTabBarController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WeightTabBarController.swift; sourceTree = "<group>"; };
 		95CA48EB1EF4C33500401E07 /* HeightTabBarController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HeightTabBarController.swift; sourceTree = "<group>"; };
-		95CFB8CB1FD8309F00C06820 /* utilities.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = utilities.swift; sourceTree = "<group>"; };
+		95E775791FDF203600909631 /* CloudHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloudHelper.swift; sourceTree = "<group>"; };
+		95E7757C1FDF20DF00909631 /* Utilities.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utilities.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -106,6 +110,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				950A3A5D1F7A91A100064708 /* Charts.framework in Frameworks */,
+				953EE4B31FDA264900A9B434 /* CloudKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -215,7 +220,8 @@
 		954CE68C1EE0EB7300C1160F /* classes */ = {
 			isa = PBXGroup;
 			children = (
-				95CFB8CB1FD8309F00C06820 /* utilities.swift */,
+				95E775791FDF203600909631 /* CloudHelper.swift */,
+				95E7757C1FDF20DF00909631 /* Utilities.swift */,
 			);
 			name = classes;
 			sourceTree = "<group>";
@@ -245,6 +251,7 @@
 		DC4192AF4663B11DC5674548 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				953EE4B21FDA264900A9B434 /* CloudKit.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -300,6 +307,12 @@
 						ProvisioningStyle = Automatic;
 						SystemCapabilities = {
 							com.apple.Keychain = {
+								enabled = 1;
+							};
+							com.apple.Push = {
+								enabled = 1;
+							};
+							com.apple.iCloud = {
 								enabled = 1;
 							};
 						};
@@ -413,7 +426,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				95CFB8CC1FD8309F00C06820 /* utilities.swift in Sources */,
 				954CE67A1EE0AB6F00C1160F /* KidsViewController.swift in Sources */,
 				9537B1C81EE878DF00CF5E1B /* AllergyViewController.swift in Sources */,
 				95CA48E01EF0078900401E07 /* HeightViewController.swift in Sources */,
@@ -427,10 +439,12 @@
 				95CA48E61EF4BD0100401E07 /* WeightGrowthChartViewController.swift in Sources */,
 				954CE6931EE1E4FD00C1160F /* KidTableViewCell.swift in Sources */,
 				95630AE21F24273F00B45A08 /* SettingsViewController.swift in Sources */,
+				95E7757D1FDF20DF00909631 /* Utilities.swift in Sources */,
 				954CE6801EE0AB6F00C1160F /* KidInfo.xcdatamodeld in Sources */,
 				95CA48E21EF062B400401E07 /* WeightTableViewCell.swift in Sources */,
 				95CA48E81EF4BD5200401E07 /* HeightGrowthChartViewController.swift in Sources */,
 				95CA48EA1EF4BF2100401E07 /* WeightTabBarController.swift in Sources */,
+				95E7757A1FDF203600909631 /* CloudHelper.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
