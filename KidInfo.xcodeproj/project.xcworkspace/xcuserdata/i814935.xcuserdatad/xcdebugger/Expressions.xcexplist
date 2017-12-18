@@ -3,10 +3,29 @@
    version = "1.0">
    <ContextStates>
       <ContextState
+         contextName = "KidInfoViewController.checkDoctorTableView():KidInfoViewController.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "viewDoctor.frame.size.height">
+            </PersistentString>
+            <PersistentString
+               value = "kid!.doctorsContacts">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
          contextName = "KidInfoViewController.loadKidInfo():KidInfoViewController.swift">
          <PersistentStrings>
             <PersistentString
                value = "kid">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "KidInfoViewController.viewDidLoad() -&gt; ():KidInfoViewController.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "txtWeightOz.text">
             </PersistentString>
          </PersistentStrings>
       </ContextState>
@@ -30,10 +49,16 @@
          </PersistentStrings>
       </ContextState>
       <ContextState
-         contextName = "KidInfoViewController.deleteTapped(Any) -&gt; ():KidInfoViewController.swift">
+         contextName = "KidsViewController.sortKids():KidsViewController.swift">
          <PersistentStrings>
             <PersistentString
-               value = "activityIndicator.isHidden">
+               value = "kid.dob">
+            </PersistentString>
+            <PersistentString
+               value = "kid.name">
+            </PersistentString>
+            <PersistentString
+               value = "bDOBExists">
             </PersistentString>
          </PersistentStrings>
       </ContextState>
@@ -42,14 +67,6 @@
          <PersistentStrings>
             <PersistentString
                value = "doctors">
-            </PersistentString>
-         </PersistentStrings>
-      </ContextState>
-      <ContextState
-         contextName = "KidInfoViewController.viewDidLoad() -&gt; ():KidInfoViewController.swift">
-         <PersistentStrings>
-            <PersistentString
-               value = "txtWeightOz.text">
             </PersistentString>
          </PersistentStrings>
       </ContextState>
@@ -65,13 +82,10 @@
          </PersistentStrings>
       </ContextState>
       <ContextState
-         contextName = "KidInfoViewController.checkDoctorTableView():KidInfoViewController.swift">
+         contextName = "CloudHelper.saveAllergyInfoForKid(kid:allergy:):CloudHelper.swift">
          <PersistentStrings>
             <PersistentString
-               value = "viewDoctor.frame.size.height">
-            </PersistentString>
-            <PersistentString
-               value = "kid!.doctorsContacts">
+               value = "allergy.id">
             </PersistentString>
          </PersistentStrings>
       </ContextState>
@@ -87,16 +101,29 @@
          </PersistentStrings>
       </ContextState>
       <ContextState
-         contextName = "KidsViewController.sortKids():KidsViewController.swift">
+         contextName = "KidInfoViewController.deleteTapped(Any) -&gt; ():KidInfoViewController.swift">
          <PersistentStrings>
             <PersistentString
-               value = "kid.dob">
+               value = "activityIndicator.isHidden">
             </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "Model.saveKidInfo(kid:):Model.swift">
+         <PersistentStrings>
             <PersistentString
                value = "kid.name">
             </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "CloudHelper.saveRecordInfo(record:recordType:):CloudHelper.swift">
+         <PersistentStrings>
             <PersistentString
-               value = "bDOBExists">
+               value = "record[&quot;id&quot;]">
+            </PersistentString>
+            <PersistentString
+               value = "record.id">
             </PersistentString>
          </PersistentStrings>
       </ContextState>

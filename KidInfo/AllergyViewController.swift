@@ -20,6 +20,7 @@ class AllergyViewController: UIViewController {
     var kid: Kid? = nil;
     var allergy: Allergy? = nil;
     let appDelegate = Utilities.getApplicationDelegate()
+    let cloudHelper = CloudHelper()
     
     override func viewDidLoad() {
         super.viewDidLoad();
@@ -61,7 +62,7 @@ class AllergyViewController: UIViewController {
     }
     
     //---------------------------------
-    // MARK: - Notification Center
+    // MARK: - NOTIFICATION CENTER
     //---------------------------------
     
     @objc func keyboardWillHide(noti: Notification) {
@@ -82,7 +83,7 @@ class AllergyViewController: UIViewController {
     }
     
     //---------------------------------
-    // MARK: - Actions
+    // MARK: - ACTIONS
     //---------------------------------
     
     // cancel adding/updating allergy
@@ -106,6 +107,11 @@ class AllergyViewController: UIViewController {
             allergy = Allergy(context: context);
         }
         
+        // set id value, if does not exist
+        if(allergy!.id == nil){
+            allergy!.id = UUID().uuidString;
+        }
+        
         allergy!.type = txtAllergyName.text;
 //        allergy!.level = segAllergyLevel!.titleForSegment(at: segAllergyLevel.selectedSegmentIndex)!;
         if(swSevereAllergy.isOn){
@@ -115,6 +121,9 @@ class AllergyViewController: UIViewController {
         }
         allergy!.notes = txtNotes.text;
         allergy!.kid = kid;
+        
+        // save allergy info to cloud for kid
+        cloudHelper.saveRecordInfo(record: kid!, recordType: Utilities.RecordTypes.allergy)//(kid: kid!, allergy: allergy!);
         
         appDelegate.saveContext();
         

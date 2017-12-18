@@ -217,8 +217,8 @@ class WeightViewController: UIViewController, UITableViewDelegate, UITableViewDa
         
         appDelegate.saveContext();
         
-        txtPounds.text! = "";
-        txtOunces.text! = "";
+        txtPounds.text = nil;
+        txtOunces.text = nil;
         
         weightTableView.reloadData();
     }

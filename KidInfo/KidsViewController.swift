@@ -12,11 +12,12 @@ class KidsViewController: UIViewController, UITableViewDelegate, UITableViewData
     
     @IBOutlet weak var kidsTableView: UITableView!
     @IBOutlet weak var noKidView: UIView!
-    @IBOutlet weak var lblTapKid: UILabel!
+    @IBOutlet weak var btnTapKid: UIButton!
     
     var arrKids: [Kid] = [];
     let utilities = Utilities();
     let appDelegate = Utilities.getApplicationDelegate()
+    let cloudModel:CloudHelper = CloudHelper()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -26,6 +27,8 @@ class KidsViewController: UIViewController, UITableViewDelegate, UITableViewData
         
         // create activity view
         utilities.createActivityView(view: self.view);
+        
+        cloudModel.getKids();
     }
     
     // get ready to segue
@@ -87,15 +90,16 @@ class KidsViewController: UIViewController, UITableViewDelegate, UITableViewData
     // show no kid overlay
     func showNoKidOverlay() -> Void{
         noKidView.isHidden = false;
-        lblTapKid.isHidden = false;
+        btnTapKid.isHidden = false;
     }
     
     // hide no kid overlay
     func hideNoKidOverlay() -> Void{
         noKidView.isHidden = true;
-        lblTapKid.isHidden = true;
+        btnTapKid.isHidden = true;
     }
     
+    // display popup to add new kid
     func showAddNewKidPopUp() -> Void{
         // show activity indicator
         utilities.showActivityIndicator();
@@ -115,7 +119,11 @@ class KidsViewController: UIViewController, UITableViewDelegate, UITableViewData
                 let theTextFields = textFields as [UITextField];
                 let kidName = theTextFields[0].text;
                 let kid = Kid(context: context);
+                kid.id = UUID().uuidString;
                 kid.name = kidName;
+                
+                // save kid to iCloud
+                self.cloudModel.saveRecordInfo(record: kid, recordType: Utilities.RecordTypes.kid);
                 
                 // save context
                 self.appDelegate.saveContext();
@@ -134,6 +142,7 @@ class KidsViewController: UIViewController, UITableViewDelegate, UITableViewData
         self.present(newKidAlert, animated: true, completion: nil);
     }
     
+    // navigate to selected kid
     func navigateToSelectedKid(kid: Kid) -> Void{
         // navigate to kid info, show selected kid
         performSegue(withIdentifier: "showKidSegue", sender: kid);
@@ -164,7 +173,7 @@ class KidsViewController: UIViewController, UITableViewDelegate, UITableViewData
     }
     
     /************************/
-    // MARK: - tableView methods
+    // MARK: - TABLEVIEW METHODS
     /************************/
     
     // set table row count

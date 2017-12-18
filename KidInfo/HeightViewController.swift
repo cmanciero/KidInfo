@@ -214,8 +214,8 @@ class HeightViewController: UIViewController, UITableViewDataSource, UITableView
         
         appDelegate.saveContext();
         
-        txtFeet.text! = "";
-        txtInches.text! = "";
+        txtFeet.text = nil;
+        txtInches.text = nil;
         
         heightTableView.reloadData();
     }
