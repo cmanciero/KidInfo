@@ -351,7 +351,7 @@ CNContactPickerDelegate{
         }
     
         // save kid to iCloud
-        cloudModel.saveKidInfo(kid: kid!);
+        cloudModel.saveRecordInfo(record: kid!, recordType: Utilities.RecordTypes.kid);
         
         appDelegate.saveContext();
     }
@@ -795,7 +795,7 @@ CNContactPickerDelegate{
             UIApplication.shared.beginIgnoringInteractionEvents();
             
             // delete from iCloud
-            self.cloudModel.deleteKid(kid: self.kid!)
+            self.cloudModel.deleteType(recordToDelete: self.kid!, recordTypeToDelete: Utilities.RecordTypes.kid)
             
             // get context
             let context = self.appDelegate.persistentContainer.viewContext;

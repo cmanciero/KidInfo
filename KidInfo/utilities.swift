@@ -15,6 +15,15 @@ class Utilities{
     let activityView = UIView();
     var activityViewConstraints: [NSLayoutConstraint] = [];
     
+    static let KID: String = "Kid"
+    class RecordTypes {
+        static let kid: String = "Kid"
+        static let allergy: String = "Allergy"
+        static let medication: String = "Kid"
+        static let height: String = "Height"
+        static let weight: String = "Weight"
+    }
+    
     // MARK: FUNCTIONS
     
     // create the activity view

@@ -123,7 +123,7 @@ class KidsViewController: UIViewController, UITableViewDelegate, UITableViewData
                 kid.name = kidName;
                 
                 // save kid to iCloud
-                self.cloudModel.saveKidInfo(kid: kid);
+                self.cloudModel.saveRecordInfo(record: kid, recordType: Utilities.RecordTypes.kid);
                 
                 // save context
                 self.appDelegate.saveContext();
