@@ -128,13 +128,7 @@ class WeightViewController: UIViewController, UITableViewDelegate, UITableViewDa
             weight = convertWeight * 16;
         }
         
-        if var convertWeightOz = Double(txtOunces.text!){
-//            // convert ounce value
-//            if(convertWeightOz >= 16){
-//                weight += 1;
-//                convertWeightOz = convertWeightOz - 16;
-//            }
-//            weight += convertWeightOz * 0.01;
+        if let convertWeightOz = Double(txtOunces.text!){
             weight += convertWeightOz;
         }
         

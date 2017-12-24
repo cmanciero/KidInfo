@@ -701,14 +701,6 @@ CNContactPickerDelegate{
             
             // pass selected allergy
             nextVC.allergy = selectedAllergy;
-        } else if(segue.identifier == "doctorSegue"){
-            let nextVC: DoctorViewController = segue.destination as! DoctorViewController;
-            
-            // pass kid info
-            nextVC.kid = kid;
-            
-            // pass selected doctor
-            nextVC.doctor = selectedDoctor;
         } else if(segue.identifier == "medicationSegue"){
             let nextVC: MedicationViewController = segue.destination as! MedicationViewController;
             
