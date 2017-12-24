@@ -59,43 +59,45 @@
                                             <outlet property="lblName" destination="1kG-Mm-sTs" id="JQq-nu-aF9"/>
                                         </connections>
                                     </tableViewCell>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="addKidTableViewCell" id="VlY-uZ-cWW" customClass="AddKidTableViewCell" customModule="KidInfo" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="111" width="375" height="83"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="VlY-uZ-cWW" id="Lk9-II-S2g">
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="82.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="add-icon" translatesAutoresizingMaskIntoConstraints="NO" id="Kch-GE-gvP">
+                                                    <rect key="frame" x="14" y="11" width="60" height="60"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                </imageView>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Add Kid" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dHJ-K0-pTV">
+                                                    <rect key="frame" x="82" y="31" width="270" height="21"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="26"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                        </tableViewCellContentView>
+                                        <connections>
+                                            <outlet property="addIconImageView" destination="Kch-GE-gvP" id="Jhv-HC-Aqg"/>
+                                            <outlet property="lblAddKid" destination="dHJ-K0-pTV" id="b4o-78-T59"/>
+                                        </connections>
+                                    </tableViewCell>
                                 </prototypes>
                             </tableView>
-                            <view hidden="YES" alpha="0.5" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="d1x-mx-awW" userLabel="No Kid View">
-                                <rect key="frame" x="0.0" y="64" width="375" height="603"/>
-                                <color key="backgroundColor" red="0.47449719930000001" green="0.89112770860000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="603" id="sIC-jO-urv"/>
-                                    <constraint firstAttribute="width" constant="375" id="tcs-2l-2jj"/>
-                                </constraints>
-                            </view>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="r73-2C-bIe">
-                                <rect key="frame" x="62" y="318" width="251" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="32"/>
-                                <state key="normal" title="Tap + to add a kid">
-                                    <color key="titleColor" cocoaTouchSystemColor="darkTextColor"/>
-                                </state>
-                                <connections>
-                                    <action selector="addNewKidTapped:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Yrn-xK-WCQ"/>
-                                </connections>
-                            </button>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="dvE-8K-Szk" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" id="GmG-La-mnk"/>
                             <constraint firstAttribute="trailing" secondItem="dvE-8K-Szk" secondAttribute="trailing" id="MUk-b2-eyG"/>
-                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="d1x-mx-awW" secondAttribute="bottom" id="QDp-Rw-5rv"/>
-                            <constraint firstItem="d1x-mx-awW" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" id="ssE-Sc-N1e"/>
                             <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="dvE-8K-Szk" secondAttribute="bottom" id="t94-sf-5cm"/>
                             <constraint firstItem="dvE-8K-Szk" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="uuL-fE-lI8"/>
-                            <constraint firstAttribute="trailing" secondItem="d1x-mx-awW" secondAttribute="trailing" id="wQO-Rf-y0e"/>
-                            <constraint firstItem="d1x-mx-awW" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="xXJ-Qd-W4y"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="KidInfo" id="aRW-LG-3Dc">
                         <barButtonItem key="backBarButtonItem" title="Back" id="seO-rX-SDd"/>
-                        <barButtonItem key="leftBarButtonItem" enabled="NO" title="Settings" id="yph-9Y-cjS">
+                        <barButtonItem key="leftBarButtonItem" title="Settings" id="yph-9Y-cjS">
                             <connections>
                                 <segue destination="Nt6-9w-Arq" kind="presentation" identifier="settingsSegue" id="qdi-P1-tYE"/>
                             </connections>
@@ -107,9 +109,7 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
-                        <outlet property="btnTapKid" destination="r73-2C-bIe" id="DEk-iF-bY1"/>
                         <outlet property="kidsTableView" destination="dvE-8K-Szk" id="2d3-Bh-0EO"/>
-                        <outlet property="noKidView" destination="d1x-mx-awW" id="87u-ua-Ykj"/>
                         <segue destination="fzg-PN-b9J" kind="show" identifier="showKidSegue" id="es7-cQ-RYP"/>
                     </connections>
                 </viewController>
@@ -1115,6 +1115,17 @@
                                     <action selector="authorizeDropbox:" destination="Nt6-9w-Arq" eventType="touchUpInside" id="PdB-x9-td4"/>
                                 </connections>
                             </button>
+                            <tabBar contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Saz-oh-Hkx">
+                                <rect key="frame" x="0.0" y="618" width="375" height="49"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <items>
+                                    <tabBarItem title="Info" id="yPk-14-2cJ"/>
+                                    <tabBarItem title="Allergies" id="DuB-kp-99n"/>
+                                    <tabBarItem title="Doctors" id="t06-KX-BP8"/>
+                                    <tabBarItem title="Medications" id="o0C-gD-IUN"/>
+                                </items>
+                            </tabBar>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
@@ -1147,6 +1158,7 @@
         </scene>
     </scenes>
     <resources>
+        <image name="add-icon" width="256" height="256"/>
         <image name="blankAvatar" width="250" height="250"/>
         <image name="chart" width="25" height="25"/>
         <image name="list" width="25" height="25"/>

@@ -54,12 +54,6 @@ class KidsViewController: UIViewController, UITableViewDelegate, UITableViewData
             
             // reload table view
             kidsTableView.reloadData();
-            
-            if(arrKids.count == 0){
-                self.showNoKidOverlay();
-            } else {
-                self.hideNoKidOverlay();
-            }
         } catch {}
     }
     
@@ -85,18 +79,6 @@ class KidsViewController: UIViewController, UITableViewDelegate, UITableViewData
         let age = ageComponents.year!;
         
         return age;
-    }
-    
-    // show no kid overlay
-    func showNoKidOverlay() -> Void{
-        noKidView.isHidden = false;
-        btnTapKid.isHidden = false;
-    }
-    
-    // hide no kid overlay
-    func hideNoKidOverlay() -> Void{
-        noKidView.isHidden = true;
-        btnTapKid.isHidden = true;
     }
     
     // display popup to add new kid
@@ -178,49 +160,75 @@ class KidsViewController: UIViewController, UITableViewDelegate, UITableViewData
     
     // set table row count
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return arrKids.count;
+        var count = 0;
+        if(section == 0){
+            count = arrKids.count;
+        } else if(section == 1){
+            count = 1;
+        }
+        
+        return count;
+    }
+    
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return 2;
     }
     
     // select kid
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        // get selected kid
-        let sortedKids = sortKids();
-        let kid = (sortedKids as! [Kid])[indexPath.row] as Kid;
-        
-        // navigate to kid info, show selected kid
-        self.navigateToSelectedKid(kid: kid);
-        
-        // deselect selected row
-        tableView.deselectRow(at: indexPath, animated: true);
+        if(indexPath.section == 0){
+            // get selected kid
+            let sortedKids = sortKids();
+            let kid = (sortedKids as! [Kid])[indexPath.row] as Kid;
+            
+            // navigate to kid info, show selected kid
+            self.navigateToSelectedKid(kid: kid);
+            
+            // deselect selected row
+            tableView.deselectRow(at: indexPath, animated: true);
+        } else if(indexPath.section == 1){
+            showAddNewKidPopUp();
+        }
     }
     
     // display kids in table cell
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let sortedKids = sortKids();
-        let kid = (sortedKids as! [Kid])[indexPath.row] as Kid;
-        let cell = tableView.dequeueReusableCell(withIdentifier: "kidInfoTableViewCell", for: indexPath) as! KidTableViewCell;
+        var kidCell:UITableViewCell = UITableViewCell();
         
-        // set kid name
-        cell.lblName.text = kid.name;
-        
-        // set kid DOB
-        let dateFormatter = DateFormatter();
-        dateFormatter.dateStyle = .medium;
-        dateFormatter.timeStyle = .none;
-        if(kid.dob != nil){
-            let formatDOB = dateFormatter.string(from: kid.dob! as Date);
-            let currentAge = calculateAge(dob: kid.dob! as Date);
-            cell.lblDOB.text = "\(formatDOB) (\(currentAge) years old)";
-        } else {
-            cell.lblDOB.text = "";
+        if(indexPath.section == 0){
+            let sortedKids = sortKids();
+            let kid = (sortedKids as! [Kid])[indexPath.row] as Kid;
+            let cell = tableView.dequeueReusableCell(withIdentifier: "kidInfoTableViewCell", for: indexPath) as! KidTableViewCell;
+            
+            // set kid name
+            cell.lblName.text = kid.name;
+            
+            // set kid DOB
+            let dateFormatter = DateFormatter();
+            dateFormatter.dateStyle = .medium;
+            dateFormatter.timeStyle = .none;
+            if(kid.dob != nil){
+                let formatDOB = dateFormatter.string(from: kid.dob! as Date);
+                let currentAge = calculateAge(dob: kid.dob! as Date);
+                cell.lblDOB.text = "\(formatDOB) (\(currentAge) years old)";
+            } else {
+                cell.lblDOB.text = "";
+            }
+            
+            // check if avatar exists
+            if(kid.avatar != nil){
+                cell.avatarImageView?.image = UIImage(data: kid.avatar! as Data);
+            }
+            
+            kidCell = cell
+            
+        } else if(indexPath.section == 1){
+            let cell = tableView.dequeueReusableCell(withIdentifier: "addKidTableViewCell", for: indexPath) as! AddKidTableViewCell;
+            
+            kidCell = cell;
         }
         
-        // check if avatar exists
-        if(kid.avatar != nil){
-            cell.avatarImageView?.image = UIImage(data: kid.avatar! as Data);
-        }
-        
-        return cell;
+        return kidCell;
     }
 }
 

@@ -31,6 +31,7 @@
 		95CA48EC1EF4C33500401E07 /* HeightTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95CA48EB1EF4C33500401E07 /* HeightTabBarController.swift */; };
 		95E7757A1FDF203600909631 /* CloudHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95E775791FDF203600909631 /* CloudHelper.swift */; };
 		95E7757D1FDF20DF00909631 /* Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95E7757C1FDF20DF00909631 /* Utilities.swift */; };
+		95EDEAAA1FF01B5C00361E9A /* AddKidTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95EDEAA91FF01B5C00361E9A /* AddKidTableViewCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -100,6 +101,7 @@
 		95CA48EB1EF4C33500401E07 /* HeightTabBarController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HeightTabBarController.swift; sourceTree = "<group>"; };
 		95E775791FDF203600909631 /* CloudHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloudHelper.swift; sourceTree = "<group>"; };
 		95E7757C1FDF20DF00909631 /* Utilities.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utilities.swift; sourceTree = "<group>"; };
+		95EDEAA91FF01B5C00361E9A /* AddKidTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddKidTableViewCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -152,6 +154,7 @@
 				954CE6901EE0EEB700C1160F /* KidInfoViewController.swift */,
 				954CE6791EE0AB6F00C1160F /* KidsViewController.swift */,
 				954CE6921EE1E4FD00C1160F /* KidTableViewCell.swift */,
+				95EDEAA91FF01B5C00361E9A /* AddKidTableViewCell.swift */,
 			);
 			name = Kids;
 			sourceTree = "<group>";
@@ -423,6 +426,7 @@
 				95CA48DE1EF0063D00401E07 /* WeightViewController.swift in Sources */,
 				954CE6781EE0AB6F00C1160F /* AppDelegate.swift in Sources */,
 				95CA48EC1EF4C33500401E07 /* HeightTabBarController.swift in Sources */,
+				95EDEAAA1FF01B5C00361E9A /* AddKidTableViewCell.swift in Sources */,
 				95CA48E41EF063B100401E07 /* HeightTableViewCell.swift in Sources */,
 				95CA48E61EF4BD0100401E07 /* WeightGrowthChartViewController.swift in Sources */,
 				954CE6931EE1E4FD00C1160F /* KidTableViewCell.swift in Sources */,
