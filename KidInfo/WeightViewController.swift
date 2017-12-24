@@ -125,16 +125,17 @@ class WeightViewController: UIViewController, UITableViewDelegate, UITableViewDa
         var weight = 0.0
         
         if let convertWeight = Double(txtPounds.text!){
-            weight = convertWeight;
+            weight = convertWeight * 16;
         }
         
         if var convertWeightOz = Double(txtOunces.text!){
-            // convert ounce value
-            if(convertWeightOz >= 16){
-                weight += 1;
-                convertWeightOz = convertWeightOz - 16;
-            }
-            weight += convertWeightOz * 0.01;
+//            // convert ounce value
+//            if(convertWeightOz >= 16){
+//                weight += 1;
+//                convertWeightOz = convertWeightOz - 16;
+//            }
+//            weight += convertWeightOz * 0.01;
+            weight += convertWeightOz;
         }
         
         return weight;
@@ -167,9 +168,11 @@ class WeightViewController: UIViewController, UITableViewDelegate, UITableViewDa
         let cell = tableView.dequeueReusableCell(withIdentifier: "weightTableViewCell", for: indexPath) as! WeightTableViewCell;
         
         // set pounds
-        let pounds = String(Int(wt.weight));
+//        let pounds = String(Int(wt.weight));
+        let pounds = Int(wt.weight / 16.0);
         // set ounces
-        let ounces = String(wt.weight).components(separatedBy: ".")[1];
+//        let ounces = String(wt.weight).components(separatedBy: ".")[1];
+        let ounces = Int(wt.weight.truncatingRemainder(dividingBy: 16.0));
         
         cell.txtWeight?.text = "\(pounds) lbs \(ounces) oz";
         cell.txtDate?.text = dateFormatter.string(from: wt.date! as Date);
@@ -200,11 +203,8 @@ class WeightViewController: UIViewController, UITableViewDelegate, UITableViewDa
     /************************/
     
     @IBAction func saveTapped(_ sender: Any) {
-        // if allergy is not available
-        if(weight == nil){
-            let context = appDelegate.persistentContainer.viewContext;
-            weight = Weight(context: context);
-        }
+        let context = appDelegate.persistentContainer.viewContext;
+        weight = Weight(context: context);
         
         // calculate the weight
         let calWeight = calculateWeight();

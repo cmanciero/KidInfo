@@ -407,9 +407,10 @@ CNContactPickerDelegate{
             let latestKidWeight = sortedWeightArray[0] as! Weight;
             
             // set pounds
-            let pounds = String(Int(latestKidWeight.weight));
+            let pounds = Int(latestKidWeight.weight / 16.0);
+            
             // set ounces
-            let ounces = String(latestKidWeight.weight).components(separatedBy: ".")[1];
+            let ounces = Int(latestKidWeight.weight.truncatingRemainder(dividingBy: 16.0));
             
             btnWeightVal.setTitle("\(pounds) lbs \(ounces) oz", for: .normal);
         }
@@ -421,9 +422,9 @@ CNContactPickerDelegate{
             let latestKidHeight = sortedHeightArray[0] as! Height;
             
             // set height feet
-            let feet = String(Int(latestKidHeight.height / 12.0));
+            let feet = Int(latestKidHeight.height / 12.0);
             // set height inches
-            let inches = String(Int(latestKidHeight.height.truncatingRemainder(dividingBy: 12.0)));
+            let inches = Int(latestKidHeight.height.truncatingRemainder(dividingBy: 12.0));
             
             btnHeightVal.setTitle("\(feet) ft \(inches) inches", for: .normal)
         }

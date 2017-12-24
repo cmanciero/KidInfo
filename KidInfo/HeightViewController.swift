@@ -163,9 +163,9 @@ class HeightViewController: UIViewController, UITableViewDataSource, UITableView
         let cell = tableView.dequeueReusableCell(withIdentifier: "heightTableViewCell", for: indexPath) as! HeightTableViewCell;
         
         // set height feet
-        let feet = String(Int(ht.height / 12.0));
+        let feet = Int(ht.height / 12.0);
         // set height inches
-        let inches = String(Int(ht.height.truncatingRemainder(dividingBy: 12.0)));
+        let inches = Int(ht.height.truncatingRemainder(dividingBy: 12.0));
         
         cell.txtHeight?.text = "\(feet) ft \(inches) inches";
         cell.txtDate?.text = dateFormatter.string(from: ht.date! as Date);
@@ -197,11 +197,8 @@ class HeightViewController: UIViewController, UITableViewDataSource, UITableView
     /************************/
     
     @IBAction func saveTapped(_ sender: Any) {
-        // if allergy is not available
-        if(height == nil){
-            let context = appDelegate.persistentContainer.viewContext;
-            height = Height(context: context);
-        }
+        let context = appDelegate.persistentContainer.viewContext;
+        height = Height(context: context);
         
         // calculate the height
         let calcHeight = calculateHeight();
