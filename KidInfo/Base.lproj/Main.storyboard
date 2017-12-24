@@ -187,13 +187,14 @@
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
-                                            <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="weightValue" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KFb-x8-jvV">
-                                                <rect key="frame" x="101" y="264" width="236" height="21"/>
+                                            <button hidden="YES" opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="uub-Uw-pgN">
+                                                <rect key="frame" x="102" y="260" width="220" height="30"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                <nil key="textColor"/>
-                                                <nil key="highlightedColor"/>
-                                            </label>
+                                                <state key="normal" title="weightValue"/>
+                                                <connections>
+                                                    <segue destination="7Ou-rK-NtU" kind="presentation" identifier="weightSegue" id="qcD-hI-QSw"/>
+                                                </connections>
+                                            </button>
                                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="contactAdd" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vcM-NU-Gg0" userLabel="Weight Add btn">
                                                 <rect key="frame" x="345" y="264" width="22" height="22"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -208,13 +209,14 @@
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
-                                            <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="heightValue" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZY0-ll-cHE">
-                                                <rect key="frame" x="102" y="305" width="235" height="21"/>
+                                            <button hidden="YES" opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wel-zQ-eWO">
+                                                <rect key="frame" x="102" y="301" width="228" height="30"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                <nil key="textColor"/>
-                                                <nil key="highlightedColor"/>
-                                            </label>
+                                                <state key="normal" title="heightValue"/>
+                                                <connections>
+                                                    <segue destination="7h1-zP-wjD" kind="presentation" identifier="heightSegue" id="aPr-3e-97e"/>
+                                                </connections>
+                                            </button>
                                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="contactAdd" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qUR-Z4-kei" userLabel="Height Add btn">
                                                 <rect key="frame" x="345" y="305" width="22" height="22"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -403,15 +405,15 @@
                     <connections>
                         <outlet property="allergyTableView" destination="TQu-kw-IEO" id="7lI-Qh-kd8"/>
                         <outlet property="btnDelete" destination="zjn-Bk-uKM" id="nkL-ka-cIr"/>
+                        <outlet property="btnHeightVal" destination="wel-zQ-eWO" id="5GN-ia-4WK"/>
+                        <outlet property="btnWeightVal" destination="uub-Uw-pgN" id="Wcb-57-6B8"/>
                         <outlet property="doctorTableView" destination="Zuj-Xe-tlx" id="jo6-JD-p8O"/>
                         <outlet property="imgAvatar" destination="FtX-dI-wd6" id="pHB-T1-YSl"/>
                         <outlet property="lblAllergies" destination="sFc-xu-ynX" id="udl-xH-dkc"/>
                         <outlet property="lblAllergyCount" destination="d8Y-Ji-6B9" id="TEn-Jm-eZa"/>
                         <outlet property="lblDoctorCount" destination="WKp-Oo-WZS" id="c1x-7t-F9D"/>
                         <outlet property="lblDoctors" destination="tDn-Hp-Vo8" id="k4y-2s-8Uh"/>
-                        <outlet property="lblHeightVal" destination="ZY0-ll-cHE" id="jHf-Fe-ixQ"/>
                         <outlet property="lblMedicationCount" destination="vqK-Ii-DnL" id="3U2-t4-q7H"/>
-                        <outlet property="lblWeightVal" destination="KFb-x8-jvV" id="0T6-R2-VoV"/>
                         <outlet property="mainView" destination="Ipq-yw-78E" id="TRL-TS-QTF"/>
                         <outlet property="medicationTableView" destination="wMj-w0-8eP" id="2kD-Yy-KvC"/>
                         <outlet property="segGender" destination="ObI-W6-1sS" id="lcZ-eo-G5F"/>
@@ -1328,4 +1330,8 @@
         <image name="chart" width="25" height="25"/>
         <image name="list" width="25" height="25"/>
     </resources>
+    <inferredMetricsTieBreakers>
+        <segue reference="aPr-3e-97e"/>
+        <segue reference="qcD-hI-QSw"/>
+    </inferredMetricsTieBreakers>
 </document>

@@ -32,6 +32,10 @@ class CloudHelper{
         privateDB = container.privateCloudDatabase
     }
     
+    func createBackupFile(){
+        
+    }
+    
     //---------------------------------
     // MARK: - KID
     //---------------------------------

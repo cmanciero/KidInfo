@@ -28,8 +28,8 @@ CNContactPickerDelegate{
     @IBOutlet weak var txtBloodType: UITextField!
     @IBOutlet weak var lblAllergies: UILabel!
     @IBOutlet weak var lblDoctors: UILabel!
-    @IBOutlet weak var lblHeightVal: UILabel!
-    @IBOutlet weak var lblWeightVal: UILabel!
+    @IBOutlet weak var btnWeightVal: UIButton!
+    @IBOutlet weak var btnHeightVal: UIButton!
     @IBOutlet weak var lblAllergyCount: UILabel!
     @IBOutlet weak var lblDoctorCount: UILabel!
     @IBOutlet weak var lblMedicationCount: UILabel!
@@ -71,6 +71,9 @@ CNContactPickerDelegate{
     
     override func viewDidLoad() {
         super.viewDidLoad();
+        
+        btnHeightVal.setTitle("", for: .normal)
+        btnWeightVal.setTitle("", for: .normal)
         
         // create the activity view
         utilities.createActivityView(view: self.view);
@@ -351,7 +354,7 @@ CNContactPickerDelegate{
         }
     
         // save kid to iCloud
-        cloudModel.saveRecordInfo(record: kid!, recordType: Utilities.RecordTypes.kid);
+//        cloudModel.saveRecordInfo(record: kid!, recordType: Utilities.RecordTypes.kid);
         
         appDelegate.saveContext();
     }
@@ -399,7 +402,7 @@ CNContactPickerDelegate{
         
         // set weight
         if((kid!.weights?.count)! > 0){
-            lblWeightVal.isHidden = false;
+            btnWeightVal.isHidden = false;
             let sortedWeightArray = sortWeightArray();
             let latestKidWeight = sortedWeightArray[0] as! Weight;
             
@@ -408,12 +411,12 @@ CNContactPickerDelegate{
             // set ounces
             let ounces = String(latestKidWeight.weight).components(separatedBy: ".")[1];
             
-            lblWeightVal.text = "\(pounds) lbs \(ounces) oz";
+            btnWeightVal.setTitle("\(pounds) lbs \(ounces) oz", for: .normal);
         }
         
         // set height
         if((kid!.heights?.count)! > 0){
-            lblHeightVal.isHidden = false;
+            btnHeightVal.isHidden = false;
             let sortedHeightArray = sortHeightArray();
             let latestKidHeight = sortedHeightArray[0] as! Height;
             
@@ -422,7 +425,7 @@ CNContactPickerDelegate{
             // set height inches
             let inches = String(Int(latestKidHeight.height.truncatingRemainder(dividingBy: 12.0)));
             
-            lblHeightVal.text = "\(feet) ft \(inches) inches";
+            btnHeightVal.setTitle("\(feet) ft \(inches) inches", for: .normal)
         }
         
         // check if kid has allergies
@@ -795,7 +798,7 @@ CNContactPickerDelegate{
             UIApplication.shared.beginIgnoringInteractionEvents();
             
             // delete from iCloud
-            self.cloudModel.deleteType(recordToDelete: self.kid!, recordTypeToDelete: Utilities.RecordTypes.kid)
+            //self.cloudModel.deleteType(recordToDelete: self.kid!, recordTypeToDelete: Utilities.RecordTypes.kid)
             
             // get context
             let context = self.appDelegate.persistentContainer.viewContext;
