@@ -8,7 +8,7 @@
 
 import UIKit
 
-class MedicationViewController: UIViewController {
+class MedicationViewController: UIViewController, UITextFieldDelegate {
     
     @IBOutlet weak var txtName: UITextField!
     @IBOutlet weak var txtDosage: UITextField!
@@ -29,8 +29,8 @@ class MedicationViewController: UIViewController {
         super.viewDidLoad()
         
         // Do any additional setup after loading the view.
-        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide(noti:)), name: NSNotification.Name.UIKeyboardWillHide, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow(noti:)), name: NSNotification.Name.UIKeyboardWillShow, object: nil)
+//        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide(noti:)), name: NSNotification.Name.UIKeyboardWillHide, object: nil)
+//        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow(noti:)), name: NSNotification.Name.UIKeyboardWillShow, object: nil)
     
         if(medication != nil){
             titleBar.title = "Update Medication"
@@ -46,6 +46,16 @@ class MedicationViewController: UIViewController {
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+    
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        self.view.endEditing(true);
+    }
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder();
+        
+        return true;
     }
     
     //---------------------------------
@@ -95,22 +105,22 @@ class MedicationViewController: UIViewController {
     // MARK: - Notification Center
     //---------------------------------
     
-    @objc func keyboardWillHide(noti: Notification) {
-        let contentInsets = UIEdgeInsets.zero
-        scrollView.contentInset = contentInsets
-        scrollView.scrollIndicatorInsets = contentInsets
-    }
-    
-    @objc func keyboardWillShow(noti: Notification) {
-        
-        guard let userInfo = noti.userInfo else { return }
-        guard var keyboardFrame: CGRect = (userInfo[UIKeyboardFrameBeginUserInfoKey] as? NSValue)?.cgRectValue else { return }
-        keyboardFrame = self.view.convert(keyboardFrame, from: nil)
-        
-        var contentInset:UIEdgeInsets = scrollView.contentInset
-        contentInset.bottom = keyboardFrame.size.height
-        scrollView.contentInset = contentInset
-    }
+//    @objc func keyboardWillHide(noti: Notification) {
+//        let contentInsets = UIEdgeInsets.zero
+//        scrollView.contentInset = contentInsets
+//        scrollView.scrollIndicatorInsets = contentInsets
+//    }
+//
+//    @objc func keyboardWillShow(noti: Notification) {
+//        
+//        guard let userInfo = noti.userInfo else { return }
+//        guard var keyboardFrame: CGRect = (userInfo[UIKeyboardFrameBeginUserInfoKey] as? NSValue)?.cgRectValue else { return }
+//        keyboardFrame = self.view.convert(keyboardFrame, from: nil)
+//
+//        var contentInset:UIEdgeInsets = scrollView.contentInset
+//        contentInset.bottom = keyboardFrame.size.height
+//        scrollView.contentInset = contentInset
+//    }
     
     /*
     // MARK: - Navigation

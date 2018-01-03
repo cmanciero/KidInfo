@@ -15,6 +15,7 @@ class KidInfoViewController: UIViewController,
     UINavigationControllerDelegate,
     UITableViewDelegate, UITableViewDataSource,
     UIPickerViewDelegate, UIPickerViewDataSource,
+    UITextFieldDelegate,
 CNContactPickerDelegate{
     
     @IBOutlet weak var txtName: UITextField!
@@ -154,6 +155,19 @@ CNContactPickerDelegate{
             }
             
         } catch {}
+    }
+    
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        self.view.endEditing(true);
+    }
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder();
+        
+        // save kid info on keyboard close
+        self.saveKidInfo();
+        
+        return true;
     }
     
     /************************/

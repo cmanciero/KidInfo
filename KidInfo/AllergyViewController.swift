@@ -25,8 +25,8 @@ class AllergyViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad();
         
-        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide(noti:)), name: NSNotification.Name.UIKeyboardWillHide, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow(noti:)), name: NSNotification.Name.UIKeyboardWillShow, object: nil)
+//        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide(noti:)), name: NSNotification.Name.UIKeyboardWillHide, object: nil)
+//        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow(noti:)), name: NSNotification.Name.UIKeyboardWillShow, object: nil)
         
         btnDone.isEnabled = false;
         
@@ -61,26 +61,30 @@ class AllergyViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        self.view.endEditing(true);
+    }
+    
     //---------------------------------
     // MARK: - NOTIFICATION CENTER
     //---------------------------------
     
-    @objc func keyboardWillHide(noti: Notification) {
-        let contentInsets = UIEdgeInsets.zero
-        scrollView.contentInset = contentInsets
-        scrollView.scrollIndicatorInsets = contentInsets
-    }
-    
-    @objc func keyboardWillShow(noti: Notification) {
-        
-        guard let userInfo = noti.userInfo else { return }
-        guard var keyboardFrame: CGRect = (userInfo[UIKeyboardFrameBeginUserInfoKey] as? NSValue)?.cgRectValue else { return }
-        keyboardFrame = self.view.convert(keyboardFrame, from: nil)
-        
-        var contentInset:UIEdgeInsets = scrollView.contentInset
-        contentInset.bottom = keyboardFrame.size.height
-        scrollView.contentInset = contentInset
-    }
+//    @objc func keyboardWillHide(noti: Notification) {
+//        let contentInsets = UIEdgeInsets.zero
+//        scrollView.contentInset = contentInsets
+//        scrollView.scrollIndicatorInsets = contentInsets
+//    }
+//
+//    @objc func keyboardWillShow(noti: Notification) {
+//
+//        guard let userInfo = noti.userInfo else { return }
+//        guard var keyboardFrame: CGRect = (userInfo[UIKeyboardFrameBeginUserInfoKey] as? NSValue)?.cgRectValue else { return }
+//        keyboardFrame = self.view.convert(keyboardFrame, from: nil)
+//
+//        var contentInset:UIEdgeInsets = scrollView.contentInset
+//        contentInset.bottom = keyboardFrame.size.height
+//        scrollView.contentInset = contentInset
+//    }
     
     //---------------------------------
     // MARK: - ACTIONS

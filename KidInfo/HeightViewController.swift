@@ -8,7 +8,8 @@
 
 import UIKit
 
-class HeightViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
+class HeightViewController: UIViewController,
+UITableViewDataSource, UITableViewDelegate, UITextFieldDelegate {
     
     @IBOutlet weak var txtFeet: UITextField!
     @IBOutlet weak var txtInches: UITextField!
@@ -58,6 +59,15 @@ class HeightViewController: UIViewController, UITableViewDataSource, UITableView
     
     override func viewDidAppear(_ animated: Bool) {
         
+    }
+    
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        self.view.endEditing(true);
+    }
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder();
+        return true;
     }
     
     //---------------------------------
