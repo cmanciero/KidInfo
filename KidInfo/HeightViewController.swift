@@ -18,6 +18,8 @@ UITableViewDataSource, UITableViewDelegate, UITextFieldDelegate {
     @IBOutlet weak var btnSave: UIBarButtonItem!
     @IBOutlet weak var titleBar: UINavigationItem!
     
+    // CloudKit model
+    let cloudModel:CloudHelper = CloudHelper()
     var kid: Kid? = nil;
     var height: Height? = nil;
     var arrHeights: [Double] = [];
@@ -189,6 +191,9 @@ UITableViewDataSource, UITableViewDelegate, UITextFieldDelegate {
             let sortedHeightArray: [Any] = sortHeightArray();
             let ht = (sortedHeightArray as! [Height])[indexPath.row] as Height;
             
+            // delete from iCloud
+            self.cloudModel.deleteType(recordToDelete: ht, recordTypeToDelete: Utilities.RecordTypes.height)
+            
             let context = appDelegate.persistentContainer.viewContext;
             context.delete(ht);
             appDelegate.saveContext();
@@ -210,6 +215,11 @@ UITableViewDataSource, UITableViewDelegate, UITextFieldDelegate {
         let context = appDelegate.persistentContainer.viewContext;
         height = Height(context: context);
         
+        // set id value, if does not exist
+        if(height!.id == nil){
+            height!.id = UUID().uuidString;
+        }
+        
         // calculate the height
         let calcHeight = calculateHeight();
         if(calcHeight > 0.0){
@@ -223,6 +233,9 @@ UITableViewDataSource, UITableViewDelegate, UITextFieldDelegate {
         
         txtFeet.text = nil;
         txtInches.text = nil;
+        
+        // save allergy info to cloud for kid
+        cloudHelper.saveRecordInfo(record: height!, recordType: Utilities.RecordTypes.height)
         
         heightTableView.reloadData();
     }

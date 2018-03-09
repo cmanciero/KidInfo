@@ -13,7 +13,7 @@ import UIKit
 
 protocol CloudHelperDelegate {
     func errorUpdating(error: NSError)
-    func modelUpdated()
+    func modelUpdated(results: [CKRecord])
 }
 
 class CloudHelper{
@@ -21,6 +21,7 @@ class CloudHelper{
     let publicDB: CKDatabase
     let privateDB: CKDatabase
     var delegate: CloudHelperDelegate?
+    var timeStamp: Date?
     
     class func sharedInstance() -> CloudHelper{
         return cloudHelper
@@ -32,8 +33,37 @@ class CloudHelper{
         privateDB = container.privateCloudDatabase
     }
     
-    func createBackupFile(){
+    //---------------------------------
+    // MARK: - TIMESTAMP
+    //---------------------------------
+    
+    func getTimeStamp(){
+        let predicate = NSPredicate(value: true)
         
+        let query = CKQuery(recordType: "LastUpdated",
+                            predicate:  predicate)
+        
+        self.privateDB.perform(query, inZoneWith: nil, completionHandler: {results, error in
+            if error != nil {
+                DispatchQueue.main.async {
+                    self.delegate?.errorUpdating(error: error! as NSError)
+                    return
+                }
+            } else {
+                DispatchQueue.main.async {
+                    var ckRecord = CKRecord(recordType: Utilities.RecordTypes.lastUpdated)
+                    ckRecord = results!.first!
+                    print("iCloud timestamp")
+                    
+                    if let timeStamp = ckRecord.value(forKey: "timeStamp") as? Date{
+                        self.timeStamp = timeStamp
+                        print(self.timeStamp!)
+                    }
+                    print("======================")
+                    return
+                }
+            }
+        })
     }
     
     //---------------------------------
@@ -57,7 +87,7 @@ class CloudHelper{
                 }
             } else {
                 DispatchQueue.main.async {
-                    self.delegate?.modelUpdated()
+                    self.delegate?.modelUpdated(results: results!)
                     return
                 }
             }
@@ -90,23 +120,7 @@ class CloudHelper{
     
     // Save record to CloudKit private DB
     func saveRecordInfo(record: AnyObject, recordType: String){
-        var predicate: NSPredicate
-        
-        // set predicate for correct type
-        switch(recordType){
-            case Utilities.RecordTypes.allergy:
-                predicate = NSPredicate(format: "id = %@", argumentArray: [(record as! Allergy).id!])
-            case Utilities.RecordTypes.height:
-                predicate = NSPredicate(format: "id = %@", argumentArray: [(record as! Height).id!])
-            case Utilities.RecordTypes.kid:
-                predicate = NSPredicate(format: "id = %@", argumentArray: [(record as! Kid).id!])
-            case Utilities.RecordTypes.medication:
-                predicate = NSPredicate(format: "id = %@", argumentArray: [(record as! Medication).id!])
-            case Utilities.RecordTypes.weight:
-                predicate = NSPredicate(format: "id = %@", argumentArray: [(record as! Weight).id!])
-            default:
-                predicate = NSPredicate(format: "id = %@", argumentArray: [(record as! Kid).id!])
-        }
+        var predicate: NSPredicate = createPredicate(record: record, recordType: recordType)
         
         let query = CKQuery(recordType: recordType, predicate: predicate)
         
@@ -116,15 +130,13 @@ class CloudHelper{
                 if(records?.count == 0){
                     // save new record
                     self.saveUpdateRecord(record: record, recordType: recordType)
-                    //                    self.saveUpdateKidInfo(kid: kid);
                 } else {
                     // update kid info
                     self.saveUpdateRecord(record: record, recordType: recordType, recordToUpdate: records!.first!)
-                    //                    self.saveUpdateKidInfo(kid: kid, recordToUpdate: records!.first!);
                 }
                 
                 // get list of kids
-                //                self.getKids();
+                // self.getKids();
             } else {
                 NSLog(error!.localizedDescription)
             }
@@ -160,6 +172,12 @@ class CloudHelper{
             // create Weight record
             case Utilities.RecordTypes.weight:
                 ckRecord = createWeightRecord(weight: record as! Weight, cloudRecord: ckRecord)
+            // create LastUpdated record
+            case Utilities.RecordTypes.lastUpdated:
+                ckRecord = createLastUpdatedRecord(lastUpdated: record as! LastUpdated, cloudRecord: ckRecord)
+            // create DoctorContact record
+            case Utilities.RecordTypes.doctorContact:
+                ckRecord = createDoctorContactRecord(doctorContact: record as! DoctorContact, cloudRecord: ckRecord)
             // create Kid record
             default:
                 ckRecord = createKidRecord(kid: record as! Kid, cloudRecord: ckRecord)
@@ -192,6 +210,11 @@ class CloudHelper{
     
     // Create Height Cloud Record
     private func createHeightRecord(height: Height, cloudRecord: CKRecord) -> CKRecord{
+        // set values
+        cloudRecord.setValue(height.id, forKey: "id")
+        cloudRecord.setValue(height.date, forKey: "date")
+        cloudRecord.setValue(height.height, forKey: "height")
+        
         return cloudRecord
     }
     
@@ -217,11 +240,41 @@ class CloudHelper{
     
     // Create Medication Cloud Record
     private func createMedicationRecord(medication: Medication, cloudRecord: CKRecord) -> CKRecord{
+        // set values
+        cloudRecord.setValue(medication.id, forKey: "id")
+        cloudRecord.setValue(medication.name, forKey: "name")
+        cloudRecord.setValue(medication.type, forKey: "type")
+        cloudRecord.setValue(medication.dosage, forKey: "dosage")
+        cloudRecord.setValue(medication.frequency, forKey: "frequency")
+        cloudRecord.setValue(medication.howToTake, forKey: "howToTake")
+        
         return cloudRecord
     }
     
     // Create Weight Cloud Record
     private func createWeightRecord(weight: Weight, cloudRecord: CKRecord) -> CKRecord{
+        // set values
+        cloudRecord.setValue(weight.id, forKey: "id")
+        cloudRecord.setValue(weight.date, forKey: "date")
+        cloudRecord.setValue(weight.weight, forKey: "weight")
+        
+        return cloudRecord
+    }
+    
+    // Create DoctorContact Cloud Record
+    private func createDoctorContactRecord(doctorContact: DoctorContact, cloudRecord: CKRecord) -> CKRecord{
+        // set values
+        cloudRecord.setValue(doctorContact.contactId, forKey: "contactId")
+        cloudRecord.setValue(doctorContact.id, forKey: "id")
+        
+        return cloudRecord
+    }
+    
+    
+    // Create LastUpdated Record
+    private func createLastUpdatedRecord(lastUpdated: LastUpdated, cloudRecord: CKRecord) ->CKRecord{
+        cloudRecord.setValue(lastUpdated.id, forKey: "id")
+        cloudRecord.setValue(lastUpdated.timeStamp, forKey: "timeStamp")
         return cloudRecord
     }
     
@@ -236,95 +289,32 @@ class CloudHelper{
         return photoURL;
     }
     
-    // save/update kid info
-    //    private func saveUpdateKidInfo(kid: Kid, recordToUpdate: CKRecord? = nil){
-    //        var kidRecord: CKRecord;
-    //
-    //        // check to see if updating existing record
-    //        if(recordToUpdate != nil){
-    //            // Update existing Kid Info
-    //            kidRecord = recordToUpdate!
-    //        } else {
-    //            // save new kid info
-    //            kidRecord = CKRecord(recordType: "Kid")
-    //        }
-    //
-    //        // check if avatar set for kid
-    //        if(kid.avatar != nil){
-    //            // get avatar asset info
-    //            let imageURL = getAvatarURL(kid: kid)
-    //            let imageAsset = CKAsset(fileURL: imageURL as URL)
-    //            kidRecord.setValue(imageAsset, forKey: "avatar")
-    //        }
-    //
-    //        // set values
-    //        kidRecord.setValue(kid.id, forKey: "id")
-    //        kidRecord.setValue(kid.name, forKey: "name")
-    //        kidRecord.setValue(kid.dob, forKey: "dob")
-    //        kidRecord.setValue(kid.gender, forKey: "gender")
-    //        kidRecord.setValue(kid.bloodType, forKey: "bloodType")
-    //
-    //        // save/update record on Cloud
-    //        privateDB.save(kidRecord, completionHandler: {(record, error) -> Void in
-    //            if(error == nil){
-    //                NSLog("Save to cloud kit")
-    //            } else {
-    //                NSLog(error!.localizedDescription)
-    //            }
-    //        })
-    //    }
-    
-    //---------------------------------
-    // MARK: - ALLERGY
-    //---------------------------------
-    //    func saveAllergyInfoForKid(kid: Kid, allergy:Allergy){
-    //        let predicate = NSPredicate(format: "id = %@", argumentArray: [allergy.id!])
-    //        let query = CKQuery(recordType: "Allergy", predicate: predicate)
-    //
-    //        // make request to see if Kid exists
-    //        privateDB.perform(query, inZoneWith: nil, completionHandler: {(records, error) -> Void in
-    //            if(error == nil){
-    //                if(records?.count == 0){
-    //                    // save new kid
-    //                    self.saveUpdateAllergyForKid(kid: kid, allergy: allergy);
-    //                } else {
-    //                    // update kid info
-    //                    self.saveUpdateAllergyForKid(kid: kid, allergy: allergy, recordToUpdate: records!.first!);
-    //                }
-    //            } else {
-    //                NSLog(error!.localizedDescription)
-    //            }
-    //        })
-    //    }
-    
-    // save Allergy record to cloud for kid
-    //    private func saveUpdateAllergyForKid(kid: Kid, allergy: Allergy, recordToUpdate: CKRecord? = nil){
-    //        var allergyRecord: CKRecord;
-    //
-    //        // check to see if updating existing record
-    //        if(recordToUpdate != nil){
-    //            // Update existing Allergy Info
-    //            allergyRecord = recordToUpdate!
-    //        } else {
-    //            // save new Allergy info
-    //            allergyRecord = CKRecord(recordType: "Allergy")
-    //        }
-    //
-    //        // set values
-    //        allergyRecord.setValue(allergy.id, forKey: "id")
-    //        allergyRecord.setValue(allergy.level, forKey: "level")
-    //        allergyRecord.setValue(allergy.notes, forKey: "notes")
-    //        allergyRecord.setValue(allergy.type, forKey: "type")
-    //
-    //        // save/update record on Cloud
-    //        privateDB.save(allergyRecord, completionHandler: {(record, error) -> Void in
-    //            if(error == nil){
-    //                NSLog("Allergy saved to cloud kit")
-    //            } else {
-    //                NSLog(error!.localizedDescription)
-    //            }
-    //        })
-    //    }
+    // create predicate to use for iCloud search
+    private func createPredicate(record: AnyObject, recordType: String) -> NSPredicate{
+        var predicate: NSPredicate
+        
+        // set predicate for correct type
+        switch(recordType){
+        case Utilities.RecordTypes.allergy:
+            predicate = NSPredicate(format: "id = %@", argumentArray: [(record as! Allergy).id!])
+        case Utilities.RecordTypes.height:
+            predicate = NSPredicate(format: "id = %@", argumentArray: [(record as! Height).id!])
+        case Utilities.RecordTypes.kid:
+            predicate = NSPredicate(format: "id = %@", argumentArray: [(record as! Kid).id!])
+        case Utilities.RecordTypes.medication:
+            predicate = NSPredicate(format: "id = %@", argumentArray: [(record as! Medication).id!])
+        case Utilities.RecordTypes.weight:
+            predicate = NSPredicate(format: "id = %@", argumentArray: [(record as! Weight).id!])
+        case Utilities.RecordTypes.lastUpdated:
+            predicate = NSPredicate(format: "id = %@", argumentArray: [(record as! LastUpdated).id!])
+        case Utilities.RecordTypes.doctorContact:
+            predicate = NSPredicate(format: "id = %@", argumentArray: [(record as! DoctorContact).id!])
+        default:
+            predicate = NSPredicate(format: "id = %@", argumentArray: [(record as! Kid).id!])
+        }
+        
+        return predicate
+    }
     
     //---------------------------------
     // MARK: - DELETE
@@ -332,7 +322,8 @@ class CloudHelper{
     
     // delete record from CloudKit private DB
     func deleteType(recordToDelete: AnyObject, recordTypeToDelete: String){
-        let predicate = NSPredicate(format: "id = %@", argumentArray: [recordToDelete["id"]])
+        let predicate:NSPredicate = createPredicate(record: recordToDelete, recordType: recordTypeToDelete)
+        
         let query = CKQuery(recordType: recordTypeToDelete, predicate: predicate)
         
         privateDB.perform(query, inZoneWith: nil, completionHandler: {(records, error) -> Void in

@@ -200,7 +200,7 @@ CNContactPickerDelegate{
                 catch { }
             }
             
-            // create/display controller for contacs
+            // create/display controller for contacts
             let contactViewController = CNContactViewController(for: selectedDoctor);
             contactViewController.contactStore = self.contactStore;
             navigationController?.pushViewController(contactViewController, animated: true)
@@ -276,6 +276,9 @@ CNContactPickerDelegate{
                 let sortedAllergies = sortAllergies();
                 let allergy = (sortedAllergies as! [Allergy])[indexPath.row] as Allergy;
                 
+                // delete from iCloud
+                self.cloudModel.deleteType(recordToDelete: allergy, recordTypeToDelete: Utilities.RecordTypes.allergy)
+                
                 let context = appDelegate.persistentContainer.viewContext;
                 context.delete(allergy);
                 appDelegate.saveContext();
@@ -292,13 +295,15 @@ CNContactPickerDelegate{
                 
                 let doctor = kid!.doctorContacts![indexPath.row] as! DoctorContact;
                 
+                self.cloudModel.deleteType(recordToDelete: doctor, recordTypeToDelete: Utilities.RecordTypes.doctorContact)
+                
                 let context = appDelegate.persistentContainer.viewContext;
                 context.delete(doctor);
                 appDelegate.saveContext();
                 
                 doctorTableView.reloadData();
                 
-                // check if kid has allergies
+                // check if kid has doctors
                 checkDoctorTableView();
             }
                 // delete row from medication table
@@ -306,13 +311,15 @@ CNContactPickerDelegate{
                 let sortedMedications = sortMedications();
                 let medication = (sortedMedications as! [Medication])[indexPath.row] as Medication;
                 
+                self.cloudModel.deleteType(recordToDelete: medication, recordTypeToDelete: Utilities.RecordTypes.medication)
+                
                 let context = appDelegate.persistentContainer.viewContext;
                 context.delete(medication);
                 appDelegate.saveContext();
                 
                 medicationTableView.reloadData();
                 
-                // check if kid has allergies
+                // check if kid has medication
                 checkMedicationTableView();
             }
         }
@@ -368,7 +375,7 @@ CNContactPickerDelegate{
         }
     
         // save kid to iCloud
-//        cloudModel.saveRecordInfo(record: kid!, recordType: Utilities.RecordTypes.kid);
+        cloudModel.saveRecordInfo(record: kid!, recordType: Utilities.RecordTypes.kid);
         
         appDelegate.saveContext();
     }
@@ -656,8 +663,12 @@ CNContactPickerDelegate{
         selectedDoctorContact = DoctorContact(context: context);
         selectedDoctorContact!.contactId = contact.identifier;
         selectedDoctorContact!.kid = kid;
+        selectedDoctorContact!.id = UUID().uuidString;
         
         appDelegate.saveContext();
+        
+        // save allergy info to cloud for kid
+        cloudHelper.saveRecordInfo(record: selectedDoctorContact!, recordType: Utilities.RecordTypes.doctorContact)
         
 //        doctorTableView.isHidden = false;
 //        self.doctors.append(contact);
@@ -805,7 +816,7 @@ CNContactPickerDelegate{
             UIApplication.shared.beginIgnoringInteractionEvents();
             
             // delete from iCloud
-            //self.cloudModel.deleteType(recordToDelete: self.kid!, recordTypeToDelete: Utilities.RecordTypes.kid)
+            self.cloudModel.deleteType(recordToDelete: self.kid!, recordTypeToDelete: Utilities.RecordTypes.kid)
             
             // get context
             let context = self.appDelegate.persistentContainer.viewContext;

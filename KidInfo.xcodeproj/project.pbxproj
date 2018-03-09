@@ -9,7 +9,7 @@
 /* Begin PBXBuildFile section */
 		950A3A5D1F7A91A100064708 /* Charts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 950A3A5A1F7A919A00064708 /* Charts.framework */; };
 		950A3A5E1F7A91A100064708 /* Charts.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 950A3A5A1F7A919A00064708 /* Charts.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		950A43231FE8594B009DDCA6 /* CloudKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 950A43221FE8594B009DDCA6 /* CloudKit.framework */; };
+		9510B49D20508C3500536AE0 /* CloudKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9510B49C20508C3500536AE0 /* CloudKit.framework */; };
 		951FEF261EF85EAD00067E1C /* MedicationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 951FEF251EF85EAD00067E1C /* MedicationViewController.swift */; };
 		9537B1C81EE878DF00CF5E1B /* AllergyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9537B1C71EE878DF00CF5E1B /* AllergyViewController.swift */; };
 		954CE6781EE0AB6F00C1160F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 954CE6771EE0AB6F00C1160F /* AppDelegate.swift */; };
@@ -76,7 +76,7 @@
 		08D19F6676E8E21014BC5138 /* Pods-KidInfo.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-KidInfo.debug.xcconfig"; path = "Pods/Target Support Files/Pods-KidInfo/Pods-KidInfo.debug.xcconfig"; sourceTree = "<group>"; };
 		4FCBCEB6AC02F164624D6B9A /* Pods-KidInfo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-KidInfo.release.xcconfig"; path = "Pods/Target Support Files/Pods-KidInfo/Pods-KidInfo.release.xcconfig"; sourceTree = "<group>"; };
 		950A3A541F7A919A00064708 /* Charts.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Charts.xcodeproj; path = ../Charts/Charts.xcodeproj; sourceTree = "<group>"; };
-		950A43221FE8594B009DDCA6 /* CloudKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CloudKit.framework; path = System/Library/Frameworks/CloudKit.framework; sourceTree = SDKROOT; };
+		9510B49C20508C3500536AE0 /* CloudKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CloudKit.framework; path = System/Library/Frameworks/CloudKit.framework; sourceTree = SDKROOT; };
 		951FEF251EF85EAD00067E1C /* MedicationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MedicationViewController.swift; sourceTree = "<group>"; };
 		9537B1C71EE878DF00CF5E1B /* AllergyViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AllergyViewController.swift; sourceTree = "<group>"; };
 		954CE6741EE0AB6F00C1160F /* KidInfo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = KidInfo.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -110,7 +110,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				950A3A5D1F7A91A100064708 /* Charts.framework in Frameworks */,
-				950A43231FE8594B009DDCA6 /* CloudKit.framework in Frameworks */,
+				9510B49D20508C3500536AE0 /* CloudKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -243,7 +243,7 @@
 		DC4192AF4663B11DC5674548 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				950A43221FE8594B009DDCA6 /* CloudKit.framework */,
+				9510B49C20508C3500536AE0 /* CloudKit.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";

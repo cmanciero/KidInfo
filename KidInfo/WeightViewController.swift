@@ -17,6 +17,8 @@ class WeightViewController: UIViewController, UITableViewDelegate, UITableViewDa
     @IBOutlet weak var btnSave: UIBarButtonItem!
     @IBOutlet weak var titleBar: UINavigationItem!
     
+    // CloudKit model
+    let cloudModel:CloudHelper = CloudHelper()
     var kid: Kid? = nil;
     var weight: Weight? = nil;
     let datePicker = UIDatePicker();
@@ -188,6 +190,9 @@ class WeightViewController: UIViewController, UITableViewDelegate, UITableViewDa
             let sortedWeightArray: [Any] = sortWeightArray();
             let wt = (sortedWeightArray as! [Weight])[indexPath.row] as Weight;
             
+            // delete from iCloud
+            self.cloudModel.deleteType(recordToDelete: wt, recordTypeToDelete: Utilities.RecordTypes.weight)
+            
             let context = appDelegate.persistentContainer.viewContext;
             context.delete(wt);
             appDelegate.saveContext();
@@ -204,13 +209,18 @@ class WeightViewController: UIViewController, UITableViewDelegate, UITableViewDa
         let context = appDelegate.persistentContainer.viewContext;
         weight = Weight(context: context);
         
+        // set id value, if does not exist
+        if(weight!.id == nil){
+            weight!.id = UUID().uuidString;
+        }
+        
         // calculate the weight
         let calWeight = calculateWeight();
         if(calWeight > 0.0){
             weight!.weight = calWeight;
         }
         
-        weight!.date = datePicker.date;// as NSDate;
+        weight!.date = datePicker.date;
         weight!.kid = kid;
         
         appDelegate.saveContext();
@@ -219,6 +229,9 @@ class WeightViewController: UIViewController, UITableViewDelegate, UITableViewDa
         txtOunces.text = nil;
         
         weightTableView.reloadData();
+        
+        // save allergy info to cloud for kid
+        cloudHelper.saveRecordInfo(record: weight!, recordType: Utilities.RecordTypes.weight)
     }
     
     @IBAction func checkForWeightVal(_ sender: Any) {

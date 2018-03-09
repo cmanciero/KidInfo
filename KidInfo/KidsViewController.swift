@@ -7,14 +7,17 @@
 //
 
 import UIKit
+import CoreData
+import CloudKit
 
-class KidsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+class KidsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, CloudHelperDelegate {
     
     @IBOutlet weak var kidsTableView: UITableView!
     @IBOutlet weak var noKidView: UIView!
     @IBOutlet weak var btnTapKid: UIButton!
     
     var arrKids: [Kid] = [];
+    var context: NSManagedObjectContext!
     let utilities = Utilities();
     let appDelegate = Utilities.getApplicationDelegate()
     let cloudModel:CloudHelper = CloudHelper()
@@ -22,13 +25,28 @@ class KidsViewController: UIViewController, UITableViewDelegate, UITableViewData
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
+        // get context for CoreData
+        context = appDelegate.persistentContainer.viewContext;
+        
         kidsTableView.delegate = self;
         kidsTableView.dataSource = self;
         
         // create activity view
         utilities.createActivityView(view: self.view);
         
-        cloudModel.getKids();
+        // check local timestamp
+        utilities.getTimeStamp()
+        
+        // make calls to iCloud
+        cloudModel.delegate = self
+        
+        // check iCloud timestamp
+        cloudModel.getTimeStamp()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        // get kids
+        getKids()
     }
     
     // get ready to segue
@@ -39,24 +57,6 @@ class KidsViewController: UIViewController, UITableViewDelegate, UITableViewData
         }
     }
     
-    // do this everytime view appears
-    override func viewWillAppear(_ animated: Bool) {
-        if(UIApplication.shared.isIgnoringInteractionEvents){
-            UIApplication.shared.endIgnoringInteractionEvents();
-        }
-        
-        // get context for CoreData
-        let context = appDelegate.persistentContainer.viewContext;
-        
-        do{
-            // fetch to get all kids
-            arrKids = try context.fetch(Kid.fetchRequest());
-            
-            // reload table view
-            kidsTableView.reloadData();
-        } catch {}
-    }
-    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
@@ -65,9 +65,72 @@ class KidsViewController: UIViewController, UITableViewDelegate, UITableViewData
     @IBAction func addNewKidTapped(_ sender: Any) {
         self.showAddNewKidPopUp();
     }
+    
+    /************************/
+    // MARK: - CloudHelper Delegate Methods
+    /************************/
+    
+    func errorUpdating(error: NSError) {
+        print(error)
+    }
+    
+    func modelUpdated(results: [CKRecord]) {
+        if let cloudTimeStamp = cloudModel.timeStamp {
+            if cloudTimeStamp > utilities.localTimeStamp!{
+                // remove all kids
+                arrKids.removeAll()
+                
+                // check to see if results exists on iCloud
+                if !results.isEmpty {
+                    // loop through results and add kids to list
+                    for (_, value) in results.enumerated(){
+                        let newKid: Kid = Kid(context: self.context)
+                        
+                        newKid.name = value["name"] as? String
+                        newKid.bloodType = value["bloodType"] as? String
+                        newKid.dob = value["dob"] as? Date
+                        newKid.gender = value["gender"] as? String
+                        newKid.id = value["id"] as? String
+                        print(value)
+                        print(value["avatar"])
+                        newKid.avatar = value["avatar"] as? Data
+                        
+                        arrKids.append(newKid)
+                    }
+                    
+                    kidsTableView.reloadData()
+                }
+            }
+        }
+    }
+    
     /************************/
     // MARK: - Functions
     /************************/
+    
+    func getKids(){
+        utilities.showActivityIndicator()
+        
+        // check cloud kids
+        cloudModel.getKids()
+        
+        // check local storage
+        getKidsLocal()
+    }
+    
+    // check Core Data for kids locally
+    func getKidsLocal(){
+        do{
+            // fetch to get all kids
+            arrKids = try context.fetch(Kid.fetchRequest());
+            
+            // reload table view
+            kidsTableView.reloadData();
+            
+            utilities.hideActivityIndicator()
+            UIApplication.shared.endIgnoringInteractionEvents();
+        } catch {}
+    }
     
     // get the age of kid
     func calculateAge(dob: Date) -> Int{
@@ -95,17 +158,14 @@ class KidsViewController: UIViewController, UITableViewDelegate, UITableViewData
             UIApplication.shared.beginIgnoringInteractionEvents();
             
             if let textFields = newKidAlert.textFields{
-                // get context
-                let context = self.appDelegate.persistentContainer.viewContext;
-                
                 let theTextFields = textFields as [UITextField];
                 let kidName = theTextFields[0].text;
-                let kid = Kid(context: context);
+                let kid = Kid(context: self.context);
                 kid.id = UUID().uuidString;
                 kid.name = kidName;
                 
                 // save kid to iCloud
-//                self.cloudModel.saveRecordInfo(record: kid, recordType: Utilities.RecordTypes.kid);
+                self.cloudModel.saveRecordInfo(record: kid, recordType: Utilities.RecordTypes.kid);
                 
                 // save context
                 self.appDelegate.saveContext();
@@ -115,6 +175,9 @@ class KidsViewController: UIViewController, UITableViewDelegate, UITableViewData
                 
                 // navigate to kid info
                 self.navigateToSelectedKid(kid: kid);
+                
+                // update time stamp
+                self.utilities.updateTimeStamp()
             }
         }));
         newKidAlert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: { action in
