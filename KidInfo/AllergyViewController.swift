@@ -127,7 +127,7 @@ class AllergyViewController: UIViewController {
         allergy!.kid = kid;
         
         // save allergy info to cloud for kid
-        //cloudHelper.saveRecordInfo(record: kid!, recordType: Utilities.RecordTypes.allergy)//(kid: kid!, allergy: allergy!);
+        cloudHelper.saveRecordInfo(record: allergy!, recordType: Utilities.RecordTypes.allergy)
         
         appDelegate.saveContext();
         

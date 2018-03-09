@@ -82,6 +82,11 @@ class MedicationViewController: UIViewController, UITextFieldDelegate {
             medication = Medication(context: context);
         }
         
+        // set id value, if does not exist
+        if(medication!.id == nil){
+            medication!.id = UUID().uuidString;
+        }
+        
         medication?.dosage = txtDosage.text;
         medication?.frequency = txtFreq.text;
         medication?.howToTake = tvNotes.text;
@@ -90,6 +95,9 @@ class MedicationViewController: UIViewController, UITextFieldDelegate {
         medication?.kid = kid;
         
         appDelegate.saveContext();
+        
+        // save allergy info to cloud for kid
+        cloudHelper.saveRecordInfo(record: medication!, recordType: Utilities.RecordTypes.medication)
         
         self.dismiss(animated: true, completion: nil);
     }

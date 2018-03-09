@@ -3,6 +3,14 @@
    version = "1.0">
    <ContextStates>
       <ContextState
+         contextName = "CloudHelper.deleteType(recordToDelete:recordTypeToDelete:):CloudHelper.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "recordToDelete[&quot;id&quot;]">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
          contextName = "KidInfoViewController.checkDoctorTableView():KidInfoViewController.swift">
          <PersistentStrings>
             <PersistentString
@@ -49,6 +57,14 @@
          </PersistentStrings>
       </ContextState>
       <ContextState
+         contextName = "KidsViewController.tableView(_:cellForRowAt:):KidsViewController.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "kid.avatar">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
          contextName = "KidsViewController.sortKids():KidsViewController.swift">
          <PersistentStrings>
             <PersistentString
@@ -59,6 +75,14 @@
             </PersistentString>
             <PersistentString
                value = "bDOBExists">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "WeightViewController.saveTapped(_:):WeightViewController.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "weight.weight">
             </PersistentString>
          </PersistentStrings>
       </ContextState>
@@ -82,7 +106,18 @@
          </PersistentStrings>
       </ContextState>
       <ContextState
+         contextName = "KidsViewController.modelUpdated(results:):KidsViewController.swift">
+      </ContextState>
+      <ContextState
          contextName = "CloudHelper.saveAllergyInfoForKid(kid:allergy:):CloudHelper.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "allergy.id">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "KidInfoViewController.tableView(_:commit:forRowAt:):KidInfoViewController.swift">
          <PersistentStrings>
             <PersistentString
                value = "allergy.id">

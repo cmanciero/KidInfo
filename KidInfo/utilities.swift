@@ -14,17 +14,60 @@ class Utilities{
     let activityIndicator = UIActivityIndicatorView(activityIndicatorStyle: UIActivityIndicatorViewStyle.gray);
     let activityView = UIView();
     var activityViewConstraints: [NSLayoutConstraint] = [];
+    var arrLastUpdate: [LastUpdated] = []
+    let appDelegate = Utilities.getApplicationDelegate()
+    let cloudModel:CloudHelper = CloudHelper()
+    var localTimeStamp: Date?
     
     static let KID: String = "Kid"
     class RecordTypes {
         static let kid: String = "Kid"
         static let allergy: String = "Allergy"
-        static let medication: String = "Kid"
+        static let doctorContact: String = "DoctorContact"
+        static let medication: String = "Medication"
         static let height: String = "Height"
         static let weight: String = "Weight"
+        static let lastUpdated: String = "LastUpdated"
     }
     
     // MARK: FUNCTIONS
+    
+    func getTimeStamp(){
+        do{
+            // fetch to get all timestamps
+            let context = appDelegate.persistentContainer.viewContext;
+            arrLastUpdate = try context.fetch(LastUpdated.fetchRequest());
+            
+            print("utilities timestamp")
+            print(arrLastUpdate[0].timeStamp!)
+            print("===========================")
+            // if there is a local timestamp, set it
+            if let timeStamp:Date = arrLastUpdate[0].timeStamp{
+                self.localTimeStamp = timeStamp
+            }
+        } catch {}
+    }
+    
+    // Set/update time stamp for any changes
+    func updateTimeStamp(){
+        let context = appDelegate.persistentContainer.viewContext;
+        var lastUpdate: LastUpdated
+        
+        if(arrLastUpdate.isEmpty){
+            lastUpdate = LastUpdated(context: context)
+            lastUpdate.id = UUID().uuidString
+            lastUpdate.timeStamp = Date()
+        } else {
+            lastUpdate = arrLastUpdate[0]
+            lastUpdate.timeStamp = Date()
+        }
+        
+        // save kid to iCloud
+        self.cloudModel.saveRecordInfo(record: lastUpdate, recordType: Utilities.RecordTypes.lastUpdated);
+        
+        // save context
+        self.appDelegate.saveContext();
+    }
     
     // create the activity view
     func createActivityView(view: UIView){
